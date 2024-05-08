@@ -28,8 +28,8 @@ export default function Archief() {
   function validationAddUser() {
     let schema = Joi.object({
       name: Joi.string().required().messages({
-        "string.empty": "        عنوان المظاهرة  مطلوب",
-        "any.required": "        عنوان المظاهرة مطلوب  ",
+        "string.empty": "        عنوان الارشيف  مطلوب",
+        "any.required": "        عنوان الارشيف مطلوب  ",
       }),
       category: Joi.string().required(),
       content: Joi.string().allow(""),

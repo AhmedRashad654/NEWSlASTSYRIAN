@@ -204,4 +204,13 @@ tr:nth-child(even) {background-color:rgb(232, 231, 231);}
     width: 100% !important;
   }
  }
-  
+ .aoomedia{
+  border-bottom: 1px solid #777;
+  width: 90%;
+  padding-bottom: 2px;
+ }
+  @media(max-width:800px){
+    .aoomedia{
+      flex-direction: column;
+    }
+  }

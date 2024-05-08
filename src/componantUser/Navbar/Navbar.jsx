@@ -6,7 +6,7 @@ import { Link as Lik} from "react-scroll";
 
 export default function Navbar() {
 
-  const { role, setOpenAuth } = useContext(ContextUser);
+  const { role } = useContext(ContextUser);
     const [activeLink, setActiveLink] = useState('');
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -16,7 +16,7 @@ export default function Navbar() {
   };
   return (
     <nav className="navbar navbar-expand-lg border-bottom">
-      <div className="container">
+      <div className="containe" style={{margin:'auto'}}>
         <button
           className="navbar-toggler"
           type="button"

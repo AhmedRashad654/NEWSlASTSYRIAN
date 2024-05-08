@@ -244,6 +244,7 @@ export default function DataSiteResponseMassacre() {
             "حذف"
           )}
         </button>
+        <button onClick={()=>navigate(-1)} className="btn btn-primary">رجوع</button>
       </div>
     </div>
   );

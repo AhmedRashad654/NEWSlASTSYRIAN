@@ -176,6 +176,7 @@ export default function ResponseLastNews() {
             "حذف"
           )}
         </button>
+        <button className='btn btn-primary' onClick={()=>navigate(-1)}>رجوع</button>
       </div>
     </div>
   );

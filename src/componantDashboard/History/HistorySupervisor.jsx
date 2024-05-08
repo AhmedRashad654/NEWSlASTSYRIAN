@@ -5,10 +5,6 @@ import { useUser } from "../../context/Context";
 export default function HistorySupervisor() {
   const { history } = useUser();
   const navigate = useNavigate();
-
-
-
-
   return (
     <div className={styles.AllHistory}>
       {history
@@ -18,8 +14,8 @@ export default function HistorySupervisor() {
           e?.upUser
             ? e?.upUser?.role === "supervisor"
             : e?.user
-            ? e?.user?.role === "supervisor" || e?.user?.role === "user"
-            : e?.data?.role === "supervisor" || e?.data?.role === "user"
+            ? e?.user?.role === "supervisor" 
+            : e?.data?.role === "supervisor"
         )
         .map((e, i) => (
           <div className={styles.oneNotific} key={i}>

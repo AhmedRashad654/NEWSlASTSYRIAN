@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "homepage": "http://AhmedRashad654.github.io/newlastAhmed",
     "@fortawesome/fontawesome-free": "^6.5.2",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-brands-svg-icons": "^6.5.2",
@@ -18,7 +19,6 @@
     "file-saver": "^2.0.5",
     "file-server": "^2.2.1",
     "gh-pages": "^6.1.1",
-   
     "joi": "^17.12.3",
     "jwt-decode": "^4.0.0",
     "react": "^18.2.0",

@@ -35,7 +35,7 @@ export default function CrimesSystem() {
             onClick={() => setChoiceArchife("magzara")}
             className={choiceArchife === "magzara" ? styles.active : ""}
           >
-            مجازر
+            جرائم
           </span>
         </div>
       </div>

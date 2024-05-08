@@ -1,13 +1,14 @@
 import React, { useContext, useState } from "react";
 import styles from "../styleDashboard/UpdateSuperVisor.module.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { ContextUser } from "../context/Context";
 export default function SingleUser() {
   const { id } = useParams();
   const [single, setSingle] = useState();
-   const { setOpenAlert, setOpenAlertStore } = useContext(ContextUser);
+  const { setOpenAlert, setOpenAlertStore } = useContext( ContextUser );
+  const navigate = useNavigate()
   ////////////////////////////
   useEffect(() => {
     async function getSingleUser() {
@@ -62,19 +63,20 @@ export default function SingleUser() {
         <div className={styles.bottomInform}>
           <div className={styles.oneDiv}>
             <h6>صورة الملف الشخصي </h6>
-            { single?.selfImg !== undefined &&
-              single?.selfImg !== "undefined" &&
-              single?.selfImg !== null &&
-              single?.selfImg !== "" ? (
-                <img
-                  src={`https://syrianrevolution1.com/images/${single?.selfImg}`}
-                  alt="profile"
-                  onClick={() => {
-                    openImage(
-                      `https://syrianrevolution1.com/images/${single?.selfImg}`
-                    );
-                  }}
-                />
+            {single?.selfImg !== undefined &&
+            single?.selfImg !== "undefined" &&
+            single?.selfImg !== null &&
+            single?.selfImg !== "" ? (
+              <img
+                src={`https://syrianrevolution1.com/images/${single?.selfImg}`}
+                alt="profile"
+                onClick={() => {
+                  openImage(
+                    `https://syrianrevolution1.com/images/${single?.selfImg}`
+                  );
+                }}
+                style={{ cursor: "pointer" }}
+              />
             ) : (
               ""
             )}
@@ -93,11 +95,21 @@ export default function SingleUser() {
                     `https://syrianrevolution1.com/images/${single?.docImg}`
                   );
                 }}
+                style={{ cursor: "pointer" }}
               />
             ) : (
               ""
             )}
           </div>
+        </div>
+        <div className={styles.btnbottom}>
+          <button
+            className={`add`}
+            style={{ border: "1px solid red", color: "red" }}
+            onClick={() => navigate(-1)}
+          >
+            رجوع
+          </button>
         </div>
       </div>
     </div>

@@ -13,14 +13,10 @@ export default function AdminHistory() {
         .reverse()
         .filter((e) =>
           e?.upUser
-            ? e.upUser?.role === "admin" || e?.upUser?.role === "supervisor"
+            ? e.upUser?.role === "admin"
             : e?.user
-            ? e?.user?.role === "admin" ||
-              e?.user?.role === "supervisor" ||
-              e?.user?.role === "user"
-            : e?.data?.role === "admin" ||
-              e?.data?.role === "supervisor" ||
-              e?.data?.role === "user"
+            ? e?.user?.role === "admin"         
+            : e?.data?.role === "admin"
         )
         .map((e, i) => (
           <div className={styles.oneNotific} key={i}>

@@ -34,8 +34,8 @@ export default function AddAMassacre() {
     let schema = Joi.object({
    
       title: Joi.string().required().messages({
-        "string.empty": "     اسم المجزرة مطلوب",
-        "any.required": "     اسم المجزرة مطلوب",
+        "string.empty": "     اسم الجريمة مطلوب",
+        "any.required": "     اسم الجريمة مطلوب",
       }),
       responsibleAuthority: Joi.string().required().messages({
         "string.empty": "  الجهة المسئولة مطلوبة",
@@ -128,7 +128,7 @@ setSuccessAdd(false);
             className="alert alert-secondary alerthemself"
             style={{ transform: "translateY(0)", width: "100%" }}
           >
-            يرجي رفع صورة للمجزرة او صورة تدل علي الحدث
+            يرجي رفع صورة للجريمة او صورة تدل علي الحدث
           </p>
         )}
       {errorBackUser &&
@@ -142,13 +142,13 @@ setSuccessAdd(false);
         )}
       <div className={styles.input}>
         <div className={styles.inp1}>
-          <label htmlFor=""> عنوان المجزرة</label>
+          <label htmlFor=""> عنوان الجريمة</label>
           <input
             onChange={handlechange}
             name="title"
             type="text"
             className="form-control"
-            placeholder="  عنوان المجزرة"
+            placeholder="  عنوان الجريمة"
           />
         </div>
         <div className={styles.inp1}>
@@ -215,11 +215,11 @@ setSuccessAdd(false);
         </div>
       </div>
       <div className={styles.inp2}>
-        <label htmlFor=""> تفاصيل المجزرة</label>
+        <label htmlFor=""> تفاصيل الجريمة</label>
         <textarea
           onChange={handlechange}
           name="details"
-          placeholder=" تفاصيل المجزرة"
+          placeholder=" تفاصيل الجريمة"
           className="form-control"
         ></textarea>
       </div>

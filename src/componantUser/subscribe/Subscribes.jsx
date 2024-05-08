@@ -40,13 +40,14 @@ export default function Subscribes() {
         <input
           type="text"
           className="form-control"
-          value={ window.location.href }
-          
+          value={window.location.href}
         />
+        { copied &&
+          <p className="alert alert-success alerthemself" style={ { width: '100%', transform: 'translatey(2px)' } }>تم نسخ الرابط بنجاح</p> }
         <div
           style={{
             position: "absolute",
-            bottom: "5%",
+            bottom: "4%",
             left: "50%",
             transform: "translatex(-50%)",
             display: "flex",
@@ -59,8 +60,13 @@ export default function Subscribes() {
           >
             رجوع
           </button>
-          <CopyToClipboard text={window.location.href} onCopy={()=>setCopied(true)}>
-            <button className="btn btn-primary" disabled={copied}>نسخ رابط المنشور</button>
+          <CopyToClipboard
+            text={window.location.href}
+            onCopy={() => setCopied(true)}
+          >
+            <button className="btn btn-primary">
+              نسخ رابط المنشور
+            </button>
           </CopyToClipboard>
         </div>
       </div>

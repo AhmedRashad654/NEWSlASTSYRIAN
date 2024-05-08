@@ -281,6 +281,7 @@ export default function UpdateUser() {
                           `https://syrianrevolution1.com/images/${userUpdate?.selfImg}`
                         );
                       }}
+                      style={{ cursor: "pointer" }}
                     />
                   ) : (
                     ""
@@ -323,6 +324,7 @@ export default function UpdateUser() {
                           `https://syrianrevolution1.com/images/${userUpdate?.docImg}`
                         );
                       }}
+                      style={{ cursor: "pointer" }}
                     />
                   ) : (
                     ""

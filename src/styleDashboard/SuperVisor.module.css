@@ -63,7 +63,7 @@ border-radius: 50%;
 .counter{
   background-color:red;
   width:30px;
-  padding:22px;
+  padding:19px;
   transform:translateY(-10px);
   display: flex;
   justify-content: center;
@@ -78,12 +78,13 @@ justify-content: space-between;
   color: white;
   transform: translateY(20px);
   font-size: 14px;
-  height: fit-content;
+height: 40px;
 }
-@media(max-width:1000px){
+@media(max-width:940px){
   .useruseruser{
     flex-direction: column;
-    gap: 12px;
+    gap: 13px;
+    height: 65px;
   }
   .search {
   margin-top: 80px;

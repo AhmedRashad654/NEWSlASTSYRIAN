@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import './Footer.css'
 import { Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaypal } from "@fortawesome/free-brands-svg-icons";
 import { useUser } from "../../context/Context";
-
+import CopyToClipboard from "react-copy-to-clipboard";
 export default function Footer() {
   const { messageAndPaypal } = useUser()
- 
+ const [copied ,setCopied] = useState(false)
   return (
     <>
       <div className="footer pt-5 pb-3 ">
@@ -100,7 +100,7 @@ export default function Footer() {
                   </a>
                   {/* ///////////////////// */}
                   <a
-                    href="https://youtube.com/syrian.revolution7"
+                    href="https://youtube.com/@syrian.revolution7"
                     className="text-white"
                   >
                     <i className="fa-brands fa-square-youtube ms-3"></i>
@@ -117,7 +117,9 @@ export default function Footer() {
                 >
                   <a
                     href={
-                      messageAndPaypal.filter((e) => e.category === "android")[0]?.content
+                      messageAndPaypal.filter(
+                        (e) => e.category === "android"
+                      )[0]?.content
                     }
                   >
                     <button
@@ -129,7 +131,9 @@ export default function Footer() {
                   </a>
                   <a
                     href={
-                      messageAndPaypal.filter((e) => e.category === "desktop")[0]?.content
+                      messageAndPaypal.filter(
+                        (e) => e.category === "desktop"
+                      )[0]?.content
                     }
                   >
                     <button
@@ -148,29 +152,43 @@ export default function Footer() {
                   {" "}
                   ادعم موقعنا لنستمر بالتطوير وتقديم رسالتنا (تبرع الان)
                 </p>
+                {copied && <p style={{ fontSize: "10px" }}>تم نسخ الرابط</p>}
                 <div
                   className="social-icons-footer d-flex align-items-center"
-                  style={{ gap: "10px", justifyContent: "center" }}
+                  style={{
+                    gap: "10px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
                 >
                   <div>
                     {messageAndPaypal
                       .filter((e) => e.category === "paypal")
                       .map((e, i) => (
-                        <div key={i}>
-                          <a
-                            href={e.content}
-                            style={{ textDecoration: "none", fontSize: "13px" }}
-                          >
-                            {e.content}
-                          </a>
-                          <br />
-                        </div>
+                        <CopyToClipboard
+                          text={e?.content}
+                          onCopy={() => setCopied(true)}
+                        >
+                          <div key={i}>
+                            <p
+                              href={e.content}
+                              style={{
+                                textDecoration: "none",
+                                fontSize: "13px",
+                                cursor: "pointer",
+                              }}
+                            >
+                              {e.content}
+                            </p>
+                            <br />
+                          </div>
+                        </CopyToClipboard>
                       ))}
                   </div>
 
                   <FontAwesomeIcon
                     icon={faPaypal}
-                    style={{ fontSize: "25px" }}
+                    style={{ fontSize: "25px", marginTop: "-30px" }}
                   />
                 </div>
               </div>

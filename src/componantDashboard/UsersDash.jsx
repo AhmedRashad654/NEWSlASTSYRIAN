@@ -166,7 +166,7 @@ export default function UsersDash() {
               <small> موثق </small>
             </div>
           </div>
-          <div style={{ display: "flex", gap: "10px" }} className={styles.youseef}>
+          <div style={{ display: "flex", gap: "10px" ,transform:'translatey(1px)'}} className={styles.youseef}>
             <div style={{ display: "flex", gap: "10px" }}>
               <p>عدد المستخدمين</p>
               <span className={styles.counter}>{onlyUser}</span>

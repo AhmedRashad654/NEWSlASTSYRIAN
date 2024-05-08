@@ -1,12 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../styleDashboard/AddSuperVisor.module.css";
 import axios from "axios";
 import Joi from "joi";
+import { useUser } from "../context/Context";
 export default function MessageDashboard() {
+    const {messageAndPaypal} = useUser() 
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState({ category: "message" });
+  const [message, setMessage] = useState({ category: "message" ,content:""});
   const [success, setSuccess] = useState(false);
-  const [errorListUser, setErrorListUser] = useState([]);
+  const [ errorListUser, setErrorListUser ] = useState( [] );
+  //////////////////////
+   useEffect(() => {
+     if (messageAndPaypal.length > 0) {
+       const messageContent =
+         messageAndPaypal.find((e) => e.category === "message")?.content || "";
+       setMessage((prevState) => ({ ...prevState, content: messageContent }));
+     }
+   }, [messageAndPaypal]);
   /////////////////////////////////////////////////////////////////////
   function validationAddUser() {
     let schema = Joi.object({
@@ -53,10 +63,19 @@ export default function MessageDashboard() {
     }
   }
   ///////////////////////////////////Desktop////////////////////////////////////////////////////
-  const [desktop, setDesktop] = useState({ category: "desktop" });
+  const [desktop, setDesktop] = useState({ category: "desktop" ,content :""});
   const [loadingDesktop, setLoadingDasktop] = useState(false);
   const [successDektop, setSuccessDesktop] = useState(false);
-  const [errorListUserDesktop, setErrorListUserDsktop] = useState([]);
+  const [ errorListUserDesktop, setErrorListUserDsktop ] = useState( [] );
+  //////////////////////
+     useEffect(() => {
+       if (messageAndPaypal.length > 0) {
+         const messageContent =
+           messageAndPaypal.find((e) => e.category === "desktop")?.content ||
+           "";
+         setDesktop((prevState) => ({ ...prevState, content: messageContent }));
+       }
+     }, [messageAndPaypal]);
   /////////////////////////////////////////////////////////////////////
   function validationAddUserDesktop() {
     let schema = Joi.object({
@@ -104,10 +123,22 @@ export default function MessageDashboard() {
       }
   }
   //////////////////////Android////////////////////////////
-    const [android, setAndroid] = useState({ category: "android" });
+    const [android, setAndroid] = useState({ category: "android" ,content:''});
     const [loadingAndroid, setLoadingAndroid] = useState(false);
     const [successAndroid, setSuccessAndroid] = useState(false);
-    const [errorListUserAndroid, setErrorListUserAndroid] = useState([]);
+  const [ errorListUserAndroid, setErrorListUserAndroid ] = useState( [] );
+  ///////////////////////////////////////////
+       useEffect(() => {
+         if (messageAndPaypal.length > 0) {
+           const messageContent =
+             messageAndPaypal.find((e) => e.category === "android")?.content ||
+             "";
+           setAndroid((prevState) => ({
+             ...prevState,
+             content: messageContent,
+           }));
+         }
+       }, [messageAndPaypal]);
     /////////////////////////////////////////////////////////////////////
     function validationAddUserAndroid() {
       let schema = Joi.object({
@@ -185,7 +216,8 @@ export default function MessageDashboard() {
                 }
                 placeholder="   رسالة التوجية"
                 className="form-control"
-                style={{ height: "30vh" }}
+                style={ { height: "30vh" } }
+                value={message.content || ""}
                 required
               ></textarea>
             </div>
@@ -201,7 +233,7 @@ export default function MessageDashboard() {
                   <span className="sr-only"></span>
                 </div>
               ) : (
-                "أرسال"
+                "ارسال"
               )}
             </button>
           </div>
@@ -241,6 +273,7 @@ export default function MessageDashboard() {
                 type="text"
                 placeholder="   رابط التطبيق "
                 className="form-control"
+                value={desktop?.content|| ""}
                 required
               />
             </div>
@@ -256,7 +289,7 @@ export default function MessageDashboard() {
                   <span className="sr-only"></span>
                 </div>
               ) : (
-                "أرسال"
+                "ارسال"
               )}
             </button>
           </div>
@@ -298,6 +331,7 @@ export default function MessageDashboard() {
                 placeholder="   رابط التطبيق "
                 className="form-control"
                 required
+                value={android?.content || ""}
               />
             </div>
           </div>
@@ -312,7 +346,7 @@ export default function MessageDashboard() {
                   <span className="sr-only"></span>
                 </div>
               ) : (
-                "أرسال"
+                "ارسال"
               )}
             </button>
           </div>

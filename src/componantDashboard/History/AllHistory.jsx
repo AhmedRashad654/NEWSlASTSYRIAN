@@ -9,9 +9,17 @@ export default function AllHistory() {
 console.log(history)
   return (
     <div className={styles.AllHistory}>
-      {history
-        .slice()
-        .reverse()
+      {history.slice().reverse().filter((e) =>
+          e?.upUser
+            ? e.upUser?.role === "admin" || e?.upUser?.role === "supervisor"
+            : e?.user
+            ? e?.user?.role === "admin" ||
+              e?.user?.role === "supervisor" ||
+              e?.user?.role === "user"
+            : e?.data?.role === "admin" ||
+              e?.data?.role === "supervisor" ||
+              e?.data?.role === "user"
+        )
         .map((e, i) => (
           <div className={styles.oneNotific} key={i}>
             <p>

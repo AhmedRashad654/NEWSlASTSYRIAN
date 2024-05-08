@@ -93,6 +93,67 @@ export default function DisplayHonorCard() {
       <div className={`headDashboard`}>
         <p>البيانات المستلمة / مجرمين الحرب / بيانات المجرم</p>
       </div>
+      {/* //////////////////////////// */}
+      <div
+        style={{
+          display: "flex",
+          gap: "30px",
+          marginTop: "30px",
+          transform: "translatex(-5px)",
+        }}
+        className="aoomedia"
+      >
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+            marginBottom: "10px",
+            alignItems: "center",
+          }}
+        >
+          <div>
+            <h6>الصورة الشخصية</h6>
+            {martyrDisplay?.user?.selfImg !== undefined &&
+            martyrDisplay?.user?.selfImg !== "undefined" &&
+            martyrDisplay?.user?.selfImg !== "" ? (
+              <img
+                src={`https://syrianrevolution1.com/images/${martyrDisplay?.user?.selfImg}`}
+                alt="profile"
+                style={{ width: "70px", height: "70px",cursor:'pointer' }}
+                onClick={() => {
+                  openImage(
+                    `https://syrianrevolution1.com/images/${martyrDisplay?.user?.selfImg}`
+                  );
+                }}
+              />
+            ) : (
+              <img
+                src={one}
+                alt="profile"
+                style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+              />
+            )}
+          </div>
+        </div>
+        {role === "admin" || role === "owner" ? (
+          <div>
+            <h6>الوثيقة الشخصية : </h6>
+            <img
+              src={`https://syrianrevolution1.com/images/${martyrDisplay?.user?.docImg}`}
+              alt="profile"
+              style={{ width: "70px", height: "70px",cursor:'pointer' }}
+              onClick={() => {
+                openImage(
+                  `https://syrianrevolution1.com/images/${martyrDisplay?.user?.docImg}`
+                );
+              }}
+            />
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
+      {/* /////////////////////////// */}
       <div className={styles.details}>
         <div className={styles.allDetailseRight}>
           <div className={styles.detailsright}>
@@ -142,51 +203,6 @@ export default function DisplayHonorCard() {
         </div>
 
         <div className={styles.detailsLeft}>
-          <div style={{ display: "flex", gap: "30px" }}>
-            <div
-              style={{
-                display: "flex",
-                gap: "10px",
-                marginBottom: "10px",
-                alignItems: "center",
-              }}
-            >
-              {martyrDisplay?.user?.selfImg !== undefined &&
-              martyrDisplay?.user?.selfImg !== "undefined" &&
-              martyrDisplay?.user?.selfImg !== "" ? (
-                <img
-                  src={`https://syrianrevolution1.com/images/${martyrDisplay?.user?.selfImg}`}
-                  alt="profile"
-                  style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-                />
-              ) : (
-                <img
-                  src={one}
-                  alt="profile"
-                  style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-                />
-              )}
-
-              <p>{martyrDisplay?.user?.name}</p>
-            </div>
-            {role === "admin" || role === "owner" ? (
-              <div>
-                <h6>الوثيقة الشخصية : </h6>
-                <img
-                  src={`https://syrianrevolution1.com/images/${martyrDisplay?.user?.docImg}`}
-                  alt="profile"
-                  style={{ width: "80px", height: "80px" }}
-                  onClick={() => {
-                    openImage(
-                      `https://syrianrevolution1.com/images/${martyrDisplay?.user?.docImg}`
-                    );
-                  }}
-                />
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
           <div>
             <h6>شرح مفصل : </h6>{" "}
             {martyrDisplay?.content !== undefined &&

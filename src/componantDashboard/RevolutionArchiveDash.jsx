@@ -4,7 +4,7 @@ import Archief from './Archief';
 import Mozaharat from '../Mozaharat';
 import Maarek from './Maarek';
 export default function RevolutionArchiveDash() {
-    const [choiceArchife, setChoiceArchife] = useState("mozaharat");
+    const [choiceArchife, setChoiceArchife] = useState("archife");
   return (
     <div>
       <div className={`headDashboard`}>
