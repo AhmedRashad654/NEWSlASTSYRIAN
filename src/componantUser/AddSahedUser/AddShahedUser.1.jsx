@@ -9,7 +9,7 @@ export default function AddShahedUser() {
   ///////////////////////////////////////////////////
   useEffect(() => {
     getSingleUser();
-  }, []);
+  }, [getSingleUser]);
   ///////////////handlechange//////////////
   const [addData, setAddData] = useState({
     category: "martyr",
@@ -121,7 +121,7 @@ export default function AddShahedUser() {
             }
           );
           const result = await response.json();
-          console.log(result);
+        
           setLoading(false);
           if (result._id) {
             setSuccessAdd(true);

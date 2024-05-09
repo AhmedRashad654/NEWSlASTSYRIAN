@@ -6,7 +6,7 @@ import { faCircleXmark, faExclamationCircle } from "@fortawesome/free-solid-svg-
 import { ContextUser } from '../../context/Context';
 export default function FailedPin() {
     
-    const {openAuth, setOpenAuth}= useContext(ContextUser)
+    const { setOpenAuth}= useContext(ContextUser)
 
   return (
     <>

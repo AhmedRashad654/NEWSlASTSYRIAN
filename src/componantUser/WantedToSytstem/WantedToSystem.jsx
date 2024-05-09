@@ -52,7 +52,7 @@ export default function WantedToSystem() {
       await axios
         .get(url)
         .then((result) => {
-          console.log(result);
+         
           if (result.data.length) {
             setData(result.data);
             setLoading(false);

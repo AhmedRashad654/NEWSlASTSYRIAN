@@ -9,7 +9,7 @@ import one from "../../image/png-clipart-computer-icons-avatar-icon-design-avata
 export default function DataSiteResponseMassacre() {
   const [martyrDisplay, setMartyrDataDisplay] = useState([]);
   const [loadingdel, setLoadingDel] = useState(false);
-  const { getMascersUser } = useUser();
+  const { getMascersUser ,role} = useUser();
     const { setOpenAlert, setOpenAlertStore } = useContext(ContextUser);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -70,6 +70,69 @@ export default function DataSiteResponseMassacre() {
       <div className={`headDashboard`}>
         <p> البيانات المعروضة بالموقع</p>
       </div>
+      <div
+        style={{
+          display: "flex",
+          gap: "30px",
+          marginTop: "30px",
+          transform: "translatex(-5px)",
+        }}
+        className="aoomedia"
+      >
+        <div>
+          <div
+            style={{
+              display: "flex",
+              gap: "10px",
+              marginBottom: "10px",
+              alignItems: "center",
+            }}
+          >
+            {martyrDisplay?.user?.selfImg !== undefined &&
+            martyrDisplay?.user?.selfImg !== "undefined" &&
+            martyrDisplay?.user?.selfImg !== "" ? (
+              <img
+                src={`https://syrianrevolution1.com/images/${martyrDisplay?.user?.selfImg}`}
+                alt="profile"
+                style={{
+                  width: "50px",
+                  height: "50px",
+                  borderRadius: "50%",
+                }}
+              />
+            ) : (
+              <img
+                src={one}
+                alt="profile"
+                style={{
+                  width: "50px",
+                  height: "50px",
+                  borderRadius: "50%",
+                }}
+              />
+            )}
+
+            <p>{martyrDisplay?.user?.name}</p>
+          </div>
+        </div>
+        {role === "admin" || role === "owner" ? (
+          <div>
+            <h6>الوثيقة الشخصية : </h6>
+            <img
+              src={`https://syrianrevolution1.com/images/${martyrDisplay?.user?.docImg}`}
+              alt="profile"
+              style={{ width: "70px", height: "70px", cursor: "pointer" }}
+              onClick={() => {
+                openImage(
+                  `https://syrianrevolution1.com/images/${martyrDisplay?.user?.docImg}`
+                );
+              }}
+            />
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
       <div className={styles.details}>
         <div className={styles.allDetailseRight}>
           <div className={styles.detailsright}>
@@ -108,7 +171,7 @@ export default function DataSiteResponseMassacre() {
                 <img
                   src={`https://syrianrevolution1.com/postImages/${martyrDisplay?.profileImage}`}
                   alt="martyr"
-                  style={{ width: "100px" }}
+                  style={{ width: "100px", cursor: "pointer" }}
                   onClick={() => {
                     openImage(
                       `https://syrianrevolution1.com/postImages/${martyrDisplay?.profileImage}`
@@ -196,32 +259,6 @@ export default function DataSiteResponseMassacre() {
               ? martyrDisplay?.details
               : "لم تتم الاضافة"}{" "}
           </div>
-          <div
-            style={{
-              display: "flex",
-              gap: "10px",
-              marginBottom: "10px",
-              alignItems: "center",
-            }}
-          >
-            {martyrDisplay?.user?.selfImg !== undefined &&
-            martyrDisplay?.user?.selfImg !== "undefined" &&
-            martyrDisplay?.user?.selfImg !== "" ? (
-              <img
-                src={`https://syrianrevolution1.com/images/${martyrDisplay?.user?.selfImg}`}
-                alt="profile"
-                style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-              />
-            ) : (
-              <img
-                src={one}
-                alt="profile"
-                style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-              />
-            )}
-
-            <p>{martyrDisplay?.user?.name}</p>
-          </div>
         </div>
       </div>
       <div className={styles.btnbottom}>
@@ -244,7 +281,9 @@ export default function DataSiteResponseMassacre() {
             "حذف"
           )}
         </button>
-        <button onClick={()=>navigate(-1)} className="btn btn-primary">رجوع</button>
+        <button onClick={() => navigate(-1)} className="btn btn-primary">
+          رجوع
+        </button>
       </div>
     </div>
   );

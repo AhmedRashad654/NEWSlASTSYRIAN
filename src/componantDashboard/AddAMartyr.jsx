@@ -23,7 +23,7 @@ export default function AddAMartyr() {
   function handleChangeDocuments( e ) {
     setDocument( e.target.files );
   }
-  console.log(document)
+
   //////////handle change //////////////
   function handlechange(e) {
     setAddData((prevState) => ({

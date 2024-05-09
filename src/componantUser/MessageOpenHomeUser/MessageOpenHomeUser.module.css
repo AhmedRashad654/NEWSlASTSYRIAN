@@ -10,12 +10,13 @@
 }
 .formsSuccessRegister{
     width: 50%;
-    min-height: 45%;
+    min-height: fit-content;
     background-color: #F7F7F7;
     margin: auto;
     border-radius: 5px;
     transform: translateY(50%);
     padding-bottom: 60px;
+    direction: rtl;
 }
 @media(max-width:1000px){
     .formsSuccessRegister{
@@ -28,10 +29,11 @@
 .informSuccess{
     width: 90%;
     margin: auto;
-    text-align: center;
     display: flex;
     flex-direction: column;
 transform: translateY(25px);
+padding: 0 30px;
+font-size: 14px;
 }
 .btnInpu{
     display: flex;

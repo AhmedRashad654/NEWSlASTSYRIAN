@@ -18,7 +18,7 @@ export default function AddAMartyr() {
   function handleChangeImageProfile(e) {
     setImageProfile(e.target.files[0]);
   }
-  console.log( addData );
+  
   ////////////handle documents///////////
   const [document, setDocument] = useState("");
   function handleChangeDocuments(e) {

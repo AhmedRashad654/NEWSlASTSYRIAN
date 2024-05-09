@@ -16,7 +16,7 @@ export default function Black() {
     function handleChangeImageProfile(e) {
       setImageProfile(e.target.files[0]);
     }
-console.log(imageProfile)
+
     //////////handle change //////////////
     function handlechange(e) {
       setAddData((prevState) => ({
@@ -69,7 +69,7 @@ console.log(imageProfile)
             }
           );
           const result = await response.json();
-          console.log(result);
+         
           setLoading(false);
           if (result._id) {
             setSuccessAdd(true);
@@ -104,8 +104,7 @@ console.log(imageProfile)
         </p>
       )}
       {errorBackUser &&
-        errorBackUser?.error ===
-          "Cannot read property 'filename' of undefined" && (
+        errorBackUser?.error === "Cannot read property '0' of undefined" && (
           <p
             className="alert alert-secondary alerthemself"
             style={{ transform: "translateY(0)", width: "100%" }}
@@ -175,7 +174,7 @@ console.log(imageProfile)
       <div className={styles.btnbottom}>
         <button
           className={`add`}
-          style={ { color: "white", backgroundColor: "green" } }
+          style={{ color: "white", backgroundColor: "green" }}
           onClick={handleSubmit}
         >
           {loading ? (

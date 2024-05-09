@@ -124,7 +124,7 @@ export default function AddShahedUser() {
             }
           );
           const result = await response.json();
-          console.log(result);
+        
           setLoading(false);
           if (result._id) {
             setSuccessAdd(true);
@@ -240,7 +240,7 @@ export default function AddShahedUser() {
               />
             </div>
             <div className={styles.inp1}>
-              <label htmlFor=""> مكان الخدث </label>
+              <label htmlFor=""> مكان الحدث </label>
               <input
                 type="text"
                 placeholder="  مكان الحدث"

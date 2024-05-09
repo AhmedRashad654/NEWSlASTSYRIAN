@@ -65,7 +65,7 @@ function ContextProvider({ children }) {
         }
       )
       .then( ( result ) => {
-        console.log(result)
+      
         result?.data?.isConfident === true
           ? setCheckConfition(true)
           : setCheckConfition(false);
@@ -86,7 +86,7 @@ function ContextProvider({ children }) {
               },
             }
           ).then( ( result ) => {
-            console.log( result )
+           
             if ( result?.data?._id ) {
               localStorage.setItem( "roleUserLogin", result?.data?.role );
               localStorage.setItem( "selfImg", result?.data?.selfImg );

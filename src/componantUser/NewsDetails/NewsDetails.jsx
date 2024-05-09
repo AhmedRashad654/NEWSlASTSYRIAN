@@ -61,7 +61,7 @@ export default function NewsDetails() {
               <h6>رابط خارجي : </h6>
               <a
                 style={{ marginBottom: "40px", display: "inline-block" }}
-                href={`https://${single?.externalLinks} `}
+                href={single?.externalLinks}
                 target="_blank"
                 rel="noopener noreferrer"
               >

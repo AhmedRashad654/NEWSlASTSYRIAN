@@ -8,7 +8,7 @@ export default function UserHistory() {
 
   return (
     <div className={styles.AllHistory}>
-      {history
+      {history?.length > 0 && history
         .slice()
         .reverse()
         .filter((e) =>

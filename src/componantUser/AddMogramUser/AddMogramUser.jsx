@@ -32,6 +32,11 @@ export default function AddMogramUser() {
   useEffect(() => {
     getSingleUser();
   }, [ getSingleUser ] );
+  ////////////////////////////////////
+       const [document, setDocument] = useState("");
+       function handleChangeDocuments(e) {
+         setDocument(e.target.files);
+       }
   ////////////valid Joi///////////////
   function validationAddUser() {
     let schema = Joi.object({
@@ -55,48 +60,63 @@ export default function AddMogramUser() {
     } else if (!localStorage.getItem("token")) {
       setOpenAuth("login");
     } else {
-      if (checkConfition === true) {
-        setErrorListUser("");
-        setSuccessAdd(false);
-        const formData = new FormData();
-        formData.append("name", addData.name);
-        formData.append("selfImg", imageProfile);
-        formData.append("externalLinks", addData.externalLinks);
-        formData.append("governorate", addData.governorate);
-        formData.append("category", addData.category);
-        formData.append("content", addData.content);
-
-        try {
-          setLoading(true);
-          const response = await fetch(
-            `https://syrianrevolution1.com/lists/${localStorage.getItem(
-              "idUserLogin"
-            )}`,
-            {
-              method: "POST",
-              body: formData,
-              headers: {
-                Authorization: localStorage.getItem("token"),
-              },
+      if ( checkConfition === true ) {
+        setErrorListUser( "" );
+        setSuccessAdd( false );
+        if ( !document ) 
+          return alert( 'يرجي رفع الوثائق' )
+      
+     
+      
+          const formData = new FormData();
+          formData.append( "name", addData.name );
+          formData.append( "selfImg", imageProfile );
+          formData.append( "externalLinks", addData.externalLinks );
+          formData.append( "governorate", addData.governorate );
+          formData.append( "category", addData.category );
+          formData.append( "content", addData.content );
+          if ( Array.isArray( document ) ) {
+            document.forEach( ( file ) => {
+              formData.append( "documents", file );
+            } );
+          } else if ( document instanceof FileList ) {
+            for ( let i = 0; i < document.length; i++ ) {
+              formData.append( "documents", document[ i ] );
             }
-          );
-          const result = await response.json();
-          console.log(result);
-          setLoading(false);
-          if (result._id) {
-            setSuccessAdd(true);
-            setErrorBackUser(null);
-            setErrorListUser(null);
-          } else {
-            setErrorBackUser(result);
           }
-        } catch (error) {
-          console.error(error);
+          try {
+            setLoading( true );
+            const response = await fetch(
+              `https://syrianrevolution1.com/lists/${localStorage.getItem(
+                "idUserLogin"
+              )}`,
+              {
+                method: "POST",
+                body: formData,
+                headers: {
+                  Authorization: localStorage.getItem( "token" ),
+                },
+              }
+            );
+            const result = await response.json();
+          
+            setLoading( false );
+            if ( result._id ) {
+              setSuccessAdd( true );
+              setErrorBackUser( null );
+              setErrorListUser( null );
+            } else {
+              setErrorBackUser( result );
+            }
+          } catch ( error ) {
+            console.error( error );
+          }
+        } else {
+          setOpenAuth( "faild" );
         }
-      } else {
-        setOpenAuth("faild");
+      
       }
-    }
+      
   }
 
   return (
@@ -113,8 +133,7 @@ export default function AddMogramUser() {
             </p>
           ))}
         {errorBackUser &&
-          errorBackUser?.error ===
-            "Cannot read property 'filename' of undefined" && (
+          errorBackUser?.error === "Cannot read property '0' of undefined" && (
             <p
               className="alert alert-secondary alerthemself"
               style={{ transform: "translateY(0)", width: "90%" }}
@@ -170,6 +189,22 @@ export default function AddMogramUser() {
                 name="selfImg"
                 id="file-upload"
                 onChange={handleChangeImageProfile}
+              />
+            </div>
+          </div>
+          <div className={styles.input}>
+            <div className={styles.inp1}>
+              <p style={{ marginBottom: "5px", fontSize: "12px" }}>
+                وثيقة او ملف (ملف pdf او word او فيديو mp4 او ملف zip)
+              </p>
+              <label htmlFor="file-upload1" className={styles.customfileupload}>
+                أرفع الملفات
+              </label>
+              <input
+                type="file"
+                name="selfImg"
+                id="file-upload1"
+                onChange={handleChangeDocuments}
               />
             </div>
           </div>

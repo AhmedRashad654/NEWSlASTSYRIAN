@@ -48,7 +48,7 @@ export default function SliderDaaehThree() {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true,
+          dots: false,
         },
       },
       {
@@ -57,6 +57,7 @@ export default function SliderDaaehThree() {
           slidesToShow: 2,
           slidesToScroll: 2,
           initialSlide: 2,
+          dots: false,
         },
       },
       {
@@ -64,6 +65,7 @@ export default function SliderDaaehThree() {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          dots: false,
         },
       },
     ],

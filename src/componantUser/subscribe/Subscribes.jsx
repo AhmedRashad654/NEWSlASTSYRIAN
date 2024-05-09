@@ -43,7 +43,7 @@ export default function Subscribes() {
           value={window.location.href}
         />
         { copied &&
-          <p className="alert alert-success alerthemself" style={ { width: '100%', transform: 'translatey(2px)' } }>تم نسخ الرابط بنجاح</p> }
+          <p className="alert alert-success alerthemself" style={ { width: '100%', transform: 'translatey(2px)' ,fontSize:'12px'} }>تم نسخ الرابط بنجاح</p> }
         <div
           style={{
             position: "absolute",

@@ -7,7 +7,8 @@ import { useUser } from "../../context/Context";
 import CopyToClipboard from "react-copy-to-clipboard";
 export default function Footer() {
   const { messageAndPaypal } = useUser()
- const [copied ,setCopied] = useState(false)
+  const [ copied, setCopied ] = useState( false )
+  const [ idCopied, setIdCopied ] = useState( '' );
   return (
     <>
       <div className="footer pt-5 pb-3 ">
@@ -152,7 +153,7 @@ export default function Footer() {
                   {" "}
                   ادعم موقعنا لنستمر بالتطوير وتقديم رسالتنا (تبرع الان)
                 </p>
-                {copied && <p style={{ fontSize: "10px" }}>تم نسخ الرابط</p>}
+
                 <div
                   className="social-icons-footer d-flex align-items-center"
                   style={{
@@ -167,7 +168,13 @@ export default function Footer() {
                       .map((e, i) => (
                         <CopyToClipboard
                           text={e?.content}
-                          onCopy={() => setCopied(true)}
+                          onCopy={ () => {
+                            setIdCopied(e?._id)
+                            setCopied(true);
+                            setTimeout(() => {
+                              setCopied(false);
+                            }, [2000]);
+                          }}
                         >
                           <div key={i}>
                             <p
@@ -178,6 +185,9 @@ export default function Footer() {
                                 cursor: "pointer",
                               }}
                             >
+                              {copied && idCopied === e?._id && (
+                                <p style={{ fontSize: "10px" }}>تم ألنسخ</p>
+                              )}
                               {e.content}
                             </p>
                             <br />

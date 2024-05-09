@@ -48,7 +48,7 @@ export default function SliderGraemThree() {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true,
+          dots: false,
         },
       },
       {
@@ -57,6 +57,7 @@ export default function SliderGraemThree() {
           slidesToShow: 2,
           slidesToScroll: 2,
           initialSlide: 2,
+          dots: false,
         },
       },
       {
@@ -64,6 +65,7 @@ export default function SliderGraemThree() {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
+          dots: false,
         },
       },
     ],

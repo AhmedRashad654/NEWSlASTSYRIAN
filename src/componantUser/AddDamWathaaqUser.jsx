@@ -32,6 +32,11 @@ export default function AddDamWathaaqUser() {
   useEffect(() => {
     getSingleUser();
   }, [ getSingleUser ] );
+  ///////////////////////////
+     const [document, setDocument] = useState("");
+     function handleChangeDocuments(e) {
+       setDocument(e.target.files);
+     }
   ////////////valid Joi///////////////
   function validationAddUser() {
     let schema = Joi.object({
@@ -65,7 +70,15 @@ export default function AddDamWathaaqUser() {
         formData.append("governorate", addData.governorate);
         formData.append("category", addData.category);
         formData.append("content", addData.content);
-
+  if (Array.isArray(document)) {
+    document.forEach((file) => {
+      formData.append("documents", file);
+    });
+  } else if (document instanceof FileList) {
+    for (let i = 0; i < document.length; i++) {
+      formData.append("documents", document[i]);
+    }
+  }
         try {
           setLoading(true);
           const response = await fetch(
@@ -81,7 +94,7 @@ export default function AddDamWathaaqUser() {
             }
           );
           const result = await response.json();
-          console.log(result);
+         
           setLoading(false);
           if (result._id) {
             setSuccessAdd(true);
@@ -114,7 +127,7 @@ export default function AddDamWathaaqUser() {
           ))}
         {errorBackUser &&
           errorBackUser?.error ===
-            "Cannot read property 'filename' of undefined" && (
+            "Cannot read property '0' of undefined" && (
             <p
               className="alert alert-secondary alerthemself"
               style={{ transform: "translateY(0)", width: "90%" }}
@@ -173,6 +186,24 @@ export default function AddDamWathaaqUser() {
               />
             </div>
           </div>
+
+          <div className={styles.input}>
+            <div className={styles.inp1}>
+              <p style={{ marginBottom: "5px", fontSize: "12px" }}>
+                وثيقة او ملف (ملف pdf او word او فيديو mp4 او ملف zip)
+              </p>
+              <label htmlFor="file-upload1" className={styles.customfileupload}>
+                أرفع الملفات
+              </label>
+              <input
+                type="file"
+                name="selfImg"
+                id="file-upload1"
+                onChange={handleChangeDocuments}
+              />
+            </div>
+          </div>
+
           <div className={styles.input1}>
             <label htmlFor="">شرح مفصل</label>
             <textarea

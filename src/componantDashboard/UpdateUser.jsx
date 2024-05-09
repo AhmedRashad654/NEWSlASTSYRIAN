@@ -160,7 +160,7 @@ export default function UpdateUser() {
              navigate("/dashboard/userdash");
         } else {
           alert("الاسم او الايميل مستخدمين من قبل")
-          console.log( result );
+         
           setLoading(false)
         }
      

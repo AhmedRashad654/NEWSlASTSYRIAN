@@ -29,7 +29,7 @@ export default function SliderSymbolThouraUser() {
         );
       } 
         let settings = {
-          dots: true,
+          dots: false,
           infinite:
             lastNews.filter((e) => e.category === "symbols").length > 1
               ? true
@@ -48,7 +48,7 @@ export default function SliderSymbolThouraUser() {
                 slidesToShow: 3,
                 slidesToScroll: 3,
                 infinite: true,
-                dots: true,
+                dots: false,
               },
             },
             {
@@ -57,6 +57,7 @@ export default function SliderSymbolThouraUser() {
                 slidesToShow: 2,
                 slidesToScroll: 2,
                 initialSlide: 2,
+                ots: false,
               },
             },
             {
@@ -64,6 +65,7 @@ export default function SliderSymbolThouraUser() {
               settings: {
                 slidesToShow: 1,
                 slidesToScroll: 1,
+                ots: false,
               },
             },
           ],

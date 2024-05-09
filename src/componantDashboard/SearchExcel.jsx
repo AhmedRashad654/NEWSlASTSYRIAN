@@ -58,7 +58,7 @@ export default function SearchExcel() {
           },
         })
         .then( ( result ) => {
-          console.log(result)
+        
              if (result.data.length) {
                setData( result.data );
                setLoading(false)

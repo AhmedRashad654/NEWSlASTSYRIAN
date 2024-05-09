@@ -104,7 +104,7 @@ export default function AddUse() {
           );
           const result = await response.json();
           setLoading( false );
-          console.log(result)
+         
           if ( result.createdAt ) {
             navigate("/dashboard/userdash");
           } else {

@@ -69,7 +69,7 @@ export default function Black() {
             }
           );
           const result = await response.json();
-          console.log(result);
+         
           setLoading(false);
           if (result._id) {
             setSuccessAdd(true);
@@ -104,8 +104,7 @@ export default function Black() {
         </p>
       )}
       {errorBackUser &&
-        errorBackUser?.error ===
-          "Cannot read property 'filename' of undefined" && (
+        errorBackUser?.error === "Cannot read property '0' of undefined" && (
           <p
             className="alert alert-secondary alerthemself"
             style={{ transform: "translateY(0)", width: "100%" }}
@@ -175,7 +174,7 @@ export default function Black() {
       <div className={styles.btnbottom}>
         <button
           className={`add`}
-          style={ { color: "white", backgroundColor: "green" } }
+          style={{ color: "white", backgroundColor: "green" }}
           onClick={handleSubmit}
         >
           {loading ? (

@@ -350,7 +350,7 @@ export default function PaypalDashboard() {
                 gap: "5px",
               }}
             >
-              <button className="btn btn-danger" onClick={handleSubmitUPdate}>
+              <button className="btn btn-primary" onClick={handleSubmitUPdate}>
                 {loadingUpdate ? (
                   <div className="spinner-border text-secondary" role="status">
                     <span className="sr-only"></span>
@@ -360,7 +360,7 @@ export default function PaypalDashboard() {
                 )}
               </button>
               <button
-                className="btn btn-primary"
+                className="btn btn-danger"
                 onClick={() => {
                   setOpenUpdate(false);
                   setErrorListUserUpdate("");

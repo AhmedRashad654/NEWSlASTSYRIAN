@@ -68,7 +68,7 @@ export default function Black() {
           }
         );
         const result = await response.json();
-        console.log(result);
+       
         setLoading(false);
         if (result._id) {
           setSuccessAdd(true);
@@ -103,8 +103,7 @@ export default function Black() {
         </p>
       )}
       {errorBackUser &&
-        errorBackUser?.error ===
-          "Cannot read property 'filename' of undefined" && (
+        errorBackUser?.error === "Cannot read property '0' of undefined" && (
           <p
             className="alert alert-secondary alerthemself"
             style={{ transform: "translateY(0)", width: "100%" }}
@@ -114,7 +113,7 @@ export default function Black() {
         )}
       <div className={styles.input}>
         <div className={styles.inp1}>
-          <label htmlFor=""> عنوان  المعركة </label>
+          <label htmlFor=""> عنوان المعركة </label>
           <input
             type="text"
             className="form-control"
@@ -127,7 +126,7 @@ export default function Black() {
           <p style={{ fontSize: "10px", marginBottom: "5px" }}>صورة (اجباري)</p>
           <label htmlFor="f1" className="customfileupload">
             {" "}
-           ارفع الصورة هنا
+            ارفع الصورة هنا
           </label>
           <input
             id="f1"

@@ -29,7 +29,10 @@ const navigate = useNavigate()
       } 
         let settings = {
           dots: false,
-          infinite: masc.filter((e) => e.responsibleAuthority === "system").length > 1?true:false,
+          infinite:
+            masc.filter((e) => e.responsibleAuthority === "system").length > 1
+              ? true
+              : false,
           speed: 500,
           slidesToShow: 4,
           slidesToScroll: 4,
@@ -44,7 +47,7 @@ const navigate = useNavigate()
                 slidesToShow: 3,
                 slidesToScroll: 3,
                 infinite: true,
-                dots: true,
+                dots: false,
               },
             },
             {
@@ -53,6 +56,7 @@ const navigate = useNavigate()
                 slidesToShow: 2,
                 slidesToScroll: 2,
                 initialSlide: 2,
+                dots: false,
               },
             },
             {
@@ -60,6 +64,7 @@ const navigate = useNavigate()
               settings: {
                 slidesToShow: 2,
                 slidesToScroll: 2,
+                dots: false,
               },
             },
           ],

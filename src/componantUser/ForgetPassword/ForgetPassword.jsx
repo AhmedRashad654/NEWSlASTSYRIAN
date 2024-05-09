@@ -20,7 +20,7 @@ export default function ForgetPassword() {
        [e.target.name]: e.target.value,
      }));
   }
-  console.log( forget );
+  
   ////////////valid Joi///////////////
   function validationAddUser() {
     let schema = Joi.object({
@@ -51,7 +51,7 @@ export default function ForgetPassword() {
               forget,
             )
             .then((data) => {
-              console.log(data);
+             
               if (data.data.success) {
                 navigate( `/success/${data.data.userId}` );
                 setOpenAuth('')

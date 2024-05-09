@@ -49,7 +49,7 @@ const navigate = useNavigate()
                 slidesToShow: 3,
                 slidesToScroll: 3,
                 infinite: true,
-                dots: true,
+                dots: false,
               },
             },
             {
@@ -58,6 +58,7 @@ const navigate = useNavigate()
                 slidesToShow: 2,
                 slidesToScroll: 2,
                 initialSlide: 2,
+                dots: false,
               },
             },
             {
@@ -65,6 +66,7 @@ const navigate = useNavigate()
               settings: {
                 slidesToShow: 1,
                 slidesToScroll: 1,
+                dots: false,
               },
             },
           ],

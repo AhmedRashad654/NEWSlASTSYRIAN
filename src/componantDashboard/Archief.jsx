@@ -70,7 +70,7 @@ export default function Archief() {
           }
         );
         const result = await response.json();
-        console.log(result);
+       
         setLoading(false);
         if (result._id) {
           setSuccessAdd(true);
@@ -108,7 +108,7 @@ export default function Archief() {
         errorBackUser?.error ===
           "Cannot read property 'filename' of undefined" && (
           <p
-            className="alert alert-secondary alerthemself"
+            className="Cannot read property '0' of undefined"
             style={{ transform: "translateY(0)", width: "100%" }}
           >
             يرجي رفع الصورة

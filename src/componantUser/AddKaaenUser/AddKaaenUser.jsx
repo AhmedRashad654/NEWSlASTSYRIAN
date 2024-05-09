@@ -31,6 +31,11 @@ export default function AddMogramUser() {
   useEffect(() => {
     getSingleUser();
   }, [ getSingleUser ] );
+  /////////////////////////////
+     const [document, setDocument] = useState("");
+     function handleChangeDocuments(e) {
+       setDocument(e.target.files);
+     }
   ////////////valid Joi///////////////
   function validationAddUser() {
     let schema = Joi.object({
@@ -56,7 +61,10 @@ export default function AddMogramUser() {
     } else {
       if (checkConfition === true) {
         setErrorListUser("");
-        setSuccessAdd(false);
+        setSuccessAdd( false );
+        if ( !document ) 
+          
+        return alert('يرجي رفع الوثيقة')
         const formData = new FormData();
         formData.append("name", addData.name);
         formData.append("selfImg", imageProfile);
@@ -64,7 +72,15 @@ export default function AddMogramUser() {
         formData.append("governorate", addData.governorate);
         formData.append("category", addData.category);
         formData.append("content", addData.content);
-
+  if (Array.isArray(document)) {
+    document.forEach((file) => {
+      formData.append("documents", file);
+    });
+  } else if (document instanceof FileList) {
+    for (let i = 0; i < document.length; i++) {
+      formData.append("documents", document[i]);
+    }
+  }
         try {
           setLoading(true);
           const response = await fetch(
@@ -80,7 +96,7 @@ export default function AddMogramUser() {
             }
           );
           const result = await response.json();
-          console.log(result);
+       
           setLoading(false);
           if (result._id) {
             setSuccessAdd(true);
@@ -112,8 +128,7 @@ export default function AddMogramUser() {
             </p>
           ))}
         {errorBackUser &&
-          errorBackUser?.error ===
-            "Cannot read property 'filename' of undefined" && (
+          errorBackUser?.error === "Cannot read property '0' of undefined" && (
             <p
               className="alert alert-secondary alerthemself"
               style={{ transform: "translateY(10px)", width: "90%" }}
@@ -169,6 +184,22 @@ export default function AddMogramUser() {
                 name="selfImg"
                 id="file-upload"
                 onChange={handleChangeImageProfile}
+              />
+            </div>
+          </div>
+          <div className={styles.input}>
+            <div className={styles.inp1}>
+              <p style={{ marginBottom: "5px", fontSize: "12px" }}>
+                وثيقة او ملف (ملف pdf او word او فيديو mp4 او ملف zip)
+              </p>
+              <label htmlFor="file-upload1" className={styles.customfileupload}>
+                أرفع الملفات
+              </label>
+              <input
+                type="file"
+                name="selfImg"
+                id="file-upload1"
+                onChange={handleChangeDocuments}
               />
             </div>
           </div>

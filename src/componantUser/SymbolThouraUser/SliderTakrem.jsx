@@ -30,7 +30,7 @@ export default function SliderTakrem() {
     );
   }
   let settings = {
-    dots: true,
+    dots: false,
     infinite:
       lastNews.filter((e) => e.category === "takrem").length > 1 ? true : false,
     speed: 500,
@@ -47,7 +47,7 @@ export default function SliderTakrem() {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true,
+          dots: false,
         },
       },
       {
@@ -56,6 +56,7 @@ export default function SliderTakrem() {
           slidesToShow: 2,
           slidesToScroll: 2,
           initialSlide: 2,
+          dots: false,
         },
       },
       {
@@ -63,6 +64,7 @@ export default function SliderTakrem() {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          dots: false,
         },
       },
     ],

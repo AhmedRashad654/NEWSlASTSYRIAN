@@ -16,7 +16,7 @@ export default function Navbar() {
   };
   return (
     <nav className="navbar navbar-expand-lg border-bottom">
-      <div className="containe" style={{margin:'auto'}}>
+      <div className="container">
         <button
           className="navbar-toggler"
           type="button"

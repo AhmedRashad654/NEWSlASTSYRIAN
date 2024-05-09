@@ -4,8 +4,7 @@ import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import axios from 'axios';
 import { useNavigate, useParams } from "react-router-dom";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faFile, faFileZipper } from '@fortawesome/free-solid-svg-icons';
+
 import { ContextUser } from '../../context/Context';
 import AlertImageDash from '../../componantDashboard/AlertImageDash/AlertImageDash';
 import one from '../../image/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png'
@@ -15,8 +14,7 @@ import Subscribes from '../subscribe/Subscribes';
 export default function NewsDetailsMascers() {
   const [single, setSingle] = useState([]);
   const {
-    // setOpenAlert,
-    // setOpenAlertStore,
+   
     openAlert,
     openAlertStore,
     setOpenSubscrips,
@@ -35,14 +33,7 @@ export default function NewsDetailsMascers() {
     }
     getSingle();
   }, [id]);
-  //////////////////////
-  ///////////////////////
-  // function openImage(src) {
-  //   setOpenAlert(true);
-  //   setOpenAlertStore(src);
-  // }
-  //////////////////////
-  ///////////////////////////////
+
   const [archief, setArchirf] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -81,74 +72,7 @@ export default function NewsDetailsMascers() {
               <p>
                 {single?.governorate !== "undefined" ? single?.governorate : ""}
               </p>
-              {/* <h6> الوثائق والمستندات : </h6>
-              <div>
-                {" "}
-                {single.documents !== undefined &&
-                single.documents !== "undefined" &&
-                single.documents !== null
-                  ? single.documents.map((doc, index) => (
-                      <div key={index} style={{ display: "inline" }}>
-                        {doc.slice(-4).toLowerCase() === ".jpg" ||
-                        doc.slice(-4).toLowerCase() === ".png" ||
-                        doc.slice(-5).toLowerCase() === ".jpeg" ? (
-                          <img
-                            src={`https://syrianrevolution1.com/postImages/${doc}`}
-                            alt="documents"
-                            style={{ width: "100px" }}
-                            onClick={() => {
-                              openImage(
-                                `https://syrianrevolution1.com/postImages/${doc}`
-                              );
-                            }}
-                          />
-                        ) : (
-                          ""
-                        )}
-                        {doc.slice(-4).toLowerCase() === ".pdf" ||
-                        doc.slice(-4) === ".doc" ||
-                        doc.slice(-5) === ".docx" ? (
-                          <a
-                            href={`https://syrianrevolution1.com/postImages/${doc}`}
-                            style={{ margin: "0 15px" }}
-                          >
-                            <FontAwesomeIcon
-                              icon={faFile}
-                              style={{
-                                fontSize: "50px",
-                                transform: "translateY(15px)",
-                              }}
-                            />
-                          </a>
-                        ) : (
-                          ""
-                        )}
-                        {doc.slice(-4).toLowerCase() === ".mp4" ? (
-                          <video
-                            controls
-                            style={{ width: "150px", height: "150px" }}
-                          >
-                            <source
-                              src={`https://syrianrevolution1.com/postImages/${doc}`}
-                              type="video/mp4"
-                            />
-                          </video>
-                        ) : (
-                          ""
-                        )}
-                        {doc.slice(-4).toLowerCase() === ".zip" ? (
-                          <a
-                            href={`https://syrianrevolution1.com/postImages/${doc}`}
-                          >
-                            <FontAwesomeIcon icon={faFileZipper} />
-                          </a>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    ))
-                  : "لم تتم الاضافة"}{" "}
-              </div> */}
+           
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div style={{ display: "flex", gap: "10px", margin: "10px 0" }}>
                   {single?.user?.selfImg !== undefined &&

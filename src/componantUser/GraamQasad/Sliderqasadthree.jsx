@@ -49,7 +49,7 @@ export default function Sliderqasadthree() {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true,
+          dots: false,
         },
       },
       {
@@ -58,6 +58,7 @@ export default function Sliderqasadthree() {
           slidesToShow: 2,
           slidesToScroll: 2,
           initialSlide: 2,
+          dots: false,
         },
       },
       {
@@ -65,6 +66,7 @@ export default function Sliderqasadthree() {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          dots: false,
         },
       },
     ],

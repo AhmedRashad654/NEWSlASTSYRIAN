@@ -6,10 +6,10 @@ import { useUser } from "../../context/Context";
 export default function AllHistory() {
   const {history}  =  useUser()
   const navigate = useNavigate();
-console.log(history)
+
   return (
     <div className={styles.AllHistory}>
-      {history.slice().reverse().filter((e) =>
+      {history?.length > 0&& history.slice().reverse().filter((e) =>
           e?.upUser
             ? e.upUser?.role === "admin" || e?.upUser?.role === "supervisor"
             : e?.user

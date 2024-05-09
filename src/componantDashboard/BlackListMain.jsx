@@ -16,7 +16,7 @@ export default function BlackListMain() {
   function handleChangeImageProfile(e) {
     setImageProfile(e.target.files[0]);
   }
-  console.log(imageProfile);
+ 
   //////////handle change //////////////
   function handlechange(e) {
     setAddData((prevState) => ({
@@ -105,8 +105,7 @@ export default function BlackListMain() {
         </p>
       )}
       {errorBackUser &&
-        errorBackUser?.error ===
-          "Cannot read property 'filename' of undefined" && (
+        errorBackUser?.error === "Cannot read property '0' of undefined" && (
           <p
             className="alert alert-secondary alerthemself"
             style={{ transform: "translateY(0)", width: "100%" }}

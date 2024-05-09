@@ -7,11 +7,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ContextUser, useUser } from "../../context/Context";
 import one from "../../image/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png";
 export default function ResponseLastChild() {
-  const [ martyrDisplay, setMartyrDataDisplay ] = useState( [] );
-     const { setOpenAlert, setOpenAlertStore } = useContext(ContextUser);
+  const [martyrDisplay, setMartyrDataDisplay] = useState([]);
+  const { setOpenAlert, setOpenAlertStore } = useContext(ContextUser);
   const [loading, setLoading] = useState(false);
-  const { getChildUser } = useUser();
-  // const [ loadingupdate, setLoadingUpdate ] = useState();
+  const { getChildUser ,role} = useUser();
+ 
   const navigate = useNavigate();
   const { id } = useParams();
   useEffect(() => {
@@ -48,7 +48,6 @@ export default function ResponseLastChild() {
         }
       )
       .then((response) => {
-       
         if (response.data === "childData Deleted Successfully") {
           setLoading(false);
           navigate("/dashboard/dataDisplaySite");
@@ -63,6 +62,69 @@ export default function ResponseLastChild() {
       {" "}
       <div className={`headDashboard`}>
         <p> البيانات المعروضة بالموقع</p>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          gap: "30px",
+          marginTop: "30px",
+          transform: "translatex(-5px)",
+        }}
+        className="aoomedia"
+      >
+        <div>
+          <div
+            style={{
+              display: "flex",
+              gap: "10px",
+              marginBottom: "10px",
+              alignItems: "center",
+            }}
+          >
+            {martyrDisplay?.user?.selfImg !== undefined &&
+            martyrDisplay?.user?.selfImg !== "undefined" &&
+            martyrDisplay?.user?.selfImg !== "" ? (
+              <img
+                src={`https://syrianrevolution1.com/images/${martyrDisplay?.user?.selfImg}`}
+                alt="profile"
+                style={{
+                  width: "50px",
+                  height: "50px",
+                  borderRadius: "50%",
+                }}
+              />
+            ) : (
+              <img
+                src={one}
+                alt="profile"
+                style={{
+                  width: "50px",
+                  height: "50px",
+                  borderRadius: "50%",
+                }}
+              />
+            )}
+
+            <h6>{martyrDisplay?.user?.username}</h6>
+          </div>
+        </div>
+        {role === "admin" || role === "owner" ? (
+          <div>
+            <h6>الوثيقة الشخصية : </h6>
+            <img
+              src={`https://syrianrevolution1.com/images/${martyrDisplay?.user?.docImg}`}
+              alt="profile"
+              style={{ width: "70px", height: "70px", cursor: "pointer" }}
+              onClick={() => {
+                openImage(
+                  `https://syrianrevolution1.com/images/${martyrDisplay?.user?.docImg}`
+                );
+              }}
+            />
+          </div>
+        ) : (
+          ""
+        )}
       </div>
       <div className={styles.details}>
         <div className={styles.allDetailseRight}>
@@ -142,7 +204,7 @@ export default function ResponseLastChild() {
                 <img
                   src={`https://syrianrevolution1.com/imgData/${martyrDisplay?.profileImage}`}
                   alt="martyr"
-                  style={{ width: "100px" }}
+                  style={{ width: "100px", cursor: "pointer" }}
                   onClick={() => {
                     openImage(
                       `https://syrianrevolution1.com/imgData/${martyrDisplay?.profileImage}`
@@ -234,32 +296,6 @@ export default function ResponseLastChild() {
               : "لم تتم الاضافة"}{" "}
           </div>
           {/* <p>{user?.name }</p> */}
-          <div
-            style={{
-              display: "flex",
-              gap: "10px",
-              marginBottom: "10px",
-              alignItems: "center",
-            }}
-          >
-            {martyrDisplay?.user?.selfImg !== undefined &&
-            martyrDisplay?.user?.selfImg !== "undefined" &&
-            martyrDisplay?.user?.selfImg !== "" ? (
-              <img
-                src={`https://syrianrevolution1.com/images/${martyrDisplay?.user?.selfImg}`}
-                alt="profile"
-                style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-              />
-            ) : (
-              <img
-                src={one}
-                alt="profile"
-                style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-              />
-            )}
-
-            <h6>{martyrDisplay?.user?.name}</h6>
-          </div>
         </div>
       </div>
       <div className={styles.btnbottom}>
@@ -288,10 +324,10 @@ export default function ResponseLastChild() {
             "حذف"
           )}
         </button>
-        <button className="btn btn-primary" onClick={()=>navigate(-1)}>رجوع</button>
+        <button className="btn btn-primary" onClick={() => navigate(-1)}>
+          رجوع
+        </button>
       </div>
     </div>
   );
 }
-
-

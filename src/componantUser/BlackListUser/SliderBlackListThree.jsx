@@ -28,7 +28,7 @@ export default function SliderBlackListThree() {
     );
   }
   let settings = {
-    dots: true,
+    dots: false,
     infinite:
       lastNews.filter((e) => e.category === "blacklist").length > 1
         ? true
@@ -47,7 +47,7 @@ export default function SliderBlackListThree() {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true,
+          dots: false,
         },
       },
       {
@@ -56,6 +56,7 @@ export default function SliderBlackListThree() {
           slidesToShow: 2,
           slidesToScroll: 2,
           initialSlide: 2,
+          dots: false,
         },
       },
       {
@@ -63,6 +64,7 @@ export default function SliderBlackListThree() {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          dots: false,
         },
       },
     ],

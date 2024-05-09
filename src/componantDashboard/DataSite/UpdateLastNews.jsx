@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useUser } from '../../context/Context';
 import axios from 'axios';
 export default function UpdateLastNews() {
-  // const navigate = useNavigate();
+
 
   //////////////////////////////////
   const [userUpdate, setUserUpdate] = useState({});
