@@ -202,12 +202,61 @@ function ContextProvider({ children }) {
     }
     useEffect(() => {
       getAllHistory();
-    }, []);
+    }, [] );
+  ////////////////////////////////////
+  const [ numberDate, setNumberDate ] = useState( "" );
+  const [notificationData, setNotificationData] = useState([]);
+    async function getAllNotificationDate() {
+      await axios
+        .get(`https://syrianrevolution1.com/notifications`, {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        })
+        .then((result) => {
+          setNotificationData(result?.data?.data);
+          setNumberDate(result?.data?.data?.length);
+        })
+        .catch((error) => console.log(error));
+    }
+  ///////////////////notification user//////////////////
+    const [notification, setNontification] = useState([]);
+
+    const [number, setNumber] = useState();
+      async function getNotification() {
+        axios
+          .get(
+            `https://syrianrevolution1.com/users/single/${localStorage.getItem(
+              "idUserLogin"
+            )}`,
+            {
+              headers: {
+                Authorization: localStorage.getItem("token"),
+              },
+            }
+          )
+          .then((result) => {
+            setNontification(result?.data);
+            setNumber(
+              1 +
+                result?.data?.child?.length +
+                result?.data?.lists?.length +
+                result?.data?.massacres?.length
+            );
+          })
+          .catch((error) => console.log(error));
+      }
   return (
     <ContextUser.Provider
       value={{
         openAuth,
         setOpenAuth,
+        notification,
+        getNotification,
+        number,
+        numberDate,
+        notificationData,
+        getAllNotificationDate,
         role,
         setRole,
         openAlert,

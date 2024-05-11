@@ -14,15 +14,23 @@ import {
 import RestNewPassword from "../ResetNewPassword/RestNewPassword";
 import imgone from "../../image/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png";
 import UpdateLogin from "../UpdateLogin";
-import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
 export default function MainNav() {
   const [open, setOpen] = useState(false);
   const [openNoti, setOpenNoti] = useState(false);
-  const { openAuth, setOpenAuth, setSearchGlobal } = useContext(ContextUser);
-  const [notification, setNontification] = useState([]);
-  const [notificationData, setNotificationData] = useState([]);
-  const [number, setNumber] = useState();
+  const {
+    openAuth,
+    setOpenAuth,
+    setSearchGlobal,
+    numberDate,
+    notificationData,
+    getAllNotificationDate,
+    notification,
+    getNotification,
+    number,
+  } = useContext(ContextUser);
+
   const navigate = useNavigate();
 
   /////////////logout//////////////
@@ -31,52 +39,16 @@ export default function MainNav() {
     window.location.reload();
   }
   useEffect(() => {
-    async function getNotification() {
-      axios
-        .get(
-          `https://syrianrevolution1.com/users/single/${localStorage.getItem(
-            "idUserLogin"
-          )}`,
-          {
-            headers: {
-              Authorization: localStorage.getItem("token"),
-            },
-          }
-        )
-        .then((result) => {
-          setNontification(result?.data);
-          setNumber(
-            1 +
-              result?.data?.child.length +
-              result?.data?.lists.length +
-              result?.data?.massacres.length
-          );
-        })
-        .catch((error) => console.log(error));
-    }
+
     if (localStorage.getItem("token")) {
       getNotification();
     }
-  }, []);
+  }, [getNotification]);
   //////////////////////////////////////////////////////////////
-  const [numberDate,setNumberDate] = useState('')
-  async function getAllNotificationDate() {
-    await axios
-      .get(`https://syrianrevolution1.com/notifications`, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      })
-      .then((result) => {
-    
-        setNotificationData(result?.data?.data);
-        setNumberDate(result?.data?.data.length)
-      })
-      .catch((error) => console.log(error));
-  }
+
   useEffect(() => {
     getAllNotificationDate();
-  }, [] );
+  }, [getAllNotificationDate] );
  
  
   ///////////////////////////////////function search//////////////////////////////
@@ -272,7 +244,7 @@ export default function MainNav() {
                     </span>{" "}
                     الإشعارات الجديدة
                   </h4>
-                  {notificationData.length > 0 &&
+                  {notificationData && notificationData.length > 0 &&
                     notificationData
                       .slice()
                       .reverse()

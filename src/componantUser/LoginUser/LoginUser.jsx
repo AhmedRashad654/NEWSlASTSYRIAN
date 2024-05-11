@@ -7,7 +7,8 @@ import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import Joi from 'joi';
 export default function LoginUser() {
-  const { setOpenAuth, setRole } = useContext(ContextUser);
+  const { setOpenAuth, setRole, getAllNotificationDate } =
+    useContext(ContextUser);
   const [user, setUser] = useState({});
   const [ loading, setLoading ] = useState( false );
   const [ errorListUser, setErrorListUser ] = useState( null );
@@ -56,6 +57,7 @@ export default function LoginUser() {
                 localStorage.setItem("roleUserLogin", decodedToken.data.role);
                 localStorage.setItem("selfImg", result?.data?.user?.selfImg);
                 setRole( localStorage.getItem( "roleUserLogin" ) );
+                getAllNotificationDate();
                   setOpenAuth("");
               }
             })
