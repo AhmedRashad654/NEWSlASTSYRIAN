@@ -8,9 +8,11 @@ import {
   faPenToSquare,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import {useUser}  from '../context/Context'
 import { useNavigate } from "react-router-dom";
 import DisplayTawsec from "./DisplayTawsec";
 import axios from "axios";
+
 export default function UsersDash() {
   const [userDashboard, setUserDashboard] = useState([]);
   const [disTawsec, setDisTawsec] = useState();
@@ -27,6 +29,7 @@ export default function UsersDash() {
   const [ onlyUser, setOnlyUSer ] = useState('0');
   const [ onlyAdmin, setOnlyAdmin ] = useState( '0' )
   const [onlySupervisor, setOnlySupervisor] = useState("0");
+  const { role } = useUser()
   
   ////////////////////get all user/////////////////
   async function getAllUserDashboard() {
@@ -249,9 +252,27 @@ export default function UsersDash() {
                           icon={faTrash}
                           className="bg-danger p-1 text-white"
                           style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            setDelete(true);
-                            setIdDelete(user._id);
+                          onClick={ () => {
+                             setIdDelete(user._id);
+                            if ( user?.role === "owner" ) {
+                              if ( role === "owner" ) {
+                                 setDelete(true);
+                              } else {
+                                return alert ('لا يمكنك حذف هذا الحساب')
+                              }
+                            }
+                            if ( user?.role === "admin" ) {
+                              if ( role === "owner" ) {
+                                 setDelete(true);
+                              } else if(role === "admin" && user?._id === localStorage.getItem("idUserLogin")) {
+                                 setDelete(true);
+                              } else {
+                                return alert ('لا يمكنك حذف هذا الحساب')
+                             }
+                           }
+                            if ( user?.role === "user" || user?.role === "supervisor" ) {
+                             setDelete(true)
+                           }
                           }}
                         />
                         <FontAwesomeIcon
@@ -259,8 +280,32 @@ export default function UsersDash() {
                           className="bg-primary p-1 text-white"
                           style={{ cursor: "pointer" }}
                           onClick={() => {
-                            localStorage.setItem("IdUpdateUser", user._id);
-                            navigate("/dashboard/updateuser");
+                            localStorage.setItem( "IdUpdateUser", user._id );
+                            if ( user?.role === "owner" ) {
+                              if ( role === "owner" ) {
+                                 navigate("/dashboard/updateuser");
+                              }else{
+                              return  alert("لا يمكنك التعديل علي هذا الحساب")
+                              }
+                            }
+
+
+                            if ( user?.role === "admin" ) {
+                              if ( role === "owner" ) {
+                                navigate("/dashboard/updateuser");
+                              
+                             }else if (
+                               role === "admin" &&
+                               user?._id === localStorage.getItem("idUserLogin")
+                              ) {
+                                navigate("/dashboard/updateuser");
+                              } else {
+                              return  alert ('لا يمكنك التعديل علي هذا الحساب')
+                             }
+                            }
+                            if ( user?.role === "user" || user?.role === "supervisor" ) {
+                               navigate("/dashboard/updateuser");
+                            }
                           }}
                         />
                         <FontAwesomeIcon

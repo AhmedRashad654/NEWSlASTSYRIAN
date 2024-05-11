@@ -28,10 +28,7 @@ export default function Liberated() {
                 </div>
                 <div style={{ width: "60%" }}>
                   <p>
-                    {
-                      lastNews.filter((e) => e.category === "symbols")[0]
-                        ?.name
-                    }
+                    {lastNews.filter((e) => e.category === "symbols")[0]?.name}
                     <br />
                     <button
                       className="btu d-inline-block mx-1 px-3 rounded-3 "
@@ -46,6 +43,11 @@ export default function Liberated() {
                     >
                       المزيد
                     </button>
+                    <small className="datedSingle">
+                      {lastNews.length > 0 &&
+                        lastNews.filter((e) => e.category === "symbols")[0]
+                          ?.createdAt.slice(0,10)}
+                    </small>
                   </p>
                 </div>
               </div>
@@ -78,6 +80,9 @@ export default function Liberated() {
                               >
                                 المزيد
                               </button>
+                              <small className="datedSingle">
+                                {e?.createdAt && e?.createdAt.slice(0,10)}
+                              </small>
                             </p>
                           </div>
                         </div>

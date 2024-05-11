@@ -89,6 +89,9 @@ export default function SliderTakrem() {
                   <p className="px-2 text-center">
                     {sym?.name ? sym?.name : ""}
                     <br />
+                    <small className="datedSlider">
+                      {sym?.createdAt && sym?.createdAt.slice(0,10)}
+                    </small>
                     <button
                       className="d-inline-block mx-1 px-3 rounded-3 btu"
                       onClick={() => navigate(`/newsDetails/${sym._id}`)}

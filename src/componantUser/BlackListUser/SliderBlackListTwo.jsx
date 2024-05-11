@@ -76,19 +76,23 @@ export default function SliderBlackListTwo() {
           <Slider {...settings}>
             {lastNews
               .filter((e) => e.category === "mogramharb")
-              .map((sym) => (
+              .map((sym, i) => (
                 <div className="slide mx-2">
                   <div className="image mb-2 mx-2 ">
                     <img
                       src={`https://syrianrevolution1.com/postImages/${sym.selfImg}`}
                       alt="symbolThowra"
                       className=" w-100 slide-image"
-                      style={{height:'250px'}}
+                      style={{ height: "250px" }}
                     />
                   </div>
                   <p className="px-2" style={{ textAlign: "center" }}>
                     {sym?.name ? sym?.name : ""}
                     <br />
+                    <small className="datedSlider">
+                      {sym?.createdAt && sym?.createdAt.slice(0, 10)}
+                    </small>
+
                     <button
                       className=" d-inline-block mx-1  rounded-3 btu"
                       onClick={() => navigate(`/newsDetails/${sym._id}`)}

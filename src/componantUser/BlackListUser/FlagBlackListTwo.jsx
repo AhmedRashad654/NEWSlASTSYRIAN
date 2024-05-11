@@ -38,6 +38,7 @@ const { lastNews } = useUser();
                               >
                                 المزيد
                               </button>
+                              <small className="datedSingle">{ e?.createdAt && e?.createdAt.slice(0,10)}</small>
                             </p>
                           </div>
                         </div>
@@ -50,10 +51,11 @@ const { lastNews } = useUser();
               <div className=" muted p-2 overflow-hidden">
                 {lastNews
                   .filter((e) => e.category === "mogramharb")
-                  .map((e) => (
+                  .map((e,i) => (
                     <div
                       className="row border-bottom pb-2 pt-2 border-2 overflow-hidden"
-                      style={{ backgroundColor: "#ECECEC" }}
+                      style={ { backgroundColor: "#ECECEC" } }
+                      key={i}
                     >
                       <div className="col-md-4">
                         <img
@@ -72,6 +74,7 @@ const { lastNews } = useUser();
                           >
                             المزيد
                           </button>
+                          <small className="datedSingle">{ e?.createdAt && e?.createdAt.slice(0,10)}</small>
                         </p>
                       </div>
                     </div>

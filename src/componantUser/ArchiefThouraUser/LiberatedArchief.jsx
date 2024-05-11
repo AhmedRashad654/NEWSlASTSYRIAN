@@ -6,7 +6,7 @@ export default function LiberatedArchief() {
   const {lastNews} =  useUser()
   const navigate = useNavigate()
   return (
-    <div id='oneone'>
+    <div id="oneone">
       <div className="demonstrations py-3">
         <div className="container">
           <div className="row gy-3 mb-5">
@@ -43,6 +43,12 @@ export default function LiberatedArchief() {
                     >
                       المزيد
                     </button>
+                    <small className="datedSingle">
+                      {lastNews.length > 0 &&
+                        lastNews
+                          .filter((e) => e.category === "mozaharat")[0]
+                          ?.createdAt.slice(0, 10)}
+                    </small>
                   </p>
                 </div>
               </div>
@@ -52,7 +58,7 @@ export default function LiberatedArchief() {
                 {lastNews
                   .filter((e) => e.category === "mozaharat")
                   .slice(0, 4)
-                  .map((e,i) => (
+                  .map((e, i) => (
                     <div className="col-md-6" key={i}>
                       <div className="news">
                         <div className="item">
@@ -75,6 +81,9 @@ export default function LiberatedArchief() {
                               >
                                 المزيد
                               </button>
+                              <small className="datedSingle">
+                                {e?.createdAt && e?.createdAt.slice(0, 10)}
+                              </small>
                             </p>
                           </div>
                         </div>

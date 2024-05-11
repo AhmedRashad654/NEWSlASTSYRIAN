@@ -42,6 +42,7 @@ export default function MartyrsUser() {
                       >
                         المزيد
                       </button>
+                      <small className="datedSingle">{ e?.createdAt && e?.createdAt.slice(0,10)}</small>
                     </p>
                   </div>
                 ))}

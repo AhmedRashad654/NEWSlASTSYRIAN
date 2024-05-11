@@ -14,9 +14,18 @@ function ContextProvider({ children }) {
   const [ messageAndPaypal, setMessageAndPaypal ] = useState( [] )
   const [ history, setHistory ] = useState( [] );
   const [ openSubscrips, setOpenSubscrips ] = useState( false )
-  const [openOne,setOpenOne] = useState(false)
+  const [ openOne, setOpenOne ] = useState( false )
+  const [allBackground,setAllBackground] = useState([])
   ////////////////////////
-  
+  async function getBackground() {
+    await axios
+      .get("https://syrianrevolution1.com/background")
+      .then((result) => setAllBackground(result?.data?.data))
+      .catch((error) => console.log(error));
+  }
+  useEffect( () => {
+    getBackground()
+  },[])
   useEffect( () => {
     if ( localStorage.getItem( 'messageOpen' ) ) {
       if ( messageAndPaypal.length > 0 ) {
@@ -228,6 +237,9 @@ function ContextProvider({ children }) {
         setOpenSubscrips,
         openOne,
         setOpenOne,
+        allBackground,
+        getBackground,
+        getAllHistory,
       }}
     >
       {children}

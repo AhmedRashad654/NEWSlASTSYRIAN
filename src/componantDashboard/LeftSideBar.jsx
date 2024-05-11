@@ -9,6 +9,7 @@ import {
   faBell,
   faComment,
   faHouse,
+  faImage,
   faOutdent,
   faReceipt,
   faUserGroup,
@@ -110,6 +111,16 @@ export default function LeftSideBar() {
         ) : (
           ""
         )}
+        {role === "admin" || role === "owner" ? (
+          <div className={style.secondFirst}>
+            <NavLink to="/dashboard/background">
+              <FontAwesomeIcon icon={faImage} />
+               الغلاف
+            </NavLink>
+          </div>
+        ) : (
+          ""
+        )}
         <div className={style.secondsecond}>
           <div className={style.headsecondsecond}>
             <Link>
@@ -130,7 +141,11 @@ export default function LeftSideBar() {
             <NavLink to="/dashboard/traitors">خونة</NavLink>
             <NavLink to="/dashboard/honorcard"> بطاقات تكريم</NavLink>
             <NavLink to="/dashboard/lastnewsfromuser"> الأخبار </NavLink>
-            <NavLink to="/dashboard/wathaaqfromuser"> وثائق </NavLink>
+            {role === "owner" || role === "admin" ? (
+              <NavLink to="/dashboard/wathaaqfromuser"> وثائق </NavLink>
+            ) : (
+              ""
+            )}
           </div>
         </div>
         <div className={style.secondsecond}>

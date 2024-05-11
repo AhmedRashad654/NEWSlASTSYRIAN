@@ -6,6 +6,8 @@ body {
   direction: rtl;
    font-family: "Cairo", sans-serif !important;
    overflow-x: hidden;
+   padding: 0 !important;
+   margin: 0;
 }
 
 :root {
@@ -213,4 +215,18 @@ tr:nth-child(even) {background-color:rgb(232, 231, 231);}
     .aoomedia{
       flex-direction: column;
     }
+  }
+  /* //////////// */
+  .datedetails{
+    font-size: 13px !important;
+  }
+  .datedSingle{
+    font-size: 12px !important;
+    color: gray;
+  }
+  .datedSlider{
+        font-size: 12px !important;
+    margin-left: -20px;
+    color: gray;
+
   }

@@ -47,7 +47,7 @@ export default function MainPageFirst() {
           <h3 className=" text-danger"> آخر الأخبار </h3>
         </div>
       </div>
-     <OneMainPageFirst/>
+      <OneMainPageFirst />
       {/* one section */}
       <section className="martyrs">
         <div className="container py-2">
@@ -74,6 +74,9 @@ export default function MainPageFirst() {
                     >
                       المزيد
                     </button>
+                    <small className="datedSingle">
+                      {e?.createdAt && e?.createdAt.slice(0, 10)}
+                    </small>
                   </p>
                 </div>
               ))}
@@ -118,6 +121,9 @@ export default function MainPageFirst() {
                                 >
                                   المزيد
                                 </button>
+                                <small className="datedSingle">
+                                  {e?.createdAt && e?.createdAt.slice(0, 10)}
+                                </small>
                               </p>
                             </div>
                           </div>
@@ -168,6 +174,9 @@ export default function MainPageFirst() {
                                 >
                                   المزيد
                                 </button>
+                                <small className="datedSingle">
+                                  {e?.createdAt && e?.createdAt.slice(0, 10)}
+                                </small>
                               </p>
                             </div>
                           </div>
@@ -218,6 +227,9 @@ export default function MainPageFirst() {
                                 >
                                   المزيد
                                 </button>
+                                <small className="datedSingle">
+                                  {e?.createdAt && e?.createdAt.slice(0, 10)}
+                                </small>
                               </p>
                             </div>
                           </div>
@@ -258,6 +270,9 @@ export default function MainPageFirst() {
                   >
                     المزيد
                   </button>
+                  <small className="datedSingle">
+                    {e?.createdAt && e?.createdAt.slice(0, 10)}
+                  </small>
                 </p>
               </div>
             ))}

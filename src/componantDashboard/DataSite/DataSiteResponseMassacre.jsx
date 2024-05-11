@@ -23,7 +23,7 @@ export default function DataSiteResponseMassacre() {
         })
         .then((result) => {
           setMartyrDataDisplay( result.data );
-       
+          console.log(result)
         })
         .catch((error) => {
           console.log(error);
@@ -56,7 +56,7 @@ export default function DataSiteResponseMassacre() {
           setLoadingDel(false);
           navigate("/dashboard/dataDisplaySite");
           getMascersUser();
-          console.log(response);
+        
         }
       })
       .catch((error) => console.log(error));

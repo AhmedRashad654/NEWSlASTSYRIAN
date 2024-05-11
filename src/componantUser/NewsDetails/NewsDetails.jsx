@@ -69,6 +69,9 @@ export default function NewsDetails() {
                   ? single.externalLinks
                   : ""}
               </a>
+              <h6>تاريخ النشر</h6>
+              <p className="datedetails">{ single?.createdAt&&single?.createdAt.slice(0,10)}</p>
+
               <div
                 style={{
                   display: "flex",
@@ -102,7 +105,7 @@ export default function NewsDetails() {
                     />
                   )}
 
-                  <p>{single?.user?.name}</p>
+                  <p>{single?.user?.username}</p>
                 </div>
                 <div
                   style={{
@@ -126,10 +129,10 @@ export default function NewsDetails() {
             {/* /////////////////////// */}
             <div className="lastSlider1 col-md-4">
               <div className=" muted  overflow-hidden">
-                {archief.slice(0, 50).map((e,i) => (
+                {archief.slice(0, 50).map((e, i) => (
                   <div
                     className="row border-bottom pb-2 pt-2 border-2 overflow-hidden"
-                    style={ { backgroundColor: "#ECECEC" } }
+                    style={{ backgroundColor: "#ECECEC" }}
                     key={i}
                   >
                     <div className="col-md-4">

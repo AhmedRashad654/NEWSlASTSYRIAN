@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import styles from "../../styleDashboard/DisplayMartysDash.module.css";
 import axios from "axios";
-import {  useParams } from "react-router-dom";
-import { ContextUser} from "../../context/Context";
+import {  useNavigate, useParams } from "react-router-dom";
+import { ContextUser, useUser} from "../../context/Context";
 import one from "../../image/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png";
 import { useContext } from 'react';
 import { faFile, faFileZipper } from '@fortawesome/free-solid-svg-icons';
@@ -10,7 +10,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export default function DisplayWathaaqFromUser() {
   const { setOpenAlert, setOpenAlertStore,role } = useContext(ContextUser);
   const [martyrDisplay, setMartyrDataDisplay] = useState([]);
-
+  const [ loading, setLoading ] = useState( false )
+  const {getList} =  useUser()
+  const navigate = useNavigate()
   const { id } = useParams();
   useEffect(() => {
     async function getMartyr() {
@@ -35,55 +37,31 @@ export default function DisplayWathaaqFromUser() {
     setOpenAlert(true);
     setOpenAlertStore(src);
   }
-  //////////////////handleDelete/////////////////
-//   async function handleDeletePost() {
-//     setLoading(true);
-//     await axios
-//       .delete(
-//         `https://syrianrevolution1.com/lists/${id}/${localStorage.getItem(
-//           "idUserLogin"
-//         )}`,
-//         {
-//           headers: {
-//             Authorization: localStorage.getItem("token"),
-//           },
-//         }
-//       )
-//       .then((response) => {
-//         if (response.data === "list Deleted Successfully") {
-//           setLoading(false);
-//           navigate("/dashboard/wathaaqfromuser");
-//           getList();
-//         }
-//       })
-//       .catch((error) => console.log(error));
-//   }
+  ////////////////handleDelete/////////////////
+  async function handleDeletePost() {
+    setLoading(true);
+    await axios
+      .delete(
+        `https://syrianrevolution1.com/lists/${id}/${localStorage.getItem(
+          "idUserLogin"
+        )}`,
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data === "list Deleted Successfully") {
+          setLoading(false);
+          navigate("/dashboard/wathaaqfromuser");
+          getList();
+        }
+      })
+      .catch((error) => console.log(error));
+  }
   /////////////////////////handleAccepted//////////////
 
-//   async function handleAccepted() {
-//     setLoadingAccepted(true);
-//     await axios
-//       .patch(
-//         `https://syrianrevolution1.com/lists/accept/${id}/${localStorage.getItem(
-//           "idUserLogin"
-//         )}`,
-//         null,
-//         {
-//           headers: {
-//             Authorization: localStorage.getItem("token"),
-//           },
-//         }
-//       )
-//       .then((response) => {
-//         if (response.data.success === "data updated successfully") {
-//           setLoading(false);
-//           navigate("/dashboard/wathaaqfromuser");
-//           getList();
-//         }
-//         console.log(response);
-//       })
-//       .catch((error) => console.log(error));
-//   }
   return (
     <div className={styles.DisplayMartysDash}>
       {" "}
@@ -279,16 +257,8 @@ export default function DisplayWathaaqFromUser() {
           </div>
         </div>
       </div>
-      {/* <div className={styles.btnbottom}>
-        <button className="btn btn-success" onClick={handleAccepted}>
-          {loadingAccepted ? (
-            <div className="spinner-border text-secondary" role="status">
-              <span className="sr-only"></span>
-            </div>
-          ) : (
-            "قبول"
-          )}
-        </button>
+      <div className={styles.btnbottom}>
+  
         <button className="btn btn-danger" onClick={handleDeletePost}>
           {loading ? (
             <div className="spinner-border text-secondary" role="status">
@@ -298,7 +268,7 @@ export default function DisplayWathaaqFromUser() {
             " رفض"
           )}
         </button>
-      </div> */}
+      </div> 
     </div>
   );
 }

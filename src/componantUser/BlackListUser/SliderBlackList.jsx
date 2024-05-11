@@ -30,7 +30,7 @@ export default function SliderBlackList() {
     );
   }
   let settings = {
-    dots: true,
+    dots: false,
     infinite:
       lastNews.filter((e) => e.category === "Traitors").length > 1
         ? true
@@ -78,8 +78,8 @@ export default function SliderBlackList() {
           <Slider {...settings}>
             {lastNews
               .filter((e) => e.category === "Traitors")
-              .map((sym) => (
-                <div className="slide mx-2">
+              .map((sym,i) => (
+                <div className="slide mx-2" key={i}>
                   <div className="image mb-2 mx-2 ">
                     <img
                       src={`https://syrianrevolution1.com/postImages/${sym.selfImg}`}
@@ -91,6 +91,9 @@ export default function SliderBlackList() {
                   <p className="px-2" style={{ textAlign: "center" }}>
                     {sym?.name ? sym?.name : ""}
                     <br />
+                    <small className="datedSlider">{
+                      sym?.createdAt && sym?.createdAt.slice(0,10)
+                    }</small>
                     <button
                       className=" d-inline-block mx-1  rounded-3 btu"
                       onClick={() => navigate(`/newsDetails/${sym._id}`)}

@@ -6,7 +6,7 @@ export default function FlagArchief() {
    const { lastNews } = useUser();
   const navigate = useNavigate();
   return (
-    <div id='onetwo'>
+    <div id="onetwo">
       <div className="demonstrations py-3">
         <div className="container">
           <div className="row" style={{ justifyContent: "space-between" }}>
@@ -15,7 +15,7 @@ export default function FlagArchief() {
                 {lastNews
                   .filter((e) => e.category === "mozaharat")
                   .slice(4, 8)
-                  .map((e,i) => (
+                  .map((e, i) => (
                     <div className="col-md-6" key={i}>
                       <div className="news">
                         <div className="item">
@@ -38,6 +38,9 @@ export default function FlagArchief() {
                               >
                                 المزيد
                               </button>
+                              <small className="datedSingle">
+                                {e?.createdAt && e?.createdAt.slice(0, 10)}
+                              </small>
                             </p>
                           </div>
                         </div>
@@ -50,7 +53,7 @@ export default function FlagArchief() {
               <div className=" muted p-2 overflow-hidden">
                 {lastNews
                   .filter((e) => e.category === "mozaharat")
-                  .map((e,i) => (
+                  .map((e, i) => (
                     <div
                       className="row border-bottom pb-2 pt-2 border-2 overflow-hidden"
                       style={{ backgroundColor: "#ECECEC" }}
@@ -73,6 +76,9 @@ export default function FlagArchief() {
                           >
                             المزيد
                           </button>
+                          <small className="datedSingle">
+                            {e?.createdAt && e?.createdAt.slice(0, 10)}
+                          </small>
                         </p>
                       </div>
                     </div>

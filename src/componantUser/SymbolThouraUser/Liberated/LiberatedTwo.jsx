@@ -41,6 +41,9 @@ export default function LiberatedTwo() {
                     >
                       المزيد
                     </button>
+                    <small className="datedSingle">
+                      {lastNews.length > 0 &&lastNews.filter((e) => e.category === "takrem")[0]?.createdAt.slice(0,10)}
+                    </small>
                   </p>
                 </div>
               </div>
@@ -74,6 +77,11 @@ export default function LiberatedTwo() {
                                 >
                                   المزيد
                                 </button>
+                                <small className="datedSingle">
+                                  {
+                                    e?.createdAt && e?.createdAt.slice(0,10)
+                                  }
+                                </small>
                               </p>
                             </div>
                           </div>

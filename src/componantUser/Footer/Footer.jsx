@@ -1,22 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import './Footer.css'
 import { Link, NavLink } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaypal } from "@fortawesome/free-brands-svg-icons";
+
 import { useUser } from "../../context/Context";
-import CopyToClipboard from "react-copy-to-clipboard";
+
 export default function Footer() {
   const { messageAndPaypal } = useUser()
-  const [ copied, setCopied ] = useState( false )
-  const [ idCopied, setIdCopied ] = useState( '' );
+
   return (
     <>
       <div className="footer pt-5 pb-3 ">
-        <div className="container">
+        <div className="containe" style={{width:'90%',margin:'auto'}}>
           <h3 className="mb-4">الثورة السورية</h3>
           <div className="row gy-4">
-            <div className="col-md-5">
-              <div className="row gy-3">
+            <div className="col-md-4">
+              <div className="row gy-3" style={{fontSize:'13px'}}>
                 <div className="col-md-4 col-sm-4 x-sm">
                   <NavLink className="nav-link" to="/">
                     الرئيسية
@@ -147,59 +145,45 @@ export default function Footer() {
                 </div>
               </div>
             </div>
-            <div className="col-md-3 d-flex justify-content-center align-items-center">
+            <div className="col-md-4 d-flex justify-content-center align-items-center">
               <div className="contact-footer text-center">
                 <p className=" para mb-3 p-0">
                   {" "}
                   ادعم موقعنا لنستمر بالتطوير وتقديم رسالتنا (تبرع الان)
                 </p>
 
-                <div
-                  className="social-icons-footer d-flex align-items-center"
-                  style={{
-                    gap: "10px",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <div>
-                    {messageAndPaypal
-                      .filter((e) => e.category === "paypal")
-                      .map((e, i) => (
-                        <CopyToClipboard
-                          text={e?.content}
-                          onCopy={ () => {
-                            setIdCopied(e?._id)
-                            setCopied(true);
-                            setTimeout(() => {
-                              setCopied(false);
-                            }, [2000]);
+                <div>
+                  {messageAndPaypal
+                    .filter((e) => e.category === "paypal")
+                    .map((e, i) => (
+                      <div
+                        key={i}
+                      
+                        style={ {
+                          display:'flex',
+                          gap: "10px",
+                          justifyContent:"space-between",
+                          alignItems: "center",
+                          marginBottom:'10px'
+                        }}
+                      >
+                        <a
+                          href={e?.content}
+                          style={{
+                            textDecoration: "none",
+                            fontSize: "13px",
+                            cursor: "pointer",
                           }}
                         >
-                          <div key={i}>
-                            <p
-                              href={e.content}
-                              style={{
-                                textDecoration: "none",
-                                fontSize: "13px",
-                                cursor: "pointer",
-                              }}
-                            >
-                              {copied && idCopied === e?._id && (
-                                <p style={{ fontSize: "10px" }}>تم ألنسخ</p>
-                              )}
-                              {e.content}
-                            </p>
-                            <br />
-                          </div>
-                        </CopyToClipboard>
-                      ))}
-                  </div>
-
-                  <FontAwesomeIcon
-                    icon={faPaypal}
-                    style={{ fontSize: "25px", marginTop: "-30px" }}
-                  />
+                          {e?.content}
+                        </a>
+                        <img
+                          src={`https://syrianrevolution1.com/messagePaypal/${e?.icon}`}
+                          alt="paypal"
+                       style={{width:'28px',height:'28px'}}
+                        />
+                      </div>
+                    ))}
                 </div>
               </div>
             </div>
@@ -207,7 +191,7 @@ export default function Footer() {
           <hr />
           <p className=" para text-center p-0 m-0">
             جميع حقوق النشر محفوظة -
-            <Link to="privacypolicy" style={{ textDecoration: "none" }}>
+            <Link to="/privacypolicy" style={{ textDecoration: "none" }}>
               سياسة الخصوصية{" "}
             </Link>
           </p>

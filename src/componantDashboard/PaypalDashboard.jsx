@@ -6,15 +6,15 @@ import { useUser } from "../context/Context";
 export default function PaypalDashboard() {
   const [openAdd, setOpenAdd] = useState(false);
   const [message, setMessage] = useState({ category: "paypal" });
-  const [messageUPdate, setMessageUpdate] = useState({ category: "paypal" });
+ 
   const [loadingAdd, setLodingAdd] = useState(false);
-  const [loadingUpdate, setLodingUpdate] = useState(false);
+  // const [loadingUpdate, setLodingUpdate] = useState(false);
   const [errorListUser, setErrorListUser] = useState([]);
-  const [errorListUserUpdate, setErrorListUserUpdate] = useState([]);
-  const [idUpdatePaypal, setIdUpdatePaypal] = useState();
-  const [openUpdate, setOpenUpdate] = useState(false);
+  // const [errorListUserUpdate, setErrorListUserUpdate] = useState([]);
+  // const [idUpdatePaypal, setIdUpdatePaypal] = useState();
+  // const [ openUpdate, setOpenUpdate ] = useState( false );
+  //  const [messageUPdate, setMessageUpdate] = useState({ category: "paypal" });
   const { messageAndPaypal, getAllMessageAndPaypal } = useUser();
-
   /////////////////////////////////////////////////////
   /////////////////////////////validation paypal add/////////////////
   function validationAddUser() {
@@ -27,6 +27,12 @@ export default function PaypalDashboard() {
     });
     return schema.validate(message, { abortEarly: false });
   }
+  //////////////////////////////////////////////handleimg//////////////
+
+ const [icon,setImageAndPaypal] = useState("")
+  function handleImg(e) {
+    setImageAndPaypal(e.target.files[0]);
+  }
   /////////////////////handle add paypal///////////////
   async function handleSubmit(e) {
     e.preventDefault();
@@ -34,25 +40,34 @@ export default function PaypalDashboard() {
     if (responseValidateUser.error) {
       setErrorListUser([responseValidateUser.error.details]);
     } else {
-      setErrorListUser("");
-      setLodingAdd(true);
+      setErrorListUser( "" );
+      if (!icon) return alert("يرجي رفع الصورة");
+         const formData = new FormData();
+         formData.append("category", message.category);
+      formData.append( "content", message.content );
+      formData.append("icon", icon);
+
+      
+      setLodingAdd( true );
+      
       await axios
         .post(
           `https://syrianrevolution1.com/messagePaypal/add/${localStorage.getItem(
             "idUserLogin"
           )}`,
-          message,
+          formData,
           {
             headers: {
               Authorization: localStorage.getItem("token"),
             },
           }
         )
-        .then((result) => {
+        .then( ( result ) => {
+          console.log(result)
           if (result.data.success === "MessagePaypal added successfully") {
             setLodingAdd(false);
-              setOpenAdd( false );
-              getAllMessageAndPaypal()
+            setOpenAdd(false);
+            getAllMessageAndPaypal();
           }
         })
         .catch((error) => {
@@ -62,63 +77,95 @@ export default function PaypalDashboard() {
     }
   }
   //////////////////////get single paypal////////////////
-  async function getSinglePaypal(id) {
-    await axios
-      .get(`https://syrianrevolution1.com/messagePaypal/${id}`)
-      .then((result) => {
-        setMessageUpdate({
-          category: "paypal",
-          content: result.data.content || "",
-        });
-      })
-      .catch((error) => console.log(error));
-  }
+  // async function getSinglePaypal(id) {
+  //   await axios
+  //     .get(`https://syrianrevolution1.com/messagePaypal/${id}`)
+  //     .then((result) => {
+  //       setMessageUpdate({
+  //         category: "paypal",
+  //         content: result.data.content || "",
+  //       });
+  //     })
+  //     .catch((error) => console.log(error));
+  // }
   ///////////////////////////validation paypal update/////////////////
-  function validationUPdatePaypal() {
-    let schema = Joi.object({
-      category: Joi.string().required(),
-      content: Joi.string().required().messages({
-        "string.empty": "   الحساب المعدل مطلوب",
-        "any.required": "   الحساب المعدل مطلوب",
-      }),
-    });
-    return schema.validate(messageUPdate, { abortEarly: false });
-  }
-  /////////////////////handle add paypal///////////////
-  async function handleSubmitUPdate(e) {
-    e.preventDefault();
-    let responseValidateUser = validationUPdatePaypal();
-    if (responseValidateUser.error) {
-      setErrorListUserUpdate([responseValidateUser.error.details]);
-    } else {
-      setErrorListUserUpdate("");
-      setLodingUpdate(true);
-      await axios
-        .patch(
-          `https://syrianrevolution1.com/messagePaypal/${idUpdatePaypal}/${localStorage.getItem(
-            "idUserLogin"
-          )}`,
-          messageUPdate,
-          {
-            headers: {
-              Authorization: localStorage.getItem("token"),
-            },
-          }
-        )
-        .then((result) => {
-          if (result?.data?.data?._id) {
-            setLodingUpdate(false);
-            setOpenUpdate(false);
-            setIdUpdatePaypal("");
-            getAllMessageAndPaypal();
-          }
-        })
-        .catch((error) => {
-          setLodingUpdate(false);
-          console.log(error);
-        });
-    }
-  }
+  // function validationUPdatePaypal() {
+  //   let schema = Joi.object({
+  //     category: Joi.string().required(),
+  //     content: Joi.string().required().messages({
+  //       "string.empty": "   الحساب المعدل مطلوب",
+  //       "any.required": "   الحساب المعدل مطلوب",
+  //     }),
+  //   });
+  //   return schema.validate(messageUPdate, { abortEarly: false });
+  // }
+  /////////////////////handle update paypal///////////////
+  ;
+  
+//  const [imagePaypalupdate, setImageAndPaypalupdate] = useState();
+//  function handleImgupdate(e) {
+//    setImageAndPaypalupdate(e.target.files[0]);
+//  }
+  // async function handleSubmitUPdate(e) {
+  //   e.preventDefault();
+  //   let responseValidateUser = validationUPdatePaypal();
+  //   if (responseValidateUser.error) {
+  //     setErrorListUserUpdate([responseValidateUser.error.details]);
+  //   } else {
+  //     setErrorListUserUpdate( "" );
+   
+  //     const formData = new FormData();
+  //         if (
+  //           messageUPdate.category !== "" &&
+  //           messageUPdate.category !== undefined &&
+  //           messageUPdate.category !== null
+  //         ) {
+  //           formData.append("category", messageUPdate.category);
+  //         }
+  //         if (
+  //           messageUPdate.content !== "" &&
+  //           messageUPdate.content !== undefined &&
+  //           messageUPdate.content !== null
+  //         ) {
+  //           formData.append("content", messageUPdate.content);
+  //         }
+         
+  //          if (
+  //            imagePaypalupdate !== null &&
+  //            imagePaypalupdate !== undefined &&
+  //            imagePaypalupdate !== ""
+  //          ) {
+  //            formData.append("icon", imagePaypalupdate);
+  //          }
+         
+  //     setLodingUpdate(true);
+  //     await axios
+  //       .patch(
+  //         `https://syrianrevolution1.com/messagePaypal/${idUpdatePaypal}/${localStorage.getItem(
+  //           "idUserLogin"
+  //         )}`,
+  //         formData,
+  //         {
+  //           headers: {
+  //             Authorization: localStorage.getItem("token"),
+  //           },
+  //         }
+  //       )
+  //       .then((result) => {
+  //         console.log(result);
+  //         if (result?.data?.data?._id) {
+  //           setLodingUpdate(false);
+  //           setOpenUpdate(false);
+  //           setIdUpdatePaypal("");
+  //           getAllMessageAndPaypal();
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         setLodingUpdate(false);
+  //         console.log(error);
+  //       });
+  //   }
+  // }
   ////////////////////handle delete paypal///////////////
   async function handleDeletePaypal(id) {
     await axios
@@ -149,6 +196,7 @@ export default function PaypalDashboard() {
           <thead>
             <tr>
               <th>الحساب</th>
+              <th>الصورة</th>
               <th> الحالة</th>
             </tr>
           </thead>
@@ -160,6 +208,14 @@ export default function PaypalDashboard() {
                   <tr key={i}>
                     <td>{e?.content}</td>
                     <td>
+                      <img
+                        src={`https://syrianrevolution1.com/messagePaypal/${e?.icon}`}
+                        alt="paypal"
+                        style={{ width: "30px", height: "30px" }}
+                      />
+                    </td>
+                 
+                    <td>
                       <button
                         style={{ marginLeft: "5px" }}
                         className="btn btn-danger"
@@ -168,7 +224,7 @@ export default function PaypalDashboard() {
                         حذف
                       </button>
 
-                      <button
+                      {/* <button
                         className="btn btn-primary"
                         onClick={() => {
                           setOpenUpdate(true);
@@ -177,7 +233,7 @@ export default function PaypalDashboard() {
                         }}
                       >
                         تعديل
-                      </button>
+                      </button> */}
                     </td>
                   </tr>
                 ))}
@@ -212,7 +268,7 @@ export default function PaypalDashboard() {
             style={{
               padding: "30px 10px",
               width: "40%",
-              height: "38%",
+              height: "fitcontent",
               transform: "translateY(150px)",
               backgroundColor: "#F7F7F7",
               borderRadius: "5px",
@@ -249,14 +305,28 @@ export default function PaypalDashboard() {
                 }))
               }
             />
+            <div style={{ marginTop: "10px" }}>
+              <p style={{ fontSize: "10px", marginBottom: "9px" }}>الصورة</p>
+
+              <label htmlFor="qw" className="customfileupload">
+                {" "}
+                ارفع الصورة هنا
+              </label>
+              <input
+                type="file"
+                className="form-control"
+                id="qw"
+                onChange={handleImg}
+              />
+            </div>
+
             <div
               style={{
-                position: "absolute",
-                bottom: "5%",
-                left: "50%",
-                transform: "translatex(-50%)",
                 display: "flex",
                 gap: "5px",
+                margin: "auto",
+                justifyContent: "center",
+                marginTop: "10px",
               }}
             >
               <button className="btn btn-danger" onClick={handleSubmit}>
@@ -286,7 +356,7 @@ export default function PaypalDashboard() {
       {/* ////////////////////////// */}
       {/* ///////////////////// */}
       {/* ///////////////////////////// */}
-      {openUpdate && (
+      {/* {openUpdate && (
         <div
           style={{
             position: "fixed",
@@ -302,7 +372,7 @@ export default function PaypalDashboard() {
             style={{
               padding: "30px 10px",
               width: "40%",
-              height: "38%",
+              height: "fitContent",
               transform: "translateY(150px)",
               backgroundColor: "#F7F7F7",
               borderRadius: "5px",
@@ -340,14 +410,28 @@ export default function PaypalDashboard() {
               }
               value={messageUPdate.content || ""}
             />
+            <div style={{ marginTop: "10px" }}>
+              <p style={{ fontSize: "10px", marginBottom: "9px" }}>الصورة</p>
+
+              <label htmlFor="qw2" className="customfileupload">
+                {" "}
+                ارفع الصورة هنا
+              </label>
+              <input
+                type="file"
+                className="form-control"
+                name="icon"
+                id="qw2"
+                onChange={handleImgupdate}
+              />
+            </div>
             <div
               style={{
-                position: "absolute",
-                bottom: "5%",
-                left: "50%",
-                transform: "translatex(-50%)",
                 display: "flex",
                 gap: "5px",
+                margin: "auto",
+                justifyContent: "center",
+                marginTop: "10px",
               }}
             >
               <button className="btn btn-primary" onClick={handleSubmitUPdate}>
@@ -372,7 +456,7 @@ export default function PaypalDashboard() {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

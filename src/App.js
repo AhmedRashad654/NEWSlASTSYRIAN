@@ -61,6 +61,7 @@ import DisplayLastNewsFromUser from './componantDashboard/InformMessagesFromUser
 import WathaaqFromUser from './componantDashboard/InformMessagesFromUser/WathaaqFromUser.jsx';
 import DisplayWathaaqFromUser from './componantDashboard/InformMessagesFromUser/DisplayWathaaqFromUser.jsx';
 import ProtectedRoutedOnUser from './componantDashboard/ProtectedRoutedOnUser.jsx';
+import BackgroundImage from './componantDashboard/BackgroundDashboard/BackgroundImage.jsx';
 
 const HomeUser = lazy( () => import( './componantUser/HomeUser.jsx' ) );
 const HomeDashboard = lazy(() =>
@@ -114,6 +115,7 @@ export default function App() {
                   element={<UpdateSupervisors />}
                 />
                 <Route path="message" element={<MessageDashboard />} />
+                <Route path="background" element={<BackgroundImage />} />
                 <Route path="paypal" element={<PaypalDashboard />} />
                 <Route
                   path="singlemessageandpaypal/:id"

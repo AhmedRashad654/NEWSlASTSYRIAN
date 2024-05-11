@@ -72,7 +72,10 @@ export default function NewsDetailsMascers() {
               <p>
                 {single?.governorate !== "undefined" ? single?.governorate : ""}
               </p>
-           
+              <h6>تاريخ النشر</h6>
+              <p className="datedetails">
+                {single?.createdAt && single?.createdAt.slice(0, 10)}
+              </p>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div style={{ display: "flex", gap: "10px", margin: "10px 0" }}>
                   {single?.user?.selfImg !== undefined &&
@@ -98,7 +101,7 @@ export default function NewsDetailsMascers() {
                       }}
                     />
                   )}
-                  <p>{single?.user?.name}</p>
+                  <p>{single?.user?.username}</p>
                 </div>
                 <div
                   style={{

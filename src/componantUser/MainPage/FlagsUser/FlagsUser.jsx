@@ -38,6 +38,9 @@ export default function FlagsUser() {
                               >
                                 المزيد
                               </button>
+                              <small className="datedSingle">
+                                {e?.createdAt && e?.createdAt.slice(0,10)}
+                              </small>
                             </p>
                           </div>
                         </div>
@@ -71,6 +74,9 @@ export default function FlagsUser() {
                         >
                           المزيد
                         </button>
+                         <small className="datedSingle">
+                                {e?.createdAt && e?.createdAt.slice(0,10)}
+                              </small>
                       </p>
                     </div>
                   </div>

@@ -1,6 +1,6 @@
 import React, {useContext, useState } from 'react';
 import './Navbar.css';
-import { Link,NavLink } from 'react-router-dom';
+import { Link,NavLink, useNavigate } from 'react-router-dom';
 import { ContextUser } from '../../context/Context';
 import { Link as Lik} from "react-scroll";
 
@@ -14,9 +14,10 @@ export default function Navbar() {
   const getLinkClass = (link) => {
     return activeLink === link ? 'ahmed' : '';
   };
+  const navigate = useNavigate()
   return (
     <nav className="navbar navbar-expand-lg border-bottom">
-      <div className="container">
+      <div className="container no">
         <button
           className="navbar-toggler"
           type="button"
@@ -86,7 +87,6 @@ export default function Navbar() {
                   >
                     معارك الثوار
                   </Lik>
-              
                 </div>
               </Link>
             </li>
@@ -316,17 +316,20 @@ export default function Navbar() {
               </Link>
             </li>
 
-            {role === "admin" ||
-            role === "supervisor" ||
-            role === "owner" ? (
+            {role === "admin" || role === "supervisor" || role === "owner" ? (
               <li className="nav-item">
-                <NavLink
+                <button
                   className="nav-link"
                   aria-current="page"
+                  onClick={() =>
+                    role === "admin" || role === "owner"
+                      ? navigate("/dashboard/userdash")
+                      : navigate("/dashboard/history")
+                  }
                   to="/dashboard/userdash"
                 >
                   صفحة الادمن
-                </NavLink>
+                </button>
               </li>
             ) : (
               ""

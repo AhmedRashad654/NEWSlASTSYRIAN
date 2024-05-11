@@ -81,7 +81,11 @@ export default function NewsDetailsMartyr() {
               <p>
                 {single?.dateOfBirth ? single?.dateOfBirth.slice(0, 10) : ""}
               </p>
-          
+              <h6>تاريخ النشر</h6>
+              <p className="datedetails">
+                {single?.createdAt && single?.createdAt.slice(0, 10)}
+              </p>
+
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div
                   style={{
@@ -121,9 +125,8 @@ export default function NewsDetailsMartyr() {
                       />
                     )}
 
-                    <p>{single?.user?.name}</p>
+                    <p>{single?.user?.username}</p>
                   </div>
-                  <p>{single?.user?.name}</p>
                 </div>
                 <div
                   style={{

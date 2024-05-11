@@ -40,6 +40,12 @@ export default function LiberatedArchiefTwo() {
                     >
                       المزيد
                     </button>
+                    <small className="datedSingle">
+                      {lastNews.length > 0 &&
+                        lastNews
+                          .filter((e) => e.category === "maarek")[0]
+                          ?.createdAt.slice(0, 10)}
+                    </small>
                   </p>
                 </div>
               </div>
@@ -49,7 +55,7 @@ export default function LiberatedArchiefTwo() {
                 {lastNews
                   .filter((e) => e.category === "maarek")
                   .slice(0, 4)
-                  .map((e,i) => (
+                  .map((e, i) => (
                     <div className="col-md-6" key={i}>
                       <div className="news">
                         <div className="item">
@@ -78,6 +84,9 @@ export default function LiberatedArchiefTwo() {
                               >
                                 المزيد
                               </button>
+                              <small className="datedSingle">
+                                {e?.createdAt && e?.createdAt.slice(0, 10)}
+                              </small>
                             </p>
                           </div>
                         </div>

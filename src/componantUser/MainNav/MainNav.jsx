@@ -7,19 +7,22 @@ import LoginUser from "../LoginUser/LoginUser";
 import { ContextUser } from "../../context/Context";
 import SuccessRegister from "../SuccessRegister/SuccessRegister";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
-import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleXmark,
+  faPenToSquare,
+} from "@fortawesome/free-solid-svg-icons";
 import RestNewPassword from "../ResetNewPassword/RestNewPassword";
 import imgone from "../../image/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png";
 import UpdateLogin from "../UpdateLogin";
 import axios from "axios";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export default function MainNav() {
   const [open, setOpen] = useState(false);
   const [openNoti, setOpenNoti] = useState(false);
-  const { openAuth, setOpenAuth,setSearchGlobal } =
-    useContext(ContextUser);
+  const { openAuth, setOpenAuth, setSearchGlobal } = useContext(ContextUser);
   const [notification, setNontification] = useState([]);
-  const [ number, setNumber ] = useState();
+  const [notificationData, setNotificationData] = useState([]);
+  const [number, setNumber] = useState();
   const navigate = useNavigate();
 
   /////////////logout//////////////
@@ -43,7 +46,8 @@ export default function MainNav() {
         .then((result) => {
           setNontification(result?.data);
           setNumber(
-            result?.data?.child.length +
+            1 +
+              result?.data?.child.length +
               result?.data?.lists.length +
               result?.data?.massacres.length
           );
@@ -54,17 +58,38 @@ export default function MainNav() {
       getNotification();
     }
   }, []);
-  ///////////////////////////////////function search//////////////////////////////
-
-function changeSearch(e) {
-  const value = e.target.value;
-  setSearchGlobal(value);
-  if (value !== "") {
-    navigate("/searchglobal");
-  } else {
-    navigate('/lastNews');
+  //////////////////////////////////////////////////////////////
+  const [numberDate,setNumberDate] = useState('')
+  async function getAllNotificationDate() {
+    await axios
+      .get(`https://syrianrevolution1.com/notifications`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
+      .then((result) => {
+    
+        setNotificationData(result?.data?.data);
+        setNumberDate(result?.data?.data.length)
+      })
+      .catch((error) => console.log(error));
   }
-}
+  useEffect(() => {
+    getAllNotificationDate();
+  }, [] );
+ 
+ 
+  ///////////////////////////////////function search//////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////
+  function changeSearch(e) {
+    const value = e.target.value;
+    setSearchGlobal(value);
+    if (value !== "") {
+      navigate("/searchglobal");
+    } else {
+      navigate("/lastNews");
+    }
+  }
 
   return (
     <>
@@ -141,7 +166,7 @@ function changeSearch(e) {
               </p>
               <div style={{ position: "relative" }}>
                 <span style={{ position: "absolute", right: "-8px" }}>
-                  {number}
+                  {numberDate && number ? numberDate + number:''}
                 </span>
                 <div
                   className="notification position-relative"
@@ -239,7 +264,7 @@ function changeSearch(e) {
                   }}
                 />
               </div>
-              <div className="notification-body p-5">
+              <div className="notification-body p-3">
                 <div className="new">
                   <h4 className="text-danger">
                     <span>
@@ -247,30 +272,96 @@ function changeSearch(e) {
                     </span>{" "}
                     الإشعارات الجديدة
                   </h4>
+                  {notificationData.length > 0 &&
+                    notificationData
+                      .slice()
+                      .reverse()
+                      .map((e) => (
+                        <p
+                          className="  note position-relative bg-white p-2 pe-5 m-0 mb-2"
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            gap: "10px",
+                            alignItems: "center",
+                          }}
+                        >
+                          <span>
+                            {e?.user?.role === "owner"
+                              ? " قام المالك "
+                              : e?.user?.role === "admin"
+                              ? " قام الادمن  "
+                              : e?.user?.role === "supervisor"
+                              ? " قام المشرف "
+                              : ""}
+                            {e?.user?.username}
+                            باضافة{" "}
+                            <small style={{ color: "#2d2dc3" }}>
+                              {e?.type === "add child data post"
+                                ? e?.data?.name.slice(0, 60)
+                                : e?.type === "add list data post"
+                                ? e?.data?.name.slice(0, 60)
+                                : e?.type === "add massacres data post"
+                                ? e?.data?.title.slice(0, 60)
+                                : ""}
+                            </small>
+                          </span>
+                          <FontAwesomeIcon
+                            icon={faPenToSquare}
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              <>
+                                {e?.type === "add child data post"
+                                  ? navigate(
+                                      `/NewsDetailsMartyr/${e?.data?._id}`
+                                    )
+                                  : e?.type === "add list data post"
+                                  ? navigate(`/newsDetails/${e?.data?._id}`)
+                                  : e?.type === "add massacres data post"
+                                  ? navigate(
+                                      `/NewsDetailsMascers/${e?.data?._id}`
+                                    )
+                                  : ""}
+                                {setOpenNoti(false)}
+                              </>;
+                            }}
+                          />
+                        </p>
+                      ))}
+                  {notification?.child && notification?.child?.length > 0
+                    ? notification?.child
+                        .slice()
+                        .reverse()
+                        .map((e) => (
+                          <p className="  note position-relative bg-white p-2 pe-5 m-0 mb-2">
+                            {e?.notification}
+                          </p>
+                        ))
+                    : ""}
+                  {notification?.lists && notification?.lists?.length > 0
+                    ? notification?.lists
+                        .slice()
+                        .reverse()
+                        .map((e) => (
+                          <p className=" note position-relative bg-white p-2 pe-5 m-0 mb-2">
+                            {e?.notification}
+                          </p>
+                        ))
+                    : ""}
+                  {notification?.massacres &&
+                  notification?.massacres?.length > 0
+                    ? notification?.massacres
+                        .slice()
+                        .reverse()
+                        .map((e) => (
+                          <p className="note  position-relative bg-white p-2 pe-5 m-0 mb-2">
+                            {e?.notification}
+                          </p>
+                        ))
+                    : ""}
                   <p className=" note position-relative bg-white p-2 pe-5 m-0 mb-2">
                     {notification ? notification?.notification : ""}
                   </p>
-                  {notification?.child && notification?.child?.length
-                    ? notification?.child.map((e) => (
-                        <p className="  note position-relative bg-white p-2 pe-5 m-0 mb-2">
-                          {e?.notification}
-                        </p>
-                      ))
-                    : ""}
-                  {notification?.lists && notification?.lists?.length
-                    ? notification?.lists.map((e) => (
-                        <p className=" note position-relative bg-white p-2 pe-5 m-0 mb-2">
-                          {e?.notification}
-                        </p>
-                      ))
-                    : ""}
-                  {notification?.massacres && notification?.massacres?.length
-                    ? notification?.massacres.map((e) => (
-                        <p className="note  position-relative bg-white p-2 pe-5 m-0 mb-2">
-                          {e?.notification}
-                        </p>
-                      ))
-                    : ""}
                 </div>
               </div>
             </div>
@@ -288,13 +379,3 @@ function changeSearch(e) {
     </>
   );
 }
-
-
-
-
-
-
-
-
-
-

@@ -196,7 +196,8 @@ export default function AddMogramUser() {
                 type="file"
                 name="selfImg"
                 id="file-upload1"
-                onChange={handleChangeDocuments}
+                onChange={ handleChangeDocuments }
+                multiple
               />
             </div>
           </div>

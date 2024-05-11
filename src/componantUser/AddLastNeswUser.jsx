@@ -182,7 +182,8 @@ export default function AddLastNeswUser() {
                 type="file"
                 name="selfImg"
                 id="file-upload"
-                onChange={handleChangeImageProfile}
+                onChange={ handleChangeImageProfile }
+                multiple
               />
             </div>
           </div>

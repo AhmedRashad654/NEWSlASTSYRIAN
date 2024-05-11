@@ -27,6 +27,7 @@ export default function OneArchief() {
                         ?.name
                     }
                     <br />
+
                     <button
                       className="btu d-inline-block mx-1 px-3 rounded-3"
                       onClick={() =>
@@ -41,6 +42,12 @@ export default function OneArchief() {
                     >
                       المزيد
                     </button>
+                    <small className="datedSingle">
+                      {lastNews.length > 0 &&
+                        lastNews
+                          .filter((e) => e.category === "archiefthoura")[0]
+                          ?.createdAt.slice(0, 10)}
+                    </small>
                   </p>
                 </div>
               </div>
@@ -50,7 +57,7 @@ export default function OneArchief() {
                 {lastNews
                   .filter((e) => e.category === "archiefthoura")
                   .slice(0, 4)
-                  .map((e,i) => (
+                  .map((e, i) => (
                     <div className="col-md-6" key={i}>
                       <div className="news">
                         <div className="item">
@@ -73,6 +80,10 @@ export default function OneArchief() {
                               >
                                 المزيد
                               </button>
+                              <small className="datedSingle">
+                                {
+                                  e?.createdAt && e?.createdAt.slice(0, 10)}
+                              </small>
                             </p>
                           </div>
                         </div>

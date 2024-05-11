@@ -33,6 +33,9 @@ export default function OneMainPageFirst() {
                     >
                       المزيد
                     </button>
+                    <small className="datedSingle">
+                      {last?.createdAt && last?.createdAt.slice(0, 10)}
+                    </small>
                   </p>
                 </div>
               ))}

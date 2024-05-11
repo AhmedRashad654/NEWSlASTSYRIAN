@@ -84,12 +84,15 @@ export default function SliderSymbolThouraUser() {
                       src={`https://syrianrevolution1.com/postImages/${sym.selfImg}`}
                       alt="symbolThowra"
                       className=" w-100 slide-image"
-                      style={{height:'250px'}}
+                      style={{ height: "250px" }}
                     />
                   </div>
                   <p className="px-2" style={{ textAlign: "center" }}>
                     {sym?.name ? sym?.name : ""}
                     <br />
+                    <small className="datedSlider">
+                      {sym?.createdAt && sym?.createdAt.slice(0, 10)}
+                    </small>
                     <button
                       className=" d-inline-block mx-1  rounded-3 btu"
                       onClick={() => navigate(`/newsDetails/${sym._id}`)}

@@ -154,7 +154,7 @@ export default function UpdateUser() {
           }
         );
         const result =  await response.json();
-        
+        console.log(result)
         if ( result?.user?._id ) {
              setLoading(false);
              navigate("/dashboard/userdash");

@@ -1,7 +1,7 @@
-import {useNavigate} from 'react-router-dom'
-import { useUser } from '../../context/Context';
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../../context/Context";
 export default function TwoArchief() {
-   const { lastNews } = useUser();
+  const { lastNews } = useUser();
   const navigate = useNavigate();
   return (
     <div>
@@ -13,7 +13,7 @@ export default function TwoArchief() {
                 {lastNews
                   .filter((e) => e.category === "archiefthoura")
                   .slice(4, 8)
-                  .map((e,i) => (
+                  .map((e, i) => (
                     <div className="col-md-6" key={i}>
                       <div className="news">
                         <div className="item">
@@ -36,6 +36,9 @@ export default function TwoArchief() {
                               >
                                 المزيد
                               </button>
+                              <small className="datedSingle">
+                                {e?.createdAt && e?.createdAt.slice(0, 10)}
+                              </small>
                             </p>
                           </div>
                         </div>
@@ -48,10 +51,10 @@ export default function TwoArchief() {
               <div className=" muted p-2 overflow-hidden">
                 {lastNews
                   .filter((e) => e.category === "archiefthoura")
-                  .map((e,i) => (
+                  .map((e, i) => (
                     <div
                       className="row border-bottom pb-2 pt-2 border-2 overflow-hidden"
-                      style={ { backgroundColor: "#ECECEC" } }
+                      style={{ backgroundColor: "#ECECEC" }}
                       key={i}
                     >
                       <div className="col-md-4">
@@ -71,6 +74,9 @@ export default function TwoArchief() {
                           >
                             المزيد
                           </button>
+                          <small className="datedSingle">
+                            {e?.createdAt && e?.createdAt.slice(0, 10)}
+                          </small>
                         </p>
                       </div>
                     </div>
@@ -83,6 +89,3 @@ export default function TwoArchief() {
     </div>
   );
 }
-
-
-

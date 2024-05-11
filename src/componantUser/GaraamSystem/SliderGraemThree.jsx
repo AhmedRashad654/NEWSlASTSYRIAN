@@ -95,6 +95,7 @@ export default function SliderGraemThree() {
                     <p className="px-2">
                       {e?.name ? e?.name : ""}
                       <br />
+                      <small className='datedSlider'>{e?.createdAt && e?.createdAt.slice(0,10) }</small>
                       <button
                         className="btu d-inline-block mx-1 px-3 rounded-3"
                         onClick={() => navigate(`/NewsDetailsMartyr/${e._id}`)}

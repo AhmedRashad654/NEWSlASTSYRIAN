@@ -31,6 +31,9 @@ export default function RegimeMassacresUser() {
                     >
                       المزيد
                     </button>
+                    <small className="datedSingle">
+                      {last?.createdAt && last?.createdAt.slice(0, 10)}
+                    </small>
                   </p>
                 </div>
               ))}

@@ -90,6 +90,7 @@ const navigate = useNavigate()
                     <p className="px-2">
                       {e?.title ? e?.title : ""}
                       <br />
+                      <small className='datedSlider'>{ e?.createdAt && e?.createdAt.slice(0,10)}</small>
                       <button
                         className="btu d-inline-block mx-1 px-3 rounded-3"
                         onClick={() => navigate(`/NewsDetailsMascers/${e._id}`)}

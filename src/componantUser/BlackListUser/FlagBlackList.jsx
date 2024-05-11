@@ -15,8 +15,8 @@ export default function FlagBlackList() {
                 {lastNews
                   .filter((e) => e.category === "Traitors")
                   .slice(0, 4)
-                  .map((e) => (
-                    <div className="col-md-6">
+                  .map((e,i) => (
+                    <div className="col-md-6" key={i}>
                       <div className="news">
                         <div className="item">
                           <div className="image">
@@ -38,6 +38,10 @@ export default function FlagBlackList() {
                               >
                                 المزيد
                               </button>
+                              <small className="datedSingle">{
+                                e?.createdAt && e?.createdAt.slice(0,10)
+                              }
+                              </small>
                             </p>
                           </div>
                         </div>
@@ -72,6 +76,7 @@ export default function FlagBlackList() {
                           >
                             المزيد
                           </button>
+                          <small className="datedSingle">{ e?.createdAt && e?.createdAt.slice(0,10)}</small>
                         </p>
                       </div>
                     </div>
