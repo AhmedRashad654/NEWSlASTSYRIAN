@@ -15,7 +15,8 @@ function ContextProvider({ children }) {
   const [ history, setHistory ] = useState( [] );
   const [ openSubscrips, setOpenSubscrips ] = useState( false )
   const [ openOne, setOpenOne ] = useState( false )
-  const [allBackground,setAllBackground] = useState([])
+  const [ allBackground, setAllBackground ] = useState( [] )
+
   ////////////////////////
   async function getBackground() {
     await axios

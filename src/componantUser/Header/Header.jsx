@@ -35,7 +35,7 @@ export default function Header() {
         </div>
 
         <img
-          src={`https://syrianrevolution1.com/backgroundImages/${allBackground[1]?.image}`}
+          src={`https://syrianrevolution1.com/backgroundImages/${allBackground[0]?.image}`}
           alt="mainpicture"
           className="head-img"
         />
