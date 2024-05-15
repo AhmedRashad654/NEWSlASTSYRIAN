@@ -3,7 +3,7 @@ import { ContextUser } from "../../context/Context";
 import CopyToClipboard from "react-copy-to-clipboard";
 export default function Subscribes() {
   const { setOpenSubscrips } = useContext( ContextUser );
-  ///////////////////////////////
+
   const [copied,setCopied] = useState(false)
   return (
     <div

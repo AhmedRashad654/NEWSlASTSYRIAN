@@ -1,12 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Slider from 'react-slick'
 import './SliderSymbolThoura.css'
 
 import {useNavigate} from 'react-router-dom'
-import { useUser } from '../../context/Context';
+import axios from 'axios'
 export default function SliderSymbolThouraUser() {
-   const { lastNews } = useUser();
-  const navigate = useNavigate()
+  const [ lastNews, setLastNews ] = useState( [] );
+  const [num,setNum] = useState(5)
+  const navigate = useNavigate();
+  useEffect(() => {
+    async function getAllLastNews() {
+      await axios
+        .get(
+          `https://syrianrevolution1.com/lists/search?category=symbols&limit=${num}`
+        )
+        .then( ( result ) => {setLastNews( result?.data )} )
+        .catch((error) => console.log(error));
+    }
+    getAllLastNews();
+  }, [num]);
 
     function SampleNextArrow(props) {
         const { className, style, onClick } = props;
@@ -14,7 +26,7 @@ export default function SliderSymbolThouraUser() {
           <div
             className={className}
             style={{ ...style, display: "block",color:'gray'}}
-            onClick={onClick}
+            onClick={ () => {setNum((e)=>e+5) ; onClick() } }
           />
         );
       }
@@ -76,7 +88,6 @@ export default function SliderSymbolThouraUser() {
         <div className="slider-container px-4 position-relative">
           <Slider {...settings}>
             {lastNews
-              .filter((e) => e.category === "symbols")
               .map((sym, i) => (
                 <div key={i} className="slide mx-2">
                   <div className="image mb-2 mx-2 ">

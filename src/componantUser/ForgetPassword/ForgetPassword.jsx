@@ -13,7 +13,7 @@ export default function ForgetPassword() {
   const [ loading, setLoading ] = useState( false );
   const [errorBack,setErrorBack] = useState(false)
   const navigate = useNavigate();
-  //////////////////////
+
    function handlechange(e) {
      setForget((prevState) => ({
        ...prevState,
@@ -21,7 +21,7 @@ export default function ForgetPassword() {
      }));
   }
   
-  ////////////valid Joi///////////////
+
   function validationAddUser() {
     let schema = Joi.object({
       email: Joi.string()

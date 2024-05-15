@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from '../../context/Context';
 export default function DataSiteBlackList() {
   const navigate = useNavigate();
-  const {lastNews} = useUser()
+  const { listDash } = useUser();
   return (
     <div className={styles.DataSiteLastNews}>
       <div className={styles.allUser}>
@@ -20,32 +20,39 @@ export default function DataSiteBlackList() {
               </tr>
             </thead>
             <tbody>
-              {lastNews &&
-                lastNews.map((user, index) =>
-                  user.category === "Traitors" ||
-                  user.category === "mogramharb" ||
-                  user.category === "blacklist" ? (
-                    <tr key={index}>
-                      <td>{user.name}</td>
-                      <td>{user?.user?.username}</td>
+              {listDash &&
+                listDash
+                  .filter((e) => e?.isAccepted === true)
+                  .map((user, index) =>
+                    user.category === "Traitors" ||
+                    user.category === "mogramharb" ||
+                    user.category === "blacklist" ? (
+                      <tr key={index}>
+                        <td>{user.name}</td>
+                        <td>{user?.user?.username}</td>
 
-                      <td>{user.category}</td>
-                      <td>
-                        <button
-                          className={`add `}
-                          style={{ backgroundColor: "#3B9058", color: "white" }}
-                          onClick={() => {
-                            navigate(`/dashboard/dataDisplaySite/${user._id}`);
-                          }}
-                        >
-                          عرض
-                        </button>
-                      </td>
-                    </tr>
-                  ) : (
-                    ""
-                  )
-                )}
+                        <td>{user.category}</td>
+                        <td>
+                          <button
+                            className={`add `}
+                            style={{
+                              backgroundColor: "#3B9058",
+                              color: "white",
+                            }}
+                            onClick={() => {
+                              navigate(
+                                `/dashboard/dataDisplaySite/${user._id}`
+                              );
+                            }}
+                          >
+                            عرض
+                          </button>
+                        </td>
+                      </tr>
+                    ) : (
+                      ""
+                    )
+                  )}
             </tbody>
           </table>
         </div>

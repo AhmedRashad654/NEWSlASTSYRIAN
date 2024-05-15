@@ -12,7 +12,6 @@ import SearchOnAllSiteDashboard from './DataSite/SearchOnAllSiteDashboard';
 export default function DataDisplaySite() {
   const [ choiceArchife, setChoiceArchife ] = useState( "lastNews" );
   const [searchDashboard,setSearchDashboard] = useState()
-  ///////////////////////////////////////////////////////////////////
   function changeSearch(e) {
     const value = e.target.value;
     setSearchDashboard(value);

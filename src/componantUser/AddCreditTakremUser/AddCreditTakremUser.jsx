@@ -6,8 +6,7 @@ import Joi from "joi";
 export default function AddMogramUser() {
   const { setOpenAuth, getSingleUser, checkConfition } =
     useContext(ContextUser);
-  //////////////////////////////////////////////////////////
-  ///////////////////////////////////////////////////
+
   useEffect(() => {
     getSingleUser();
   }, [ getSingleUser ] );
@@ -18,25 +17,25 @@ export default function AddMogramUser() {
   const [loading, setLoading] = useState(false);
   const [errorBackUser, setErrorBackUser] = useState(null);
   const [successAdd, setSuccessAdd] = useState(false);
-  /////////handle image////////////////
+
   const [imageProfile, setImageProfile] = useState("");
   function handleChangeImageProfile(e) {
     setImageProfile(e.target.files[0]);
   }
   
-  //////////handle change //////////////
+
   function handlechange(e) {
     setAddData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   }
-  //////////////////////////////////
+
        const [document, setDocument] = useState("");
        function handleChangeDocuments(e) {
          setDocument(e.target.files);
        }
-  ////////////valid Joi///////////////
+
   function validationAddUser() {
     let schema = Joi.object({
       name: Joi.string().required().messages({

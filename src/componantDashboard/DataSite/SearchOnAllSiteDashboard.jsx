@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 export default function SearchOnAllSiteDashboard({searchDashboard}) {
   const navigate = useNavigate();
-  const { lastNews, child, masc } = useUser();
+  const { listDash, childDash, mascDash } = useUser();
   return (
     <div className={styles.DataSiteLastNews}>
       <div className={styles.allUser}>
@@ -36,8 +36,11 @@ export default function SearchOnAllSiteDashboard({searchDashboard}) {
               </tr>
             </thead>
             <tbody>
-              {lastNews
-                .filter((e) => e?.name.includes(searchDashboard))
+              {listDash
+                .filter(
+                  (e) =>
+                    e?.name.includes(searchDashboard) && e?.isAccepted === true
+                )
                 .map((user, index) => (
                   <tr key={index}>
                     <td>{user.name}</td>
@@ -56,8 +59,11 @@ export default function SearchOnAllSiteDashboard({searchDashboard}) {
                     </td>
                   </tr>
                 ))}
-              {child
-                .filter((e) => e?.name.includes(searchDashboard))
+              {childDash
+                .filter(
+                  (e) =>
+                    e?.name.includes(searchDashboard) && e?.isAccepted === true
+                )
                 .map((user, index) => (
                   <tr key={index}>
                     <td>{user.name}</td>
@@ -79,8 +85,11 @@ export default function SearchOnAllSiteDashboard({searchDashboard}) {
                     </td>
                   </tr>
                 ))}
-              {masc
-                .filter((e) => e?.title.includes(searchDashboard))
+              {mascDash
+                .filter(
+                  (e) =>
+                    e?.title.includes(searchDashboard) && e?.isAccepted === true
+                )
                 .map((user, index) => (
                   <tr key={index}>
                     <td>{user.title}</td>

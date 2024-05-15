@@ -30,13 +30,12 @@ export default function DisplayMartysDash() {
     getMartyr()
   },[id])
 
-  ///////////////////////
   function openImage(src) {
 
     setOpenAlert( true );
     setOpenAlertStore(src)
   }
-  //////////////////handleDelete/////////////////
+
   async function handleDeletePost() {
    
     setLoading( true );
@@ -60,7 +59,7 @@ export default function DisplayMartysDash() {
       })
       .catch((error) => console.log(error));
   }
-  /////////////////////////handleAccepted//////////////
+
   
   async function handleAccepted() {
      
@@ -93,7 +92,7 @@ export default function DisplayMartysDash() {
       <div className={`headDashboard`}>
         <p>البيانات المستلمة / شهداء / بيانات الشهيد</p>
       </div>
-      {/* ///////////////////////////////// */}
+
       <div
         style={{
           display: "flex",
@@ -153,7 +152,7 @@ export default function DisplayMartysDash() {
           ""
         )}
       </div>
-      {/* ////////////////////////// */}
+
       <div className={styles.details}>
         <div className={styles.allDetailseRight}>
           <div className={styles.detailsright}>

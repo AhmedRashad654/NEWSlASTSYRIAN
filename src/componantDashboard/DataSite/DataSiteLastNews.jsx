@@ -1,12 +1,10 @@
 import React  from 'react'
 import styles from '../../styleDashboard/DataDisplaySite.module.css';
 import { useNavigate } from "react-router-dom";
-
 import { useUser } from '../../context/Context';
 export default function DataSiteLastNews() {
   const navigate = useNavigate();
-  const {lastNews} = useUser()
-
+  const { listDash } = useUser();
   return (
     <div className={styles.DataSiteLastNews}>
       <div className={styles.allUser}>
@@ -20,8 +18,9 @@ export default function DataSiteLastNews() {
               </tr>
             </thead>
             <tbody>
-              {lastNews &&
-                lastNews.map((user, index) =>
+              {listDash &&
+                listDash
+                  .filter((e) => e?.isAccepted === true).map((user, index) =>
                   user.category === "lastNews" ? (
                     <tr key={index}>
                       <td>{user.name}</td>

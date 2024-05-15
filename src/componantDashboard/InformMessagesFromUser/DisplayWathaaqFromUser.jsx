@@ -32,12 +32,12 @@ export default function DisplayWathaaqFromUser() {
     }
     getMartyr();
   }, [id]);
-  //////////////
+
   function openImage(src) {
     setOpenAlert(true);
     setOpenAlertStore(src);
   }
-  ////////////////handleDelete/////////////////
+
   async function handleDeletePost() {
     setLoading(true);
     await axios
@@ -60,7 +60,7 @@ export default function DisplayWathaaqFromUser() {
       })
       .catch((error) => console.log(error));
   }
-  /////////////////////////handleAccepted//////////////
+
 
   return (
     <div className={styles.DisplayMartysDash}>
@@ -68,7 +68,7 @@ export default function DisplayWathaaqFromUser() {
       <div className={`headDashboard`}>
         <p>البيانات المستلمة / وثائق / بيانات الوثيقة</p>
       </div>
-      {/* //////////////////////////// */}
+
       <div
         style={{
           display: "flex",
@@ -128,7 +128,7 @@ export default function DisplayWathaaqFromUser() {
           ""
         )}
       </div>
-      {/* /////////////////////////// */}
+
       <div className={styles.details}>
         <div className={styles.allDetailseRight}>
           <div className={styles.detailsright}>

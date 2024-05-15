@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Joi from 'joi';
 export default function AddAMassacre() {
   const navigate = useNavigate();
-  ///////////////handlechange//////////////
+
   const [addData, setAddData] = useState({
     responsibleAuthority: "system",
   });
@@ -12,24 +12,24 @@ export default function AddAMassacre() {
   const [loading, setLoading] = useState(false);
   const [errorBackUser, setErrorBackUser] = useState(null);
   const [successAdd, setSuccessAdd] = useState(false);
-  /////////handle image////////////////
+
   const [imageProfile, setImageProfile] = useState("");
   function handleChangeImageProfile(e) {
     setImageProfile(e.target.files[0]);
   }
-  ////////////handle documents///////////
+
   const [document, setDocument] = useState("");
   function handleChangeDocuments(e) {
     setDocument(e.target.files);
   }
-  //////////handle change //////////////
+
   function handlechange(e) {
     setAddData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   }
-  ////////////valid Joi///////////////
+
   function validationAddUser() {
     let schema = Joi.object({
    
@@ -69,7 +69,7 @@ setSuccessAdd(false);
           formData.append("documents", document[i]);
         }
       }
-      // formData.append("documents", document);
+  
       formData.append("responsibleAuthority", addData.responsibleAuthority);
       formData.append("governorate", addData.governorate);
       formData.append("details", addData.details);

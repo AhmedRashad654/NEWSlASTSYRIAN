@@ -6,12 +6,10 @@ export default function BackgroundImage() {
     const [openAddImage,setOpenImage] = useState(false)
     const [ addImage, setAddImage ] = useState("")
     const [ loadingAdd, setLoadingAdd ] = useState( false )
-   
     const { allBackground, getBackground } = useUser();
-    console.log(allBackground)
        function handleChangeImageProfile(e) {
          setAddImage(e.target.files[0]);
-    }
+  }
     async function handleSubmit( e ) {
         e.preventDefault()
         if ( !addImage ) {
@@ -34,8 +32,6 @@ export default function BackgroundImage() {
        ).then( ( result ) => {
            
            if ( result?.data?.success ) {
-              
-           
                setLoadingAdd( false );
                setOpenImage(false)
                getBackground();

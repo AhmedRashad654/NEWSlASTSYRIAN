@@ -1,6 +1,6 @@
 import React from 'react'
 import Slider from 'react-slick'
-// import './SliderGramaamQasad.css'
+
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/Context';
 export default function SliderDaaehThree() {

@@ -7,8 +7,6 @@ export default function ExeclSheet() {
   const navigate = useNavigate();
   const [ success, setSuccess ] = useState( false );
   const [ loading, setLoading ] = useState();
-  ///////////////
-  ////////////function handleChange///////////////
   const [ user, setUser ] = useState( {} );
     function handlechange(e) {
       setUser((prevState) => ({
@@ -16,7 +14,7 @@ export default function ExeclSheet() {
         [e.target.name]: e.target.value,
       }));
   }
-  ///////////////////
+
   async function handleSubmit( e ) {
     e.preventDefault()
     setSuccess( false );

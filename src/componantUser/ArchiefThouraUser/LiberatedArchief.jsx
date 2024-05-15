@@ -1,10 +1,20 @@
-import React  from 'react'
-
+import React, { useEffect, useState }  from 'react'
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../../context/Context';
+import axios from 'axios';
 export default function LiberatedArchief() {
-  const {lastNews} =  useUser()
-  const navigate = useNavigate()
+ const [lastNews, setLastNews] = useState([]);
+ const navigate = useNavigate();
+ useEffect(() => {
+   async function getAllLastNews() {
+     await axios
+       .get(
+         "https://syrianrevolution1.com/lists/search?category=mozaharat&limit=5"
+       )
+       .then((result) => setLastNews(result?.data))
+       .catch((error) => console.log(error));
+   }
+   getAllLastNews();
+ }, []);
   return (
     <div id="oneone">
       <div className="demonstrations py-3">
@@ -15,7 +25,7 @@ export default function LiberatedArchief() {
                 <div className="image mb-4">
                   <img
                     src={`https://syrianrevolution1.com/postImages/${
-                      lastNews.filter((e) => e.category === "mozaharat")[0]
+                      lastNews[0]
                         ?.selfImg
                     }`}
                     alt="mozaharat"
@@ -25,7 +35,7 @@ export default function LiberatedArchief() {
                 <div className="info">
                   <p>
                     {
-                      lastNews.filter((e) => e.category === "mozaharat")[0]
+                      lastNews[0]
                         ?.name
                     }
                     <br />
@@ -34,9 +44,7 @@ export default function LiberatedArchief() {
                       onClick={() =>
                         navigate(
                           `/newsDetails/${
-                            lastNews.filter(
-                              (e) => e.category === "mozaharat"
-                            )[0]?._id
+                            lastNews[0]?._id
                           }`
                         )
                       }
@@ -46,7 +54,7 @@ export default function LiberatedArchief() {
                     <small className="datedSingle">
                       {lastNews.length > 0 &&
                         lastNews
-                          .filter((e) => e.category === "mozaharat")[0]
+                          [0]
                           ?.createdAt.slice(0, 10)}
                     </small>
                   </p>
@@ -56,8 +64,7 @@ export default function LiberatedArchief() {
             <div className="col-md-6">
               <div className="row gy-2">
                 {lastNews
-                  .filter((e) => e.category === "mozaharat")
-                  .slice(0, 4)
+                  .slice(1, 5)
                   .map((e, i) => (
                     <div className="col-md-6" key={i}>
                       <div className="news">

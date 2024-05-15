@@ -9,7 +9,7 @@ export default function SingleUser() {
   const [single, setSingle] = useState();
   const { setOpenAlert, setOpenAlertStore } = useContext( ContextUser );
   const navigate = useNavigate()
-  ////////////////////////////
+
   useEffect(() => {
     async function getSingleUser() {
       await axios
@@ -25,12 +25,12 @@ export default function SingleUser() {
     }
     getSingleUser();
   }, [id]);
-  ///////////////////////
+
   function openImage(src) {
     setOpenAlert(true);
     setOpenAlertStore(src);
   }
-  ///////////////////////////
+
 
   return (
     <div className={styles.AddSuperVisor}>

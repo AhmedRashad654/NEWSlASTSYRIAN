@@ -1,13 +1,10 @@
 import React from 'react'
 import styles from '../../styleDashboard/DataDisplaySite.module.css';
 import { useNavigate } from "react-router-dom";
-
 import { useUser } from '../../context/Context';
 export default function DataSiteLastNews() {
   const navigate = useNavigate();
-
-  //////////////////
-  const { child ,masc} = useUser();
+  const { childDash, mascDash } = useUser();
 
   return (
     <div className={styles.DataSiteLastNews}>
@@ -24,37 +21,42 @@ export default function DataSiteLastNews() {
               </tr>
             </thead>
             <tbody>
-              {child &&
-                child.map((user, index) =>
-                  (user.category === "martyr" ||
-                    user.category === "adetaine" ||
-                    user.category === "missing") &&
-                  user.responsibleAuthority === "system" ? (
-                    <tr key={index}>
-                      <td>{user.name}</td>
-                      <td>{user?.user?.username}</td>
+              {childDash &&
+                childDash
+                  .filter((e) => e?.isAccepted === true)
+                  .map((user, index) =>
+                    (user.category === "martyr" ||
+                      user.category === "adetaine" ||
+                      user.category === "missing") &&
+                    user.responsibleAuthority === "system" ? (
+                      <tr key={index}>
+                        <td>{user.name}</td>
+                        <td>{user?.user?.username}</td>
 
-                      <td>{user.category}</td>
-                      <td>
-                        <button
-                          className={`add `}
-                          style={{ backgroundColor: "#3B9058", color: "white" }}
-                          onClick={() => {
-                            navigate(
-                              `/dashboard/dataChildDisplaySite/${user._id}`
-                            );
-                          }}
-                        >
-                          عرض
-                        </button>
-                      </td>
-                    </tr>
-                  ) : (
-                    ""
-                  )
-                )}
-              {masc &&
-                masc.map((user, index) =>
+                        <td>{user.category}</td>
+                        <td>
+                          <button
+                            className={`add `}
+                            style={{
+                              backgroundColor: "#3B9058",
+                              color: "white",
+                            }}
+                            onClick={() => {
+                              navigate(
+                                `/dashboard/dataChildDisplaySite/${user._id}`
+                              );
+                            }}
+                          >
+                            عرض
+                          </button>
+                        </td>
+                      </tr>
+                    ) : (
+                      ""
+                    )
+                  )}
+              {mascDash &&
+                mascDash.filter((e) => e?.isAccepted === true).map((user, index) =>
                   user.responsibleAuthority === "system" ? (
                     <tr key={index}>
                       <td>{user.title}</td>

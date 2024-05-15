@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import "./SliderSymbolThoura.css";
+import axios from "axios";
 
-import { useUser } from "../../context/Context";
+
 export default function SliderTakrem() {
-    const { lastNews } = useUser();
-    const navigate = useNavigate();
+     const [lastNews, setLastNews] = useState([]);
+     const [num, setNum] = useState(5);
+     const navigate = useNavigate();
+     useEffect(() => {
+       async function getAllLastNews() {
+         await axios
+           .get(
+             `https://syrianrevolution1.com/lists/search?category=takrem&limit=${num}`
+           )
+           .then((result) => {
+             setLastNews(result?.data);
+           })
+           .catch((error) => console.log(error));
+       }
+       getAllLastNews();
+     }, [num]);
 
 
   function SampleNextArrow(props) {
@@ -14,8 +29,11 @@ export default function SliderTakrem() {
     return (
       <div
         className={className}
-        style={{ ...style, display: "block",color:'gray' }}
-        onClick={onClick}
+        style={{ ...style, display: "block", color: "gray" }}
+        onClick={() => {
+          setNum((e) => e + 5);
+          onClick();
+        }}
       />
     );
   }
@@ -32,7 +50,7 @@ export default function SliderTakrem() {
   let settings = {
     dots: false,
     infinite:
-      lastNews.filter((e) => e.category === "takrem").length > 1 ? true : false,
+      lastNews.length > 1 ? true : false,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4,

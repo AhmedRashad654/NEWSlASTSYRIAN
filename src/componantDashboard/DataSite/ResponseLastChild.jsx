@@ -10,8 +10,7 @@ export default function ResponseLastChild() {
   const [martyrDisplay, setMartyrDataDisplay] = useState([]);
   const { setOpenAlert, setOpenAlertStore } = useContext(ContextUser);
   const [loading, setLoading] = useState(false);
-  const { getChildUser ,role} = useUser();
- 
+  const { getChildUser, role } = useUser();
   const navigate = useNavigate();
   const { id } = useParams();
   useEffect(() => {
@@ -27,13 +26,10 @@ export default function ResponseLastChild() {
     }
     getMartyr();
   }, [id]);
-  ///////////////////////
   function openImage(src) {
     setOpenAlert(true);
     setOpenAlertStore(src);
   }
-
-  //////////////////handleDelete/////////////////
   async function handleDeletePost() {
     setLoading(true);
     await axios
@@ -295,7 +291,6 @@ export default function ResponseLastChild() {
               ? martyrDisplay?.details
               : "لم تتم الاضافة"}{" "}
           </div>
-          {/* <p>{user?.name }</p> */}
         </div>
       </div>
       <div className={styles.btnbottom}>
@@ -307,13 +302,7 @@ export default function ResponseLastChild() {
             )
           }
         >
-          {/* {loadingupdate ? (
-            <div className="spinner-border text-secondary" role="status">
-              <span className="sr-only"></span>
-            </div>
-          ) : ( */}
           تعديل
-          {/* )} */}
         </button>
         <button className="btn btn-danger" onClick={handleDeletePost}>
           {loading ? (

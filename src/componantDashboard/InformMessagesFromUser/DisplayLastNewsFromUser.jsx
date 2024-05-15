@@ -33,12 +33,10 @@ export default function DisplayLastNewsFromUser() {
     }
     getMartyr();
   }, [id]);
-  //////////////
   function openImage(src) {
     setOpenAlert(true);
     setOpenAlertStore(src);
   }
-  //////////////////handleDelete/////////////////
   async function handleDeletePost() {
     setLoading(true);
     await axios
@@ -61,8 +59,6 @@ export default function DisplayLastNewsFromUser() {
       })
       .catch((error) => console.log(error));
   }
-  /////////////////////////handleAccepted//////////////
-
   async function handleAccepted() {
     setLoadingAccepted(true);
     await axios
@@ -93,7 +89,6 @@ export default function DisplayLastNewsFromUser() {
       <div className={`headDashboard`}>
         <p>البيانات المستلمة / الاخبار / بيانات الخبر</p>
       </div>
-      {/* //////////////////////////// */}
       <div
         style={{
           display: "flex",
@@ -153,7 +148,7 @@ export default function DisplayLastNewsFromUser() {
           ""
         )}
       </div>
-      {/* /////////////////////////// */}
+ 
       <div className={styles.details}>
         <div className={styles.allDetailseRight}>
           <div className={styles.detailsright}>

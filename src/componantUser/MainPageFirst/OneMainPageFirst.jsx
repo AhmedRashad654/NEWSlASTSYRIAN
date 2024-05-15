@@ -1,12 +1,22 @@
-
-
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../MainPage/RegimeMassacres/RegimeMassacresUser.css'
 import { useNavigate } from "react-router-dom";
-import { useUser } from '../../context/Context';
+import axios from 'axios';
+
+
 export default function OneMainPageFirst() {
   const navigate = useNavigate()
-  const {lastNews} = useUser()
+  const  [lastNews,setLastNews] = useState([])
+  useEffect( () => {
+    async function getAllLastNews() {
+  await axios
+    .get("https://syrianrevolution1.com/lists/search?category=lastNews&limit=4")
+    .then((result) => setLastNews(result?.data))
+    .catch((error) => console.log(error));
+      
+    }
+    getAllLastNews()
+},[])
   return (
     <>
       <section className="regime" style={{ marginBottom: "50px" }}>
@@ -22,6 +32,7 @@ export default function OneMainPageFirst() {
                       src={`https://syrianrevolution1.com/postImages/${last.selfImg}`}
                       alt="home"
                       className=" w-100 rounded-3 fimg"
+                      fetchpriority="high"
                     />
                   </div>
                   <p>

@@ -1,8 +1,20 @@
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../../context/Context';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 export default function OneArchief() {
-  const {lastNews} =  useUser()
-  const navigate = useNavigate()
+ const [lastNews, setLastNews] = useState([]);
+ const navigate = useNavigate();
+ useEffect(() => {
+   async function getAllLastNews() {
+     await axios
+       .get(
+         "https://syrianrevolution1.com/lists/search?category=archiefthoura&limit=5"
+       )
+       .then((result) => setLastNews(result?.data))
+       .catch((error) => console.log(error));
+   }
+   getAllLastNews();
+ }, []);
   return (
     <div id="oneoneone">
       <div className="demonstrations py-3">
@@ -13,7 +25,7 @@ export default function OneArchief() {
                 <div className="image mb-4">
                   <img
                     src={`https://syrianrevolution1.com/postImages/${
-                      lastNews.filter((e) => e.category === "archiefthoura")[0]
+                      lastNews[0]
                         ?.selfImg
                     }`}
                     alt="mozaharat"
@@ -33,9 +45,7 @@ export default function OneArchief() {
                       onClick={() =>
                         navigate(
                           `/newsDetails/${
-                            lastNews.filter(
-                              (e) => e.category === "archiefthoura"
-                            )[0]?._id
+                            lastNews[0]?._id
                           }`
                         )
                       }
@@ -54,9 +64,7 @@ export default function OneArchief() {
             </div>
             <div className="col-md-6">
               <div className="row gy-2">
-                {lastNews
-                  .filter((e) => e.category === "archiefthoura")
-                  .slice(0, 4)
+                {lastNews.length > 0 && lastNews.slice(1, 5)
                   .map((e, i) => (
                     <div className="col-md-6" key={i}>
                       <div className="news">

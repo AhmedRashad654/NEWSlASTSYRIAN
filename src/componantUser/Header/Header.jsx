@@ -5,7 +5,7 @@ import EnterInformUser from '../EnterInformUser/EnterInformUser';
 import SuccessAddInform from '../SuccessAddInform/SuccessAddInform';
 import FaildAddInform from '../FaildAddForm/FaildAddForm';
 import TawsikEmail from '../TawsikEmail';
-// import axios from 'axios';
+
 export default function Header() {
   const { openAuth, setOpenAuth, allBackground } = useContext(ContextUser);
   function handleOpen() {
@@ -38,6 +38,7 @@ export default function Header() {
           src={`https://syrianrevolution1.com/backgroundImages/${allBackground[0]?.image}`}
           alt="mainpicture"
           className="head-img"
+          fetchpriority="high"
         />
       </div>
 

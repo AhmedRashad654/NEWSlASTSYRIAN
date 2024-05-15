@@ -29,13 +29,12 @@ export default function ResponseLastNews() {
     }
     getMartyr();
   }, [id]);
-  //////////////////////////////
-  ///////////////////////
+
   function openImage(src) {
     setOpenAlert(true);
     setOpenAlertStore(src);
   }
-  //////////////////handleDelete/////////////////
+
   async function handleDeletePost() {
     setLoading(true);
     await axios
@@ -64,7 +63,7 @@ export default function ResponseLastNews() {
       <div className={`headDashboard`}>
         <p>البيانات المعروضة بالموقع </p>
       </div>
-      {/* ////////////////////// */}
+   
       <div
         style={{
           display: "flex",
@@ -128,7 +127,7 @@ export default function ResponseLastNews() {
           ""
         )}
       </div>
-      {/* /////////////////////// */}
+ 
       <div className={styles.details}>
         <div className={styles.allDetailseRight}>
           <div className={styles.detailsright}>
@@ -267,13 +266,9 @@ export default function ResponseLastNews() {
             navigate(`/dashboard/dataDisplaySiteupdate/${martyrDisplay._id}`)
           }
         >
-          {/* {loadingupdate ? (
-            <div className="spinner-border text-secondary" role="status">
-              <span className="sr-only"></span>
-            </div>
-          ) : ( */}
+      
           تعديل
-          {/* )} */}
+   
         </button>
         <button className="btn btn-danger" onClick={handleDeletePost}>
           {loading ? (

@@ -63,154 +63,165 @@ import DisplayWathaaqFromUser from './componantDashboard/InformMessagesFromUser/
 import ProtectedRoutedOnUser from './componantDashboard/ProtectedRoutedOnUser.jsx';
 import BackgroundImage from './componantDashboard/BackgroundDashboard/BackgroundImage.jsx';
 
+
 const HomeUser = lazy( () => import( './componantUser/HomeUser.jsx' ) );
 const HomeDashboard = lazy(() =>
   import("./componantDashboard/HomeDashboard.jsx")
 );
-
 export default function App() {
     
   return (
-    <ContextDashboardProvider>
-      <ContextProvider>
-        <BrowserRouter>
-          <Suspense fallback={<SpinnerFull />}>
-            <Routes>
-              <Route path="/" element={<HomeUser />}>
-                <Route path="/" element={<MainPageFirst />} />
-                <Route path="/lastNews" element={<MainPage />} />
-                <Route path="archiefthoura" element={<ArchiefThourahUser />} />
-                <Route path="symbolthourauser" element={<SymbolThouraUser />} />
-                <Route path="blacklistuser" element={<BlackListUser />} />
-                <Route path="graamsystem" element={<BaraemSystem />} />
-                <Route path="graemqasad" element={<GaraamQasad />} />
-                <Route path="graemdashuser" element={<GaraamDaaehUser />} />
-                <Route path="/success/:id" element={<UpdatedPassword />} />
-                <Route path="privacypolicy" element={<PrivacyPolicy />} />
-                <Route path="searchglobal" element={<SearchGlobal />} />
-              </Route>
-              <Route path="newsDetails/:id" element={<NewsDetails />} />
-              <Route
-                path="NewsDetailsMascers/:id"
-                element={<NewsDetailsMascers />}
-              />
-              <Route
-                path="NewsDetailsMartyr/:id"
-                element={<NewsDetailsMartyr />}
-              />
-
-              <Route path="WantedToSystem" element={<WantedToSystem />} />
-              <Route
-                path="dashboard"
-                element={
-                  <ProtectedRouted>
-                    <HomeDashboard />
-                  </ProtectedRouted>
-                }
-              >
-                <Route path="singleUser/:id" element={<SingleUser />} />
-                <Route path="addsupervisor" element={<AddSuperVisor />} />
+ 
+      <ContextDashboardProvider>
+        <ContextProvider>
+          <BrowserRouter>
+            <Suspense fallback={<SpinnerFull />}>
+              <Routes>
+                <Route path="/" element={<HomeUser />}>
+                  <Route path="/" element={<MainPageFirst />} />
+                  <Route path="/lastNews" element={<MainPage />} />
+                  <Route
+                    path="archiefthoura"
+                    element={<ArchiefThourahUser />}
+                  />
+                  <Route
+                    path="symbolthourauser"
+                    element={<SymbolThouraUser />}
+                  />
+                  <Route path="blacklistuser" element={<BlackListUser />} />
+                  <Route path="graamsystem" element={<BaraemSystem />} />
+                  <Route path="graemqasad" element={<GaraamQasad />} />
+                  <Route path="graemdashuser" element={<GaraamDaaehUser />} />
+                  <Route path="/success/:id" element={<UpdatedPassword />} />
+                  <Route path="privacypolicy" element={<PrivacyPolicy />} />
+                  <Route path="searchglobal" element={<SearchGlobal />} />
+                </Route>
+                <Route path="newsDetails/:id" element={<NewsDetails />} />
                 <Route
-                  path="updatesupervisor"
-                  element={<UpdateSupervisors />}
-                />
-                <Route path="message" element={<MessageDashboard />} />
-                <Route path="background" element={<BackgroundImage />} />
-                <Route path="paypal" element={<PaypalDashboard />} />
-                <Route
-                  path="singlemessageandpaypal/:id"
-                  element={<SingleMessageAndPaypal />}
-                />
-                <Route path="history" element={<MainHistory />} />
-                <Route path="addsupervisor" element={<AddSuperVisor />} />
-                <Route path="martyrs" element={<MartyrsDash />} />
-                <Route path="martyrs/:id" element={<DisplayMartysDash />} />
-                <Route path="detaineesdash" element={<DetaineesDash />} />
-                <Route
-                  path="detaineesdash/:id"
-                  element={<DisplayDestainessDash />}
-                />
-                <Route path="missingdash" element={<MissingDash />} />
-                <Route
-                  path="missingdash/:id"
-                  element={<DisplayMissingDash />}
-                />
-                <Route path="warcriminals" element={<WarCriminals />} />
-                <Route
-                  path="displaywarcriminals/:id"
-                  element={<DisplayWarCriminals />}
-                />
-                <Route path="traitors" element={<TraitorsDash />} />
-                <Route path="traitors/:id" element={<DisplayTraitorsDash />} />
-                <Route path="honorcard" element={<HonorCard />} />
-                <Route path="honorcard/:id" element={<DisplayHonorCard />} />
-                <Route
-                  path="lastnewsfromuser"
-                  element={<LastNewsDashFromUser />}
+                  path="NewsDetailsMascers/:id"
+                  element={<NewsDetailsMascers />}
                 />
                 <Route
-                  path="displaylastnewsfromuser/:id"
-                  element={<DisplayLastNewsFromUser />}
-                />
-                <Route path="wathaaqfromuser" element={<WathaaqFromUser />} />
-                <Route
-                  path="displaywathaaqfromuser/:id"
-                  element={<DisplayWathaaqFromUser />}
+                  path="NewsDetailsMartyr/:id"
+                  element={<NewsDetailsMartyr />}
                 />
 
-                <Route path="lastnewsdash" element={<LastNewsDash />} />
+                <Route path="WantedToSystem" element={<WantedToSystem />} />
                 <Route
-                  path="revolutionarchivedash"
-                  element={<RevolutionArchiveDash />}
-                />
-                <Route
-                  path="symbolsoftherevolution"
-                  element={<SymbolsoftheRevolution />}
-                />
-                <Route path="allexcel" element={<AllExcelDash />} />
-                <Route path="excel" element={<ExeclSheet />} />
-                <Route path="blacklist" element={<BlackListDash />} />
-                <Route path="crimessystem" element={<CrimesSystem />} />
-                <Route
-                  path="userDash"
+                  path="dashboard"
                   element={
-                    <ProtectedRoutedOnUser>
-                      <UsersDash />
-                    </ProtectedRoutedOnUser>
+                    <ProtectedRouted>
+                      <HomeDashboard />
+                    </ProtectedRouted>
                   }
-                />
-                <Route path="AddUser" element={<AddUser />} />
-                <Route path="updateuser" element={<UpdateUser />} />
-                <Route path="dataDisplaySite" element={<DataDisplaySite />} />
-                <Route
-                  path="dataDisplaySite/:id"
-                  element={<ResponseLastNews />}
-                />
-                <Route
-                  path="dataChildDisplaySite/:id"
-                  element={<ResponseLastChild />}
-                />
-                <Route
-                  path="dataChildDisplaySitemascr/:id"
-                  element={<DataSiteResponseMassacre />}
-                />
-                <Route
-                  path="dataDisplaySiteupdate/:id"
-                  element={<UpdateLastNews />}
-                />
-                <Route
-                  path="dataChildDisplaySiteupdate/:id"
-                  element={<ResponseUpdateChild />}
-                />
-                <Route
-                  path="dataChildDisplaySitemascrupdate/:id"
-                  element={<UpdateSiteMascers />}
-                />
-              </Route>
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-      </ContextProvider>
-    </ContextDashboardProvider>
+                >
+                  <Route path="singleUser/:id" element={<SingleUser />} />
+                  <Route path="addsupervisor" element={<AddSuperVisor />} />
+                  <Route
+                    path="updatesupervisor"
+                    element={<UpdateSupervisors />}
+                  />
+                  <Route path="message" element={<MessageDashboard />} />
+                  <Route path="background" element={<BackgroundImage />} />
+                  <Route path="paypal" element={<PaypalDashboard />} />
+                  <Route
+                    path="singlemessageandpaypal/:id"
+                    element={<SingleMessageAndPaypal />}
+                  />
+                  <Route path="history" element={<MainHistory />} />
+                  <Route path="addsupervisor" element={<AddSuperVisor />} />
+                  <Route path="martyrs" element={<MartyrsDash />} />
+                  <Route path="martyrs/:id" element={<DisplayMartysDash />} />
+                  <Route path="detaineesdash" element={<DetaineesDash />} />
+                  <Route
+                    path="detaineesdash/:id"
+                    element={<DisplayDestainessDash />}
+                  />
+                  <Route path="missingdash" element={<MissingDash />} />
+                  <Route
+                    path="missingdash/:id"
+                    element={<DisplayMissingDash />}
+                  />
+                  <Route path="warcriminals" element={<WarCriminals />} />
+                  <Route
+                    path="displaywarcriminals/:id"
+                    element={<DisplayWarCriminals />}
+                  />
+                  <Route path="traitors" element={<TraitorsDash />} />
+                  <Route
+                    path="traitors/:id"
+                    element={<DisplayTraitorsDash />}
+                  />
+                  <Route path="honorcard" element={<HonorCard />} />
+                  <Route path="honorcard/:id" element={<DisplayHonorCard />} />
+                  <Route
+                    path="lastnewsfromuser"
+                    element={<LastNewsDashFromUser />}
+                  />
+                  <Route
+                    path="displaylastnewsfromuser/:id"
+                    element={<DisplayLastNewsFromUser />}
+                  />
+                  <Route path="wathaaqfromuser" element={<WathaaqFromUser />} />
+                  <Route
+                    path="displaywathaaqfromuser/:id"
+                    element={<DisplayWathaaqFromUser />}
+                  />
+
+                  <Route path="lastnewsdash" element={<LastNewsDash />} />
+                  <Route
+                    path="revolutionarchivedash"
+                    element={<RevolutionArchiveDash />}
+                  />
+                  <Route
+                    path="symbolsoftherevolution"
+                    element={<SymbolsoftheRevolution />}
+                  />
+                  <Route path="allexcel" element={<AllExcelDash />} />
+                  <Route path="excel" element={<ExeclSheet />} />
+                  <Route path="blacklist" element={<BlackListDash />} />
+                  <Route path="crimessystem" element={<CrimesSystem />} />
+                  <Route
+                    path="userDash"
+                    element={
+                      <ProtectedRoutedOnUser>
+                        <UsersDash />
+                      </ProtectedRoutedOnUser>
+                    }
+                  />
+                  <Route path="AddUser" element={<AddUser />} />
+                  <Route path="updateuser" element={<UpdateUser />} />
+                  <Route path="dataDisplaySite" element={<DataDisplaySite />} />
+                  <Route
+                    path="dataDisplaySite/:id"
+                    element={<ResponseLastNews />}
+                  />
+                  <Route
+                    path="dataChildDisplaySite/:id"
+                    element={<ResponseLastChild />}
+                  />
+                  <Route
+                    path="dataChildDisplaySitemascr/:id"
+                    element={<DataSiteResponseMassacre />}
+                  />
+                  <Route
+                    path="dataDisplaySiteupdate/:id"
+                    element={<UpdateLastNews />}
+                  />
+                  <Route
+                    path="dataChildDisplaySiteupdate/:id"
+                    element={<ResponseUpdateChild />}
+                  />
+                  <Route
+                    path="dataChildDisplaySitemascrupdate/:id"
+                    element={<UpdateSiteMascers />}
+                  />
+                </Route>
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </ContextProvider>
+      </ContextDashboardProvider>
+
   );
 }

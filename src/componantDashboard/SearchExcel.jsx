@@ -22,7 +22,7 @@ export default function SearchExcel() {
     }));
   }
 
-  /////////////validation excel///////////
+
   function validationSearch() {
     let schema = Joi.object({
       name: Joi.string().required().messages({

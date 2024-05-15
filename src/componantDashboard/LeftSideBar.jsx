@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import style from "../styleDashboard/leftSideBar.module.css";
 import imgAvatar from "../image/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowDown,
@@ -18,8 +18,7 @@ import { ContextUser, useUser } from "../context/Context";
 import AlertLogout from "../componantDashboard/AlertImageDash/AlertLogout";
 import { faPaypal } from "@fortawesome/free-brands-svg-icons";
 export default function LeftSideBar() {
-  const [ isMobile, setIsMobile ] = useState( false );
-  const navigate = useNavigate()
+  const [isMobile, setIsMobile] = useState(false);
   const { numberMogrem } = useUser();
   const { role, setOpenLogout, openLogout } = useContext(ContextUser);
   useEffect(() => {
@@ -33,8 +32,6 @@ export default function LeftSideBar() {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  //////////////function logout//////////////
 
   return (
     <div className={style.LeftSideBar}>
@@ -115,7 +112,7 @@ export default function LeftSideBar() {
           <div className={style.secondFirst}>
             <NavLink to="/dashboard/background">
               <FontAwesomeIcon icon={faImage} />
-               الغلاف
+              الغلاف
             </NavLink>
           </div>
         ) : (
@@ -180,12 +177,7 @@ export default function LeftSideBar() {
         </div>
         <div className={style.secondFourth}>
           <div className={style.headsecondsecond}>
-            <Link
-              onClick={() => {
-                navigate("/");
-                window.location.reload();
-              }}
-            >
+            <Link to="/">
               <FontAwesomeIcon icon={faHouse} />
               الرئيسية
             </Link>
@@ -204,4 +196,3 @@ export default function LeftSideBar() {
     </div>
   );
 }
-

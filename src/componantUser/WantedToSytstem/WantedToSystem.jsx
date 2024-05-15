@@ -20,7 +20,7 @@ export default function WantedToSystem() {
       [e.target.name]: e.target.value,
     }));
   }
-  /////////////validation excel///////////
+
   function validationSearch() {
     let schema = Joi.object({
       name: Joi.string().required().messages({
@@ -38,7 +38,7 @@ export default function WantedToSystem() {
     });
     return schema.validate(searched, { abortEarly: false });
   }
-  ////////////////////////////////////
+
 
   async function handleSearch() {
     setMessage(false);
@@ -168,12 +168,11 @@ export default function WantedToSystem() {
                       <th> المكان</th>
                       <th> المحافظة</th>
                       <th> الجنسية</th>
-                      {/* <th> المدينة</th>
-                    <th>الحي</th> */}
+                  
                       <th> الجرم</th>
 
                       <th> الجهة المسؤلة</th>
-                      {/* <th> ملاحظات</th> */}
+              
                       <th> الملاحظات</th>
                  
                     </tr>
@@ -189,12 +188,11 @@ export default function WantedToSystem() {
                         <td>{e?.place}</td>
                         <td>{e?.governorate}</td>
                         <td></td>
-                        {/* <td>{e?.city}</td>
-                      <td>{e?.elhy}</td> */}
+                  
                         <td>{e?.grom}</td>
 
                         <td>{e?.responsibleAuthority}</td>
-                        {/* <td>{e?.extraInfo}</td> */}
+                    
                         <td>{e?.notes}</td>
                   
                       </tr>

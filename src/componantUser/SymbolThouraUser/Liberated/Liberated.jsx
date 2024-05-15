@@ -1,14 +1,21 @@
 
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import { useUser } from "../../../context/Context";
 export default function Liberated() {
-  
-    const { lastNews } = useUser();
-
-
+  const [lastNews, setLastNews] = useState([]);
   const navigate = useNavigate();
+  useEffect(() => {
+    async function getAllLastNews() {
+      await axios
+        .get(
+          "https://syrianrevolution1.com/lists/search?category=symbols&limit=5"
+        )
+        .then((result) => setLastNews(result?.data))
+        .catch((error) => console.log(error));
+    }
+    getAllLastNews();
+  }, []);
   return (
     <div id="twoone">
       <div className="demonstrations py-3">
@@ -19,23 +26,23 @@ export default function Liberated() {
                 <div className="image mb-4">
                   <img
                     src={`https://syrianrevolution1.com/postImages/${
-                      lastNews.filter((e) => e.category === "symbols")[0]
+                      lastNews[0]
                         ?.selfImg
                     }`}
                     alt="symbolThowra"
-                    className=" w-100 rounded-3"
+                    className=" w-100 rounded-3 gimg"
                   />
                 </div>
                 <div style={{ width: "60%" }}>
                   <p>
-                    {lastNews.filter((e) => e.category === "symbols")[0]?.name}
+                    {lastNews[0]?.name}
                     <br />
                     <button
                       className="btu d-inline-block mx-1 px-3 rounded-3 "
                       onClick={() =>
                         navigate(
                           `/newsDetails/${
-                            lastNews.filter((e) => e.category === "symbols")[0]
+                            lastNews[0]
                               ?._id
                           }`
                         )
@@ -54,9 +61,8 @@ export default function Liberated() {
             </div>
             <div className="col-md-6">
               <div className="row gy-2">
-                {lastNews
-                  .filter((e) => e.category === "symbols")
-                  .slice(0, 4)
+                {lastNews.length > 0 &&lastNews
+                  .slice(1, 5)
                   .map((e, i) => (
                     <div className="col-md-6" key={i}>
                       <div className="news">

@@ -10,7 +10,7 @@ export default function TawsikEmail() {
     const [ imageProfile, setImageProfile ] = useState( "" );
     const [ loading, setLoading ] = useState( false );
     const [ nofile, setFile ] = useState(false );
-    ////////////////////////////////
+
      function handleChangeImageProfile(e) {
        setImageProfile(e.target.files[0]);
      }

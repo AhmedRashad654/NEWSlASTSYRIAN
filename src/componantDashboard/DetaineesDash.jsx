@@ -6,7 +6,6 @@ import { useUser } from '../context/Context';
 export default function DetaineesDash() {
   const navigate = useNavigate();
    const { childDash } = useUser();
-
   return (
     <div className={style.MartyrsDash}>
       <div className={`headDashboard`}>

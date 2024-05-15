@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet-async";
 import OneArchief from './OneArchief';
 import TwoArchief from './TwoArchief';
 export default function ArchiefThourahUser() {
+  
   return (
     <>
       <Helmet>

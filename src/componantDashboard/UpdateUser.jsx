@@ -7,18 +7,19 @@ import axios from "axios";
 import { ContextUser } from "../context/Context";
 export default function UpdateUser() {
   const navigate = useNavigate();
-  //////////////////////////////////
+
   const [userUpdate, setUserUpdate] = useState({});
   const [errorListUpdate, setErrorListUpdate] = useState();
-  const { setOpenAlert, setOpenAlertStore } = useContext(ContextUser);
-  ////////////function handleChange///////////////
+  const { setOpenAlert, setOpenAlertStore, getAllUserDashboard } =
+    useContext(ContextUser);
+
   function handlechange(e) {
     setUserUpdate((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   }
-  ////////////////////////////
+
   useEffect(() => {
     async function getSingleUser() {
       await axios
@@ -48,19 +49,19 @@ export default function UpdateUser() {
     }
     getSingleUser();
   }, []);
-  /////////handle image////////////////
+
   const [imageProfile, setImageProfile] = useState("");
 
   const [loading, setLoading] = useState(false);
   function handleImg(e) {
     setImageProfile(e.target.files[0]);
   }
-  /////////////////////
+
   const [doc, setDoc] = useState("");
   function handleDoc(e) {
     setDoc(e.target.files[0]);
   }
-  ////////////valid Joi///////////////
+
   function validationAddUser() {
     let schema = Joi.object({
       name: Joi.string().allow(""),
@@ -76,7 +77,7 @@ export default function UpdateUser() {
     });
     return schema.validate(userUpdate, { abortEarly: false });
   }
-  /////////////////function submit ///////////////////
+
   async function handleSubmit(e) {
     setErrorListUpdate("");
     e.preventDefault();
@@ -157,7 +158,8 @@ export default function UpdateUser() {
         console.log(result)
         if ( result?.user?._id ) {
              setLoading(false);
-             navigate("/dashboard/userdash");
+          navigate( "/dashboard/userdash" );
+          getAllUserDashboard()
         } else {
           alert("الاسم او الايميل مستخدمين من قبل")
          
@@ -169,7 +171,7 @@ export default function UpdateUser() {
       }
     }
   }
-  ///////////////////////
+
   function openImage(src) {
     setOpenAlert(true);
     setOpenAlertStore(src);

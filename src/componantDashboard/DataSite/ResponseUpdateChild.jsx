@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../context/Context";
 import axios from "axios";
 export default function ResponseUpdateChild() {
-  //////////////////////////////////
   const [userUpdate, setUserUpdate] = useState({
     fatherName: "",
     motherName: "",
@@ -21,23 +20,18 @@ export default function ResponseUpdateChild() {
   const [ loading, setLoading ] = useState( false );
   const navigate = useNavigate()
    const { getChildUser } = useUser();
-  ////////////////////////////////////
   const [ success, setSuccess ] = useState( false );
-  ////////////////////////////
   const { id } = useParams();
-  ////////////function handleChange///////////////
   function handlechange(e) {
     setUserUpdate((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   }
-  /////////handle image////////////////
   const [imageProfile, setImageProfile] = useState("");
   function handleImg(e) {
     setImageProfile(e.target.files[0]);
   }
-  //////////////getsingleChild//////////////////
     useEffect(() => {
       async function getSingleUser() {
         await axios
@@ -61,8 +55,6 @@ export default function ResponseUpdateChild() {
       }
       getSingleUser();
     }, [ id ] );
-  
-  /////////////////function submit ///////////////////
   async function handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData();

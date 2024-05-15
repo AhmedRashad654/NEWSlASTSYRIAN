@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { useUser } from '../../context/Context';
 import axios from 'axios';
 export default function UpdateSiteMascers() {
-  //////////////////////////////////
   const [userUpdate, setUserUpdate] = useState({
     title: "",
     governorate: "",
@@ -12,12 +11,8 @@ export default function UpdateSiteMascers() {
   });
   const [loading, setLoading] = useState(false);
   const { getMascersUser } = useUser();
-  //////////////////////////
   const [success, setSuccess] = useState(false);
-  ////////////////////////////////////
   const { id } = useParams();
-  ////////////////////////////////
-  //////////////getsingleChild//////////////////
   useEffect(() => {
     async function getSingleUser() {
       await axios
@@ -33,19 +28,16 @@ export default function UpdateSiteMascers() {
     }
     getSingleUser();
   }, [id]);
-  ////////////function handleChange///////////////
   function handlechange(e) {
     setUserUpdate((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   }
-  /////////handle image////////////////
   const [imageProfile, setImageProfile] = useState("");
   function handleImg(e) {
     setImageProfile(e.target.files[0]);
   }
-  /////////////////function submit ///////////////////
   async function handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData();

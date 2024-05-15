@@ -9,7 +9,7 @@ export default function MessageDashboard() {
   const [message, setMessage] = useState({ category: "message" ,content:""});
   const [success, setSuccess] = useState(false);
   const [ errorListUser, setErrorListUser ] = useState( [] );
-  //////////////////////
+
    useEffect(() => {
      if (messageAndPaypal.length > 0) {
        const messageContent =
@@ -17,7 +17,7 @@ export default function MessageDashboard() {
        setMessage((prevState) => ({ ...prevState, content: messageContent }));
      }
    }, [messageAndPaypal]);
-  /////////////////////////////////////////////////////////////////////
+
   function validationAddUser() {
     let schema = Joi.object({
       category: Joi.string().required(),
@@ -62,12 +62,12 @@ export default function MessageDashboard() {
         });
     }
   }
-  ///////////////////////////////////Desktop////////////////////////////////////////////////////
+
   const [desktop, setDesktop] = useState({ category: "desktop" ,content :""});
   const [loadingDesktop, setLoadingDasktop] = useState(false);
   const [successDektop, setSuccessDesktop] = useState(false);
   const [ errorListUserDesktop, setErrorListUserDsktop ] = useState( [] );
-  //////////////////////
+
      useEffect(() => {
        if (messageAndPaypal.length > 0) {
          const messageContent =
@@ -76,7 +76,7 @@ export default function MessageDashboard() {
          setDesktop((prevState) => ({ ...prevState, content: messageContent }));
        }
      }, [messageAndPaypal]);
-  /////////////////////////////////////////////////////////////////////
+
   function validationAddUserDesktop() {
     let schema = Joi.object({
       category: Joi.string().required(),
@@ -87,7 +87,7 @@ export default function MessageDashboard() {
     });
     return schema.validate(desktop, { abortEarly: false });
   }
-  ////////////////////////////////////////////////////////////////////////
+
     async function handleSubmitDesktop(e) {
       setSuccessDesktop(false);
       e.preventDefault();
@@ -122,12 +122,12 @@ export default function MessageDashboard() {
           });
       }
   }
-  //////////////////////Android////////////////////////////
+
     const [android, setAndroid] = useState({ category: "android" ,content:''});
     const [loadingAndroid, setLoadingAndroid] = useState(false);
     const [successAndroid, setSuccessAndroid] = useState(false);
   const [ errorListUserAndroid, setErrorListUserAndroid ] = useState( [] );
-  ///////////////////////////////////////////
+
        useEffect(() => {
          if (messageAndPaypal.length > 0) {
            const messageContent =
@@ -139,7 +139,7 @@ export default function MessageDashboard() {
            }));
          }
        }, [messageAndPaypal]);
-    /////////////////////////////////////////////////////////////////////
+
     function validationAddUserAndroid() {
       let schema = Joi.object({
         category: Joi.string().required(),
@@ -150,7 +150,7 @@ export default function MessageDashboard() {
       });
       return schema.validate(android, { abortEarly: false });
     }
-    ////////////////////////////////////////////////////////////////////////
+
     async function handleSubmitAndroid(e) {
       setSuccessAndroid(false);
       e.preventDefault();
@@ -190,7 +190,7 @@ export default function MessageDashboard() {
       <div className={styles.head}>
         <p>رسالة التوجية</p>
       </div>
-      {/* ///////////////////message////////////////// */}
+  
       <form action="" className={styles.form}>
         {success && (
           <p className="alert alert-success alerthemself">
@@ -239,7 +239,7 @@ export default function MessageDashboard() {
           </div>
         </div>
       </form>
-      {/* /////////////desktop//////////////////////// */}
+ 
       <form action="" className={styles.form}>
         <div className={styles.headForm}>
           <div className={styles.input}>
@@ -295,7 +295,7 @@ export default function MessageDashboard() {
           </div>
         </div>
       </form>
-      {/* ///////////////android/////////////////// */}
+
       <form action="" className={styles.form}>
         <div className={styles.headForm}>
           <div className={styles.input}>
@@ -308,7 +308,7 @@ export default function MessageDashboard() {
                   تمت اضافة الرابط للاندرويد بنجاح
                 </p>
               )}
-              {/* /////////////////// */}
+        
               {errorListUserAndroid &&
                 errorListUserAndroid.map((error, index) => (
                   <p

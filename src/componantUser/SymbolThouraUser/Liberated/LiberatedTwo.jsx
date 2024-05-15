@@ -1,12 +1,20 @@
-import React  from "react";
+import React, { useEffect, useState }  from "react";
 import { useNavigate } from "react-router-dom";
-
-import { useUser } from "../../../context/Context";
+import axios from "axios";
 export default function LiberatedTwo() {
-   const { lastNews } = useUser();
-
-
-  const navigate = useNavigate();
+    const [lastNews, setLastNews] = useState([]);
+    const navigate = useNavigate();
+    useEffect(() => {
+      async function getAllLastNews() {
+        await axios
+          .get(
+            "https://syrianrevolution1.com/lists/search?category=takrem&limit=5"
+          )
+          .then((result) => setLastNews(result?.data))
+          .catch((error) => console.log(error));
+      }
+      getAllLastNews();
+    }, []);
   return (
     <div id="twotwo">
       <div className="demonstrations py-3">
@@ -17,7 +25,7 @@ export default function LiberatedTwo() {
                 <div className="image mb-4">
                   <img
                     src={`https://syrianrevolution1.com/postImages/${
-                      lastNews.filter((e) => e.category === "takrem")[0]
+                      lastNews[0]
                         ?.selfImg
                     }`}
                     alt="symbolThowra"
@@ -33,7 +41,7 @@ export default function LiberatedTwo() {
                       onClick={() =>
                         navigate(
                           `/newsDetails/${
-                            lastNews.filter((e) => e.category === "takrem")[0]
+                            lastNews[0]
                               ?._id
                           }`
                         )
@@ -42,7 +50,7 @@ export default function LiberatedTwo() {
                       المزيد
                     </button>
                     <small className="datedSingle">
-                      {lastNews.length > 0 &&lastNews.filter((e) => e.category === "takrem")[0]?.createdAt.slice(0,10)}
+                      {lastNews.length > 0 &&lastNews[0]?.createdAt.slice(0,10)}
                     </small>
                   </p>
                 </div>
@@ -50,10 +58,9 @@ export default function LiberatedTwo() {
             </div>
             <div className="col-md-6">
               <div className="row gy-2">
-                {lastNews.filter((e) => e.category === "takrem").length !== 0 &&
+                {lastNews.length !== 0 &&
                   lastNews
-                    .filter((e) => e.category === "takrem")
-                    .slice(0, 4)
+                    .slice(1, 5)
                     .map((e, i) => (
                       <div className="col-md-6" key={i}>
                         <div className="news">

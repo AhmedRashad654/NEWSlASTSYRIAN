@@ -6,14 +6,14 @@ export default function AddUse() {
   const navigate = useNavigate();
     const [user, setUser] = useState({role:'user'});
     const [errorListUser, setErrorListUser] = useState(null);
-    ////////////function handleChange///////////////
+
     function handlechange(e) {
       setUser((prevState) => ({
         ...prevState,
         [e.target.name]: e.target.value,
       }));
   }
-    /////////handle image////////////////
+
   const [ imageProfile, setImageProfile ] = useState( "" );
  
   
@@ -22,12 +22,12 @@ export default function AddUse() {
     function handleChangeImageProfile(e) {
       setImageProfile(e.target.files[0]);
   }
-  ///////////////////////
+
    const [imageDoc, setImageDoc] = useState("");
   function handleChangeImageDoc( e ) {
      setImageDoc(e.target.files[0]);
   }
-    ////////////valid Joi///////////////
+
     function validationAddUser() {
       let schema = Joi.object({
         username: Joi.string().required().messages({
@@ -73,7 +73,7 @@ export default function AddUse() {
       });
       return schema.validate(user, { abortEarly: false });
     }
-    /////////////////function submit ///////////////////
+
     async function handleSubmit(e) {
       e.preventDefault();
       let responseValidateUser = validationAddUser();
@@ -142,9 +142,7 @@ export default function AddUse() {
                 className="form-control"
                 onChange={handlechange}
               />
-              {/* {errorBackUser && errorBackUser?.message && (
-                <p className={`error`}>هذا الاسم موجود من قبل</p>
-              )} */}
+         
               {errorBackUser &&
                 errorBackUser?.message?.includes(
                   "E11000 duplicate key error collection: test.users index: username_1 dup key"

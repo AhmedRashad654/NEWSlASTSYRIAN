@@ -11,20 +11,16 @@ export default function BlackListMain() {
   const [loading, setLoading] = useState(false);
   const [errorBackUser, setErrorBackUser] = useState(null);
   const [successAdd, setSuccessAdd] = useState(false);
-  /////////handle image////////////////
   const [imageProfile, setImageProfile] = useState("");
   function handleChangeImageProfile(e) {
     setImageProfile(e.target.files[0]);
   }
- 
-  //////////handle change //////////////
   function handlechange(e) {
     setAddData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   }
-  ////////////valid Joi///////////////
   function validationAddUser() {
     let schema = Joi.object({
       name: Joi.string().required().messages({

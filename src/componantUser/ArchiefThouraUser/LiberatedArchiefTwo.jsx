@@ -1,11 +1,23 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { useUser } from "../../context/Context";
+
 export default function LiberatedArchiefTwo() {
-    const { lastNews } = useUser();
+  const [lastNews, setLastNews] = useState([]);
   const navigate = useNavigate();
+  useEffect(() => {
+    async function getAllLastNews() {
+      await axios
+        .get(
+          "https://syrianrevolution1.com/lists/search?category=maarek&limit=5"
+        )
+        .then((result) => setLastNews(result?.data))
+        .catch((error) => console.log(error));
+    }
+    getAllLastNews();
+  }, []);
   return (
     <div id="onethreefour">
       <div className="demonstrations py-3">
@@ -16,7 +28,7 @@ export default function LiberatedArchiefTwo() {
                 <div className="image mb-4">
                   <img
                     src={`https://syrianrevolution1.com/postImages/${
-                      lastNews.filter((e) => e.category === "maarek")[0]
+                      lastNews[0]
                         ?.selfImg
                     }`}
                     alt="mozaharat"
@@ -25,14 +37,14 @@ export default function LiberatedArchiefTwo() {
                 </div>
                 <div className="info">
                   <p>
-                    {lastNews.filter((e) => e.category === "maarek")[0]?.name}
+                    {lastNews?.name}
                     <br />
                     <button
                       className="btu d-inline-block mx-1 px-3 rounded-3"
                       onClick={() =>
                         navigate(
                           `/newsDetails/${
-                            lastNews.filter((e) => e.category === "maarek")[0]
+                            lastNews[0]
                               ?._id
                           }`
                         )
@@ -43,7 +55,7 @@ export default function LiberatedArchiefTwo() {
                     <small className="datedSingle">
                       {lastNews.length > 0 &&
                         lastNews
-                          .filter((e) => e.category === "maarek")[0]
+                          [0]
                           ?.createdAt.slice(0, 10)}
                     </small>
                   </p>
@@ -53,8 +65,7 @@ export default function LiberatedArchiefTwo() {
             <div className="col-md-6">
               <div className="row gy-2">
                 {lastNews
-                  .filter((e) => e.category === "maarek")
-                  .slice(0, 4)
+                  .slice(1, 5)
                   .map((e, i) => (
                     <div className="col-md-6" key={i}>
                       <div className="news">
@@ -74,11 +85,7 @@ export default function LiberatedArchiefTwo() {
                                 className="btu d-inline-block mx-1 px-3 rounded-3"
                                 onClick={() =>
                                   navigate(
-                                    `/newsDetails/${
-                                      lastNews.filter(
-                                        (e) => e.category === "maarek"
-                                      )[0]?._id
-                                    }`
+                                    `/newsDetails/${e?._id }`
                                   )
                                 }
                               >

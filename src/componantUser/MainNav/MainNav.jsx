@@ -9,7 +9,7 @@ import SuccessRegister from "../SuccessRegister/SuccessRegister";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
 import {
   faCircleXmark,
-  faPenToSquare,
+  faEye
 } from "@fortawesome/free-solid-svg-icons";
 import RestNewPassword from "../ResetNewPassword/RestNewPassword";
 import imgone from "../../image/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png";
@@ -33,7 +33,7 @@ export default function MainNav() {
 
   const navigate = useNavigate();
 
-  /////////////logout//////////////
+
   function handleLogout() {
     localStorage.clear();
     window.location.reload();
@@ -44,15 +44,13 @@ export default function MainNav() {
       getNotification();
     }
   }, [getNotification]);
-  //////////////////////////////////////////////////////////////
+
 
   useEffect(() => {
     getAllNotificationDate();
   }, [getAllNotificationDate] );
  
- 
-  ///////////////////////////////////function search//////////////////////////////
-  ///////////////////////////////////////////////////////////////////////////////
+
   function changeSearch(e) {
     const value = e.target.value;
     setSearchGlobal(value);
@@ -138,7 +136,7 @@ export default function MainNav() {
               </p>
               <div style={{ position: "relative" }}>
                 <span style={{ position: "absolute", right: "-8px" }}>
-                  {numberDate && number ? numberDate + number:''}
+                  {numberDate && number ? numberDate + number : ""}
                 </span>
                 <div
                   className="notification position-relative"
@@ -244,8 +242,10 @@ export default function MainNav() {
                     </span>{" "}
                     الإشعارات الجديدة
                   </h4>
-                  {notificationData && notificationData.length > 0 &&
+                  {notificationData &&
+                    notificationData.length > 0 &&
                     notificationData
+                      .filter((e) => e?.data?.isAccepted === true)
                       .slice()
                       .reverse()
                       .map((e) => (
@@ -259,15 +259,7 @@ export default function MainNav() {
                           }}
                         >
                           <span>
-                            {e?.user?.role === "owner"
-                              ? " قام المالك "
-                              : e?.user?.role === "admin"
-                              ? " قام الادمن  "
-                              : e?.user?.role === "supervisor"
-                              ? " قام المشرف "
-                              : ""}
-                            {e?.user?.username}
-                            باضافة{" "}
+                            <small>   تمت اضافة منشور جديد بعنوان </small>
                             <small style={{ color: "#2d2dc3" }}>
                               {e?.type === "add child data post"
                                 ? e?.data?.name.slice(0, 60)
@@ -277,9 +269,39 @@ export default function MainNav() {
                                 ? e?.data?.title.slice(0, 60)
                                 : ""}
                             </small>
+                            <small>
+                              {" "}
+                              (
+                              {e?.data?.category === "lastNews"
+                                ? "اخر الاخبار"
+                                : e?.data?.category === "archiefthoura"
+                                ? "ارشيف الثورة"
+                                : e?.data?.category === "mozaharat"
+                                ? "المظاهرات"
+                                : e?.data?.category === "maarek"
+                                ? "معارك الثوار"
+                                : e?.data?.category === "symbols"
+                                ? "رموز الثورة"
+                                : e?.data?.category === "takrem"
+                                ? "بطاقات التكريم"
+                                : e?.data?.category === "blacklist"
+                                ? "القائمة السوداء"
+                                : e?.data?.category === "Traitors"
+                                ? "الخونة"
+                                : e?.data?.category === "mogramharb"
+                                ? "مجرمين الحرب"
+                                : e?.type === "add massacres data post"
+                                ? "جرائم"
+                                : e?.data?.category === "martyr"
+                                ? "الشهداء"
+                                : e?.data?.category === "adetaine"
+                                ? "المعتقلين"
+                                : e?.data?.category === "missing" ?"المفقودين" :''}{" "}
+                              ){" "}
+                            </small>
                           </span>
                           <FontAwesomeIcon
-                            icon={faPenToSquare}
+                            icon={faEye}
                             style={{ cursor: "pointer" }}
                             onClick={() => {
                               <>

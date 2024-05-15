@@ -7,32 +7,31 @@ import Joi from 'joi';
 import axios from 'axios';
 export default function RegisterUser() {
   const { setOpenAuth } = useContext(ContextUser);
-  //////////////////////////////////
+
   const [userUpdate, setUserUpdate] = useState({});
   const [errorListUpdate, setErrorListUpdate] = useState();
   const [success, setSuccess] = useState(false);
  
-  ////////////function handleChange///////////////
+
   function handlechange(e) {
     setUserUpdate((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   }
-  /////////handle image////////////////
+
   const [imageProfile, setImageProfile] = useState("");
 
   const [loading, setLoading] = useState(false);
   function handleImg(e) {
     setImageProfile(e.target.files[0]);
   }
-  ////////////////////////////
-  /////////handle image////////////////
+
   const [docImageState, setDocImgState] = useState("");
   function handleImgDoc(e) {
     setDocImgState(e.target.files[0]);
   }
-  ////////////valid Joi///////////////
+
   function validationAddUser() {
     let schema = Joi.object({
       name: Joi.string().allow(""),
@@ -78,7 +77,7 @@ export default function RegisterUser() {
   
     getSingleUserUpdate();
   }, []);
-  /////////////////function submit ///////////////////
+
   async function handleSubmit(e) {
     setErrorListUpdate("");
     e.preventDefault();

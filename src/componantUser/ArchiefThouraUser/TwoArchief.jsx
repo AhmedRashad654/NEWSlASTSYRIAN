@@ -1,8 +1,34 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../../context/Context";
+
 export default function TwoArchief() {
-  const { lastNews } = useUser();
-  const navigate = useNavigate();
+ const [lastNews, setLastNews] = useState([]);
+ const navigate = useNavigate();
+ useEffect(() => {
+   async function getAllLastNews() {
+     await axios
+       .get(
+         "https://syrianrevolution1.com/lists/search?category=archiefthoura&page=2&limit=4"
+       )
+       .then((result) => setLastNews(result?.data))
+       .catch((error) => console.log(error));
+   }
+   getAllLastNews();
+ }, [] );
+  //////////////////////////
+   const [alllastNews, setallLastNews] = useState([]);
+   useEffect(() => {
+     async function getAllLastNews() {
+       await axios
+         .get(
+           "https://syrianrevolution1.com/lists/search?category=archiefthoura&page=3&limit=10"
+         )
+         .then((result) => setallLastNews(result?.data))
+         .catch((error) => console.log(error));
+     }
+     getAllLastNews();
+   }, []);
   return (
     <div>
       <div className="demonstrations py-3">
@@ -10,10 +36,8 @@ export default function TwoArchief() {
           <div className="row" style={{ justifyContent: "space-between" }}>
             <div className="col-md-6">
               <div className="row gy-2">
-                {lastNews
-                  .filter((e) => e.category === "archiefthoura")
-                  .slice(4, 8)
-                  .map((e, i) => (
+                {lastNews.length > 0 &&
+                  lastNews.map((e, i) => (
                     <div className="col-md-6" key={i}>
                       <div className="news">
                         <div className="item">
@@ -21,7 +45,7 @@ export default function TwoArchief() {
                             <img
                               src={`https://syrianrevolution1.com/postImages/${e?.selfImg}`}
                               alt="mozaharat"
-                              className=" w-100 rounded-3"
+                              className=" w-100 rounded-3 fimg"
                             />
                           </div>
                           <div className="text">
@@ -49,8 +73,7 @@ export default function TwoArchief() {
             </div>
             <div className="lastSlider col-md-5">
               <div className=" muted p-2 overflow-hidden">
-                {lastNews
-                  .filter((e) => e.category === "archiefthoura")
+                {alllastNews
                   .map((e, i) => (
                     <div
                       className="row border-bottom pb-2 pt-2 border-2 overflow-hidden"

@@ -1,6 +1,6 @@
 import styles from "../styleDashboard/SuperVisor.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDashboard } from '../context/DashboardContext';
 import {
   faEye,
@@ -8,13 +8,11 @@ import {
   faPenToSquare,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import {useUser}  from '../context/Context'
+import {ContextUser}  from '../context/Context'
 import { useNavigate } from "react-router-dom";
 import DisplayTawsec from "./DisplayTawsec";
 import axios from "axios";
-
 export default function UsersDash() {
-  const [userDashboard, setUserDashboard] = useState([]);
   const [disTawsec, setDisTawsec] = useState();
   const [imageProfile, setImageProfile] = useState("");
   const { getIdConfideint } = useDashboard();
@@ -26,39 +24,29 @@ export default function UsersDash() {
   const [nofile, setFile] = useState(false);
   const [loading, setLoading] = useState(false);
   const [ report, setReport ] = useState( [] );
-  const [ onlyUser, setOnlyUSer ] = useState('0');
-  const [ onlyAdmin, setOnlyAdmin ] = useState( '0' )
-  const [onlySupervisor, setOnlySupervisor] = useState("0");
-  const { role } = useUser()
-  
-  ////////////////////get all user/////////////////
-  async function getAllUserDashboard() {
-    try {
-      const response = await fetch("https://syrianrevolution1.com/users/all", {
-        method: "GET",
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      });
-      const result = await response.json();
-      setOnlyUSer( result.data.filter( ( e ) => e.role === "user" )?.length );
-      setOnlySupervisor(result.data.filter((e) => e.role === "supervisor")?.length);
-      setOnlyAdmin(result.data.filter((e) => e.role === "admin")?.length);
-      setUserDashboard(result.data);
-      setReport( result.data );
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  /////////////get all user ///////////////////////
-  ///////////////////////////
+  const [searched,setSearched] = useState(false)
+  const {
+    role,
+    getAllUserDashboard,
+    onlySupervisor,
+    onlyAdmin,
+    onlyUser,
+    userDashboard,
+  } = useContext(ContextUser);
   function handleChangeImageProfile(e) {
     setImageProfile(e.target.files[0]);
   }
+
+  useEffect( () => {
+    if ( !searched ) {
+    setReport(userDashboard);
+      
+    }
+  }, [searched, userDashboard]);
   useEffect(() => {
     getAllUserDashboard();
-  }, []);
-  ///////////////////////////////////
+  }, [getAllUserDashboard]);
+
   async function handleTawsek(e) {
     e.preventDefault();
     if (!imageProfile) {
@@ -87,7 +75,7 @@ export default function UsersDash() {
         console.log(error);
       });
   }
-  /////////deleteUser///////////////////
+
   async function deleteUser() {
     try {
       setIdLoading(true);
@@ -105,7 +93,7 @@ export default function UsersDash() {
       const result = await response.json();
       if (result === "User Deleted Successfully") {
         getAllUserDashboard();
-     
+
         setIdLoading(false);
         setIdDelete("");
         setDelete("");
@@ -118,12 +106,19 @@ export default function UsersDash() {
   }
 
   const navigate = useNavigate();
-  //////////////search by name//////////////
-  const filter = (event) => {
+
+  const filter = ( event ) => {
+    if ( event.target.value ) {
+    setSearched(true);
+      
+    } else {
+    setSearched(false);
+      
+    }
     setReport(
       userDashboard.filter(
         (f) =>
-          f.name.includes(event.target.value) ||
+          f.username.includes(event.target.value) ||
           f.phone.includes(event.target.value)
       )
     );
@@ -131,11 +126,7 @@ export default function UsersDash() {
   return (
     <>
       <div className={styles.SuperVisor}>
-        <div
-          className={styles.useruseruser}
-         
-          
-        >
+        <div className={styles.useruseruser}>
           <div style={{ display: "flex", gap: "10px" }}>
             <p>المستخدمون/</p>
             <div>
@@ -169,7 +160,14 @@ export default function UsersDash() {
               <small> موثق </small>
             </div>
           </div>
-          <div style={{ display: "flex", gap: "10px" ,transform:'translatey(1px)'}} className={styles.youseef}>
+          <div
+            style={{
+              display: "flex",
+              gap: "10px",
+              transform: "translatey(1px)",
+            }}
+            className={styles.youseef}
+          >
             <div style={{ display: "flex", gap: "10px" }}>
               <p>عدد المستخدمين</p>
               <span className={styles.counter}>{onlyUser}</span>
@@ -252,27 +250,34 @@ export default function UsersDash() {
                           icon={faTrash}
                           className="bg-danger p-1 text-white"
                           style={{ cursor: "pointer" }}
-                          onClick={ () => {
-                             setIdDelete(user._id);
-                            if ( user?.role === "owner" ) {
-                              if ( role === "owner" ) {
-                                 setDelete(true);
+                          onClick={() => {
+                            setIdDelete(user._id);
+                            if (user?.role === "owner") {
+                              if (role === "owner") {
+                                setDelete(true);
                               } else {
-                                return alert ('لا يمكنك حذف هذا الحساب')
+                                return alert("لا يمكنك حذف هذا الحساب");
                               }
                             }
-                            if ( user?.role === "admin" ) {
-                              if ( role === "owner" ) {
-                                 setDelete(true);
-                              } else if(role === "admin" && user?._id === localStorage.getItem("idUserLogin")) {
-                                 setDelete(true);
+                            if (user?.role === "admin") {
+                              if (role === "owner") {
+                                setDelete(true);
+                              } else if (
+                                role === "admin" &&
+                                user?._id ===
+                                  localStorage.getItem("idUserLogin")
+                              ) {
+                                setDelete(true);
                               } else {
-                                return alert ('لا يمكنك حذف هذا الحساب')
-                             }
-                           }
-                            if ( user?.role === "user" || user?.role === "supervisor" ) {
-                             setDelete(true)
-                           }
+                                return alert("لا يمكنك حذف هذا الحساب");
+                              }
+                            }
+                            if (
+                              user?.role === "user" ||
+                              user?.role === "supervisor"
+                            ) {
+                              setDelete(true);
+                            }
                           }}
                         />
                         <FontAwesomeIcon
@@ -280,31 +285,33 @@ export default function UsersDash() {
                           className="bg-primary p-1 text-white"
                           style={{ cursor: "pointer" }}
                           onClick={() => {
-                            localStorage.setItem( "IdUpdateUser", user._id );
-                            if ( user?.role === "owner" ) {
-                              if ( role === "owner" ) {
-                                 navigate("/dashboard/updateuser");
-                              }else{
-                              return  alert("لا يمكنك التعديل علي هذا الحساب")
+                            localStorage.setItem("IdUpdateUser", user._id);
+                            if (user?.role === "owner") {
+                              if (role === "owner") {
+                                navigate("/dashboard/updateuser");
+                              } else {
+                                return alert("لا يمكنك التعديل علي هذا الحساب");
                               }
                             }
 
-
-                            if ( user?.role === "admin" ) {
-                              if ( role === "owner" ) {
+                            if (user?.role === "admin") {
+                              if (role === "owner") {
                                 navigate("/dashboard/updateuser");
-                              
-                             }else if (
-                               role === "admin" &&
-                               user?._id === localStorage.getItem("idUserLogin")
+                              } else if (
+                                role === "admin" &&
+                                user?._id ===
+                                  localStorage.getItem("idUserLogin")
                               ) {
                                 navigate("/dashboard/updateuser");
                               } else {
-                              return  alert ('لا يمكنك التعديل علي هذا الحساب')
-                             }
+                                return alert("لا يمكنك التعديل علي هذا الحساب");
+                              }
                             }
-                            if ( user?.role === "user" || user?.role === "supervisor" ) {
-                               navigate("/dashboard/updateuser");
+                            if (
+                              user?.role === "user" ||
+                              user?.role === "supervisor"
+                            ) {
+                              navigate("/dashboard/updateuser");
                             }
                           }}
                         />
@@ -312,7 +319,9 @@ export default function UsersDash() {
                           icon={faEye}
                           style={{ cursor: "pointer" }}
                           className="bg-primary p-1 text-white"
-                          onClick={()=>navigate(`/dashboard/singleUser/${user._id}`)}
+                          onClick={() =>
+                            navigate(`/dashboard/singleUser/${user._id}`)
+                          }
                         />
                       </td>
                     </tr>

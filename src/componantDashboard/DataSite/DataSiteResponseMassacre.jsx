@@ -31,13 +31,10 @@ export default function DataSiteResponseMassacre() {
     }
     getMartyr();
   }, [id]);
-
-  ///////////////////////
   function openImage(src) {
     setOpenAlert(true);
     setOpenAlertStore(src);
   }
-  //////////////////handleDelete/////////////////
   async function handleDeletePost() {
     setLoadingDel(true);
     await axios
@@ -62,8 +59,6 @@ export default function DataSiteResponseMassacre() {
       .catch((error) => console.log(error));
     setLoadingDel(false);
   }
-
-  /////////////////////////////
   return (
     <div className={styles.DisplayMartysDash}>
       {" "}

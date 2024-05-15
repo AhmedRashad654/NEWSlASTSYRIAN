@@ -1,6 +1,3 @@
-// import React from "react";
-// import styles from "../styleDashboard/Excel.module.css";
-// import ExcelDash from "./ExcelDash";
 import SearchExcel from "./SearchExcel";
 export default function AllExcelDash() {
   

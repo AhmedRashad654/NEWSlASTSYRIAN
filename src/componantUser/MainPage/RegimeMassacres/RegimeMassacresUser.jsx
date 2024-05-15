@@ -1,18 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './RegimeMassacresUser.css'
 import { useNavigate } from "react-router-dom";
-import { useUser } from '../../../context/Context';
+import axios from 'axios';
 export default function RegimeMassacresUser() {
+  const [ lastNews, setLastNews ] = useState( [] );
   const navigate = useNavigate()
-  const {lastNews} = useUser()
+  useEffect(() => {
+    async function getAllLastNews() {
+      await axios
+        .get(
+          "https://syrianrevolution1.com/lists/search?category=lastNews&limit=8"
+        )
+        .then((result) => setLastNews(result?.data))
+        .catch((error) => console.log(error));
+    }
+    getAllLastNews();
+  }, []);
   return (
     <>
       <section className="regime" style={{ marginBottom: "50px" }}>
         <div className="container py-2">
           <div className="row gy-3 mb-4">
             {lastNews
-              .filter((e) => e.category === "lastNews")
-              .slice(0, 8)
               .map((last, i) => (
                 <div className="col-md-3" key={i}>
                   <div className="image mb-2">
