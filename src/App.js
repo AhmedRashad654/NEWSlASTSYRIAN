@@ -62,6 +62,10 @@ import WathaaqFromUser from './componantDashboard/InformMessagesFromUser/Wathaaq
 import DisplayWathaaqFromUser from './componantDashboard/InformMessagesFromUser/DisplayWathaaqFromUser.jsx';
 import ProtectedRoutedOnUser from './componantDashboard/ProtectedRoutedOnUser.jsx';
 import BackgroundImage from './componantDashboard/BackgroundDashboard/BackgroundImage.jsx';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import SearchList from './componantUser/SearchGlobal/SearchList.jsx';
+import SearchChild from './componantUser/SearchGlobal/SearchChild.jsx';
+import SearchMascers from './componantUser/SearchGlobal/SearchMascers.jsx';
 
 
 const HomeUser = lazy( () => import( './componantUser/HomeUser.jsx' ) );
@@ -69,9 +73,9 @@ const HomeDashboard = lazy(() =>
   import("./componantDashboard/HomeDashboard.jsx")
 );
 export default function App() {
-    
+  let queryClient = new QueryClient()
   return (
- 
+    <QueryClientProvider client={queryClient}>
       <ContextDashboardProvider>
         <ContextProvider>
           <BrowserRouter>
@@ -107,6 +111,9 @@ export default function App() {
                 />
 
                 <Route path="WantedToSystem" element={<WantedToSystem />} />
+                <Route path="searchList" element={<SearchList />} />
+                <Route path="searchchild" element={<SearchChild />} />
+                <Route path="searchmascers" element={<SearchMascers />} />
                 <Route
                   path="dashboard"
                   element={
@@ -222,6 +229,6 @@ export default function App() {
           </BrowserRouter>
         </ContextProvider>
       </ContextDashboardProvider>
-
+    </QueryClientProvider>
   );
 }

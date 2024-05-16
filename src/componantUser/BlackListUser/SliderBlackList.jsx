@@ -1,21 +1,35 @@
 import React from "react";
 import Slider from "react-slick";
 import './SliderBlackList.css'
-
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../../context/Context";
+import { useQuery } from "react-query";
+import { useState } from "react";
+import axios from "axios";
 export default function SliderBlackList() {
-  const { lastNews } = useUser();
-  const navigate = useNavigate();
 
- 
+  const navigate = useNavigate();
+  const [num, setNum] = useState(10);
+  ///////////////////////////////////////////
+  function getAllLastNews() {
+    return axios.get(
+      `https://syrianrevolution1.com/lists/search?category=Traitors&limit=${num}`
+    );
+  }
+  const { data } = useQuery("Traitors3", getAllLastNews, {
+    cacheTime: 1800000,
+  });
+  
+ /////////////////////////////////
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
       <div
         className={className}
         style={{ ...style, display: "block" }}
-        onClick={onClick}
+        onClick={() => {
+          setNum((e) => e + 5);
+          onClick();
+        }}
       />
     );
   }
@@ -32,9 +46,7 @@ export default function SliderBlackList() {
   let settings = {
     dots: false,
     infinite:
-      lastNews.filter((e) => e.category === "Traitors").length > 1
-        ? true
-        : false,
+      data?.data.length > 1 ? true : false,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4,
@@ -76,24 +88,24 @@ export default function SliderBlackList() {
       <div className="container">
         <div className="slider-container px-4 position-relative">
           <Slider {...settings}>
-            {lastNews
-              .filter((e) => e.category === "Traitors")
-              .map((sym,i) => (
+            {data?.data
+         
+              .map((sym, i) => (
                 <div className="slide mx-2" key={i}>
                   <div className="image mb-2 mx-2 ">
                     <img
                       src={`https://syrianrevolution1.com/postImages/${sym.selfImg}`}
                       alt="symbolThowra"
                       className=" w-100 slide-image"
-                      style={{height:'250px'}}
+                      style={{ height: "250px" }}
                     />
                   </div>
                   <p className="px-2" style={{ textAlign: "center" }}>
                     {sym?.name ? sym?.name : ""}
                     <br />
-                    <small className="datedSlider">{
-                      sym?.createdAt && sym?.createdAt.slice(0,10)
-                    }</small>
+                    <small className="datedSlider">
+                      {sym?.createdAt && sym?.createdAt.slice(0, 10)}
+                    </small>
                     <button
                       className=" d-inline-block mx-1  rounded-3 btu"
                       onClick={() => navigate(`/newsDetails/${sym._id}`)}

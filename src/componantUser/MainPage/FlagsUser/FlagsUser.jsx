@@ -1,34 +1,31 @@
 import axios from 'axios';
-import React, { useEffect, useState }  from 'react'
+import React  from 'react'
+import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 export default function FlagsUser() {
  
-  const [lastNews, setLastNews] = useState([]);
+
   const navigate = useNavigate();
-  useEffect(() => {
-    async function getAllLastNews() {
-      await axios
+
+     function getAllLastNews() {
+      return axios
         .get(
           "https://syrianrevolution1.com/lists/search?category=lastNews&page=4&limit=4"
         )
-        .then((result) => setLastNews(result?.data))
-        .catch((error) => console.log(error));
     }
-    getAllLastNews();
-  }, [] );
+  const {data:data1} = useQuery('one',getAllLastNews)
   ///////////////////////////////////
-    const [lastNewsAll, setLastNewsAll] = useState([]);
-    useEffect(() => {
-      async function getAllLastNews() {
-        await axios
+
+
+ function getAllLastNews1() {
+        return axios
           .get(
             "https://syrianrevolution1.com/lists/search?category=lastNews&page=5&limit=10"
           )
-          .then((result) => setLastNewsAll(result?.data))
-          .catch((error) => console.log(error));
+    
       }
       getAllLastNews();
-    }, []);
+const {data:data2} = useQuery('two',getAllLastNews1)
   return (
     <div>
       <div className="demonstrations py-3">
@@ -36,7 +33,7 @@ export default function FlagsUser() {
           <div className="row" style={{ justifyContent: "space-between" }}>
             <div className="col-md-6">
               <div className="row gy-2">
-                {lastNews.map((e, i) => (
+                {data1?.data.map((e, i) => (
                   <div className="col-md-6" key={i}>
                     <div className="news">
                       <div className="item">
@@ -70,37 +67,36 @@ export default function FlagsUser() {
             </div>
             <div className="lastSlider col-md-5">
               <div className=" muted p-2 overflow-hidden">
-                {lastNewsAll
-                  .map((e, i) => (
-                    <div
-                      key={i}
-                      className="row border-bottom pb-2 pt-2 border-2 overflow-hidden"
-                      style={{ backgroundColor: "#ECECEC" }}
-                    >
-                      <div className="col-md-4">
-                        <img
-                          src={`https://syrianrevolution1.com/postImages/${e?.selfImg}`}
-                          alt="lastNews"
-                          className="w-100"
-                        />
-                      </div>
-                      <div className="col-md-8">
-                        <p>
-                          {e?.name}
-                          <br />
-                          <button
-                            className="btu d-inline-block mx-1 px-3 rounded-3"
-                            onClick={() => navigate(`/newsDetails/${e._id}`)}
-                          >
-                            المزيد
-                          </button>
-                          <small className="datedSingle">
-                            {e?.createdAt && e?.createdAt.slice(0, 10)}
-                          </small>
-                        </p>
-                      </div>
+                {data2?.data.map((e, i) => (
+                  <div
+                    key={i}
+                    className="row border-bottom pb-2 pt-2 border-2 overflow-hidden"
+                    style={{ backgroundColor: "#ECECEC" }}
+                  >
+                    <div className="col-md-4">
+                      <img
+                        src={`https://syrianrevolution1.com/postImages/${e?.selfImg}`}
+                        alt="lastNews"
+                        className="w-100"
+                      />
                     </div>
-                  ))}
+                    <div className="col-md-8">
+                      <p>
+                        {e?.name}
+                        <br />
+                        <button
+                          className="btu d-inline-block mx-1 px-3 rounded-3"
+                          onClick={() => navigate(`/newsDetails/${e._id}`)}
+                        >
+                          المزيد
+                        </button>
+                        <small className="datedSingle">
+                          {e?.createdAt && e?.createdAt.slice(0, 10)}
+                        </small>
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

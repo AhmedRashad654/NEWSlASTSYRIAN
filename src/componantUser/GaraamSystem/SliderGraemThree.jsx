@@ -1,18 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Slider from 'react-slick'
 import './SliderGramaamSystem.css'
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../../context/Context';
+import axios from 'axios';
+import { useQuery } from 'react-query';
 export default function SliderGraemThree() {
   const navigate = useNavigate();
-  const { child } = useUser();
+  const [num, setNum] = useState(10);
+  function getAllLastNews() {
+    return axios.get(
+      `https://syrianrevolution1.com/childData/search?category=adetaine&responsibleAuthority=system&page=2&limit=${num}`
+    );
+  }
+  const { data } = useQuery("adentaieSystemSlider", getAllLastNews, {
+    cacheTime: 1800000,
+  });
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
       <div
         className={className}
-        style={{ ...style, display: "block",color:'gray' }}
-        onClick={onClick}
+        style={{ ...style, display: "block", color: "gray" }}
+        onClick={() => {
+          setNum((e) => e + 5);
+          onClick();
+        }}
       />
     );
   }
@@ -29,9 +41,7 @@ export default function SliderGraemThree() {
   let settings = {
     dots: false,
     infinite:
-      child.filter(
-        (e) => e.category === "adetaine" && e.responsibleAuthority === "system"
-      ).length > 1
+      data?.data.length > 1
         ? true
         : false,
     speed: 500,
@@ -75,13 +85,9 @@ export default function SliderGraemThree() {
       <div className="container">
         <div className="slider-container px-4 position-relative">
           <Slider {...settings}>
-            {child &&
-              child
-                .filter(
-                  (e) =>
-                    e.category === "adetaine" &&
-                    e.responsibleAuthority === "system"
-                )
+            {
+              data?.data
+             
                 .map((e, i) => (
                   <div key={i} className="slide mx-2 text-center">
                     <div className="image mb-2 mx-2 ">

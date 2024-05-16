@@ -1,19 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import './SliderBlackList.css'
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../../context/Context";
+import { useQuery } from "react-query";
+import axios from "axios";
 export default function SliderBlackListTwo() {
- const { lastNews } = useUser();
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  const [num, setNum] = useState(10);
+  ///////////////////////////////////////////
+  function getAllLastNews() {
+    return axios.get(
+      `https://syrianrevolution1.com/lists/search?category=mogramharb&limit=${num}`
+    );
+  }
+  const { data } = useQuery("mogramharb4", getAllLastNews, {
+    cacheTime: 1800000,
+  });
+  /////////////////////////////////////
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
       <div
         className={className}
-        style={{ ...style, display: "block",color:'gray' }}
-        onClick={onClick}
+        style={{ ...style, display: "block", color: "gray" }}
+        onClick={() => {
+          setNum((e) => e + 5);
+          onClick();
+        }}
       />
     );
   }
@@ -30,9 +44,7 @@ export default function SliderBlackListTwo() {
   let settings = {
     dots: false,
     infinite:
-      lastNews.filter((e) => e.category === "mogramharb").length > 1
-        ? true
-        : false,
+      data?.data.length > 1 ? true : false,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4,
@@ -74,10 +86,9 @@ export default function SliderBlackListTwo() {
       <div className="container">
         <div className="slider-container px-4 position-relative">
           <Slider {...settings}>
-            {lastNews
-              .filter((e) => e.category === "mogramharb")
+            {data?.data
               .map((sym, i) => (
-                <div className="slide mx-2">
+                <div className="slide mx-2" key={i}>
                   <div className="image mb-2 mx-2 ">
                     <img
                       src={`https://syrianrevolution1.com/postImages/${sym.selfImg}`}

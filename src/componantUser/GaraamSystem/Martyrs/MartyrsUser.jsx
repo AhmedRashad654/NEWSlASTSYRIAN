@@ -1,16 +1,19 @@
 import React from 'react'
 import './MartyrsUser.css'
-
 import { useNavigate } from 'react-router-dom';
 import SliderGraemSliderOne from '../SliderGraemSliderOne';
-import { useUser } from '../../../context/Context';
-
-
-
+import axios from 'axios';
+import { useQuery } from 'react-query';
 export default function MartyrsUser() {
-
-  const {child} =  useUser()
   const navigate = useNavigate();
+    function getAllLastNews() {
+    return axios.get(
+      "https://syrianrevolution1.com/childData/search?category=martyr&responsibleAuthority=system&limit=8"
+    );
+  }
+  const { data } = useQuery( "martyrSystem", getAllLastNews, {
+    cacheTime:1800000
+  });
   return (
     <>
       <section className="martyrs" id="fourtwo">
@@ -19,14 +22,7 @@ export default function MartyrsUser() {
             <h3 className=" text-danger">الشهداء</h3>
           </div>
           <div className="row gy-3 mb-4">
-            {child &&
-              child
-                .filter(
-                  (e) =>
-                    e.category === "martyr" &&
-                    e.responsibleAuthority === "system"
-                )
-                .slice(0, 8)
+            {data?.data
                 .map((e, i) => (
                   <div className="col-md-3" key={i}>
                     <div className="image mb-2">

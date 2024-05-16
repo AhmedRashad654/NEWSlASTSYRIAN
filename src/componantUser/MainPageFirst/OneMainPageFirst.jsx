@@ -1,28 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import '../MainPage/RegimeMassacres/RegimeMassacresUser.css'
+import React from "react";
+import "../MainPage/RegimeMassacres/RegimeMassacresUser.css";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
-
+import axios from "axios";
+import { useQuery } from "react-query";
 
 export default function OneMainPageFirst() {
-  const navigate = useNavigate()
-  const  [lastNews,setLastNews] = useState([])
-  useEffect( () => {
-    async function getAllLastNews() {
-  await axios
-    .get("https://syrianrevolution1.com/lists/search?category=lastNews&limit=4")
-    .then((result) => setLastNews(result?.data))
-    .catch((error) => console.log(error));
-      
-    }
-    getAllLastNews()
-},[])
+  const navigate = useNavigate();
+  function getAllLastNews() {
+    return axios.get(
+      "https://syrianrevolution1.com/lists/search?category=lastNews&limit=4"
+    );
+  }
+  let { data } = useQuery( 'lastNews', getAllLastNews)
   return (
     <>
       <section className="regime" style={{ marginBottom: "50px" }}>
         <div className="container py-2">
           <div className="row gy-3 mb-4">
-            {lastNews
+            {data?.data
               .filter((e) => e.category === "lastNews")
               .slice(0, 4)
               .map((last, i) => (
@@ -54,6 +49,5 @@ export default function OneMainPageFirst() {
         </div>
       </section>
     </>
-  ); 
+  );
 }
-

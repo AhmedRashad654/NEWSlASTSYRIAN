@@ -1,9 +1,30 @@
+import axios from "axios";
 import React from "react";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../../context/Context";
+
 export default function FlagBlackList() {
   const navigate = useNavigate();
-  const { lastNews } = useUser();
+
+  function getAllLastNews() {
+    return axios.get(
+      "https://syrianrevolution1.com/lists/search?category=Traitors&limit=4"
+    );
+  }
+  getAllLastNews();
+  const { data: data1 } = useQuery("Traitors", getAllLastNews, {
+    cacheTime: 1800000,
+  });
+  //////////////////////////////////////
+  function getAllLastNews1() {
+    return axios.get(
+      "https://syrianrevolution1.com/lists/search?category=Traitors&page=2&limit=10"
+    );
+  }
+  getAllLastNews();
+  const { data: data2 } = useQuery("Traitors2", getAllLastNews1, {
+    cacheTime: 1800000,
+  });
 
   return (
     <div id="threetwo">
@@ -12,10 +33,9 @@ export default function FlagBlackList() {
           <div className="row" style={{ justifyContent: "space-between" }}>
             <div className="col-md-6">
               <div className="row gy-2">
-                {lastNews
-                  .filter((e) => e.category === "Traitors")
-                  .slice(0, 4)
-                  .map((e,i) => (
+                {data1?.data
+             
+                  .map((e, i) => (
                     <div className="col-md-6" key={i}>
                       <div className="news">
                         <div className="item">
@@ -23,7 +43,7 @@ export default function FlagBlackList() {
                             <img
                               src={`https://syrianrevolution1.com/postImages/${e?.selfImg}`}
                               alt="lastNews"
-                              className=" w-100 rounded-3"
+                              className=" w-100 rounded-3 fimg"
                             />
                           </div>
                           <div className="text">
@@ -38,9 +58,8 @@ export default function FlagBlackList() {
                               >
                                 المزيد
                               </button>
-                              <small className="datedSingle">{
-                                e?.createdAt && e?.createdAt.slice(0,10)
-                              }
+                              <small className="datedSingle">
+                                {e?.createdAt && e?.createdAt.slice(0, 10)}
                               </small>
                             </p>
                           </div>
@@ -52,8 +71,7 @@ export default function FlagBlackList() {
             </div>
             <div className="lastSlider col-md-5">
               <div className=" muted p-2 overflow-hidden">
-                {lastNews
-                  .filter((e) => e.category === "Traitors")
+                {data2?.data
                   .map((e) => (
                     <div
                       className="row border-bottom pb-2 pt-2 border-2 overflow-hidden"
@@ -76,7 +94,9 @@ export default function FlagBlackList() {
                           >
                             المزيد
                           </button>
-                          <small className="datedSingle">{ e?.createdAt && e?.createdAt.slice(0,10)}</small>
+                          <small className="datedSingle">
+                            {e?.createdAt && e?.createdAt.slice(0, 10)}
+                          </small>
                         </p>
                       </div>
                     </div>

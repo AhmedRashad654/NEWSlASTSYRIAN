@@ -1,19 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import "./SliderGramaamQasad.css";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../../context/Context";
+import { useQuery } from "react-query";
+import axios from "axios";
 export default function SliderGraamQasad() {
   const navigate = useNavigate();
- 
-  const {masc}  =useUser()
+  const [num, setNum] = useState(10);
+  function getMascersSystem1() {
+    return axios.get(
+      `https://syrianrevolution1.com/massacres/search?responsibleAuthority=qasad&limit=${num}`
+    );
+  }
+
+  const { data } = useQuery("oneMascersQasad1", getMascersSystem1);
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
       <div
         className={className}
-        style={{ ...style, display: "block" ,color:'gray'}}
-        onClick={onClick}
+        style={{ ...style, display: "block", color: "gray" }}
+        onClick={() => {
+          setNum((e) => e + 5);
+          onClick();
+        }}
       />
     );
   }
@@ -22,17 +32,14 @@ export default function SliderGraamQasad() {
     return (
       <div
         className={className}
-        style={{ ...style, display: "block",color:'gray' }}
+        style={{ ...style, display: "block", color: "gray" }}
         onClick={onClick}
       />
     );
   }
   let settings = {
     dots: false,
-    infinite:
-      masc.filter((e) => e.responsibleAuthority === "qasad").length > 1
-        ? true
-        : false,
+    infinite: data?.data.length > 1 ? true : false,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4,
@@ -74,32 +81,31 @@ export default function SliderGraamQasad() {
       <div className="container">
         <div className="slider-container px-4 position-relative">
           <Slider {...settings}>
-            {masc &&
-              masc
-                .filter((e) => e.responsibleAuthority === "qasad")
-                .map((e, i) => (
-                  <div key={i} className="slide mx-2 text-center">
-                    <div className="image mb-2 mx-2 ">
-                      <img
-                        src={`https://syrianrevolution1.com/postImages/${e.profileImage}`}
-                        alt="mascers"
-                        className=" w-100 slide-image"
-                        style={{height:'250px'}}
-                      />
-                    </div>
-                    <p className="px-2">
-                      {e?.title ? e?.title : ""}
-                      <br />
-                      <small className="datedSlider">{ e?.createdAt && e?.createdAt.slice(0,10)}</small>
-                      <button
-                        className="btu d-inline-block mx-1 px-3 rounded-3"
-                        onClick={() => navigate(`/NewsDetailsMascers/${e._id}`)}
-                      >
-                        المزيد
-                      </button>
-                    </p>
-                  </div>
-                ))}
+            {data?.data.map((e, i) => (
+              <div key={i} className="slide mx-2 text-center">
+                <div className="image mb-2 mx-2 ">
+                  <img
+                    src={`https://syrianrevolution1.com/postImages/${e.profileImage}`}
+                    alt="mascers"
+                    className=" w-100 slide-image"
+                    style={{ height: "250px" }}
+                  />
+                </div>
+                <p className="px-2">
+                  {e?.title ? e?.title : ""}
+                  <br />
+                  <small className="datedSlider">
+                    {e?.createdAt && e?.createdAt.slice(0, 10)}
+                  </small>
+                  <button
+                    className="btu d-inline-block mx-1 px-3 rounded-3"
+                    onClick={() => navigate(`/NewsDetailsMascers/${e._id}`)}
+                  >
+                    المزيد
+                  </button>
+                </p>
+              </div>
+            ))}
           </Slider>
         </div>
       </div>

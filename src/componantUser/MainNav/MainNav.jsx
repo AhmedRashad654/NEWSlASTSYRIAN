@@ -7,10 +7,7 @@ import LoginUser from "../LoginUser/LoginUser";
 import { ContextUser } from "../../context/Context";
 import SuccessRegister from "../SuccessRegister/SuccessRegister";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
-import {
-  faCircleXmark,
-  faEye
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark, faEye } from "@fortawesome/free-solid-svg-icons";
 import RestNewPassword from "../ResetNewPassword/RestNewPassword";
 import imgone from "../../image/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png";
 import UpdateLogin from "../UpdateLogin";
@@ -22,7 +19,6 @@ export default function MainNav() {
   const {
     openAuth,
     setOpenAuth,
-    setSearchGlobal,
     numberDate,
     notificationData,
     getAllNotificationDate,
@@ -33,34 +29,37 @@ export default function MainNav() {
 
   const navigate = useNavigate();
 
-
   function handleLogout() {
     localStorage.clear();
     window.location.reload();
   }
   useEffect(() => {
-
     if (localStorage.getItem("token")) {
       getNotification();
     }
   }, [getNotification]);
 
-
   useEffect(() => {
     getAllNotificationDate();
-  }, [getAllNotificationDate] );
- 
-
-  function changeSearch(e) {
-    const value = e.target.value;
-    setSearchGlobal(value);
-    if (value !== "") {
-      navigate("/searchglobal");
-    } else {
-      navigate("/lastNews");
+  }, [getAllNotificationDate]);
+  //////////////////////////////////////////
+  const handleSelectChange = (event) => {
+    const value = event.target.value;
+    switch (value) {
+      case "option1":
+        navigate("/searchlist");
+        break;
+      case "option2":
+        navigate("/searchchild");
+        break;
+      case "option3":
+        navigate("/searchmascers");
+        break;
+      default:
+        break;
     }
-  }
-
+  };
+  
   return (
     <>
       <div className="container">
@@ -147,13 +146,23 @@ export default function MainNav() {
               </div>
             </div>
             <div className="uio">
-              <input
-                type="text"
+              <select
                 className="form-control"
-                placeholder="ابحث هنا"
-                onChange={changeSearch}
-                style={{ Width: "100%" }}
-              />
+                style={{ width: "100%" }}
+                onChange={handleSelectChange}
+              >
+                <option>ابحث عن</option>
+                <option value="option1">
+                  {" "}
+                  اخر الاخبار و الارشيف و الرموز والخونة
+                </option>
+                <option value="option2">
+                  {" "}
+                  الثهداء و المعتقلين و المفقودين
+                </option>
+
+                <option value="option3"> الجرائم</option>
+              </select>
             </div>
             <div className="   search d-flex justify-content-between align-items-center position-relative">
               {localStorage.getItem("token") ? (
@@ -246,8 +255,7 @@ export default function MainNav() {
                     notificationData.length > 0 &&
                     notificationData
                       .filter((e) => e?.data?.isAccepted === true)
-                      .slice()
-                      .reverse()
+
                       .map((e) => (
                         <p
                           className="  note position-relative bg-white p-2 pe-5 m-0 mb-2"
@@ -259,7 +267,7 @@ export default function MainNav() {
                           }}
                         >
                           <span>
-                            <small>   تمت اضافة منشور جديد بعنوان </small>
+                            <small> تمت اضافة منشور جديد بعنوان </small>
                             <small style={{ color: "#2d2dc3" }}>
                               {e?.type === "add child data post"
                                 ? e?.data?.name.slice(0, 60)
@@ -296,7 +304,9 @@ export default function MainNav() {
                                 ? "الشهداء"
                                 : e?.data?.category === "adetaine"
                                 ? "المعتقلين"
-                                : e?.data?.category === "missing" ?"المفقودين" :''}{" "}
+                                : e?.data?.category === "missing"
+                                ? "المفقودين"
+                                : ""}{" "}
                               ){" "}
                             </small>
                           </span>

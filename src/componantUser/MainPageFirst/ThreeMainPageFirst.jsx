@@ -1,22 +1,23 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 export default function ThreeMainPageFirst() {
-    const [ mascer, setMascer ] = useState( [] );
+
      const navigate = useNavigate();
-      useEffect(() => {
-        async function getMascers() {
-          await axios
+
+      function getMascers() {
+       return axios
             .get(
               "https://syrianrevolution1.com/massacres/search?responsibleAuthority=system&limit=4"
             )
-            .then((result) => {
-              setMascer(result.data);
-            })
-            .catch((error) => console.log(error));
-        }
-        getMascers();
-      }, [] );
+        
+  }
+  const { data } = useQuery( 'mascers', getMascers, {
+    cacheTime:900000
+  })
+      
+
    
   return (
     <div>
@@ -28,7 +29,7 @@ export default function ThreeMainPageFirst() {
       <section className="regime" style={{ marginBottom: "100px" }}>
         <div className="container py-2">
           <div className="row gy-3 mb-4">
-            {mascer.map((e, i) => (
+            {data?.data.map((e, i) => (
               <div className="col-md-3" key={i}>
                 <div className="image mb-2">
                   <img
@@ -36,6 +37,7 @@ export default function ThreeMainPageFirst() {
                     alt="home"
                     className=" w-100 rounded-3 fimg
                     "
+                    fetchPriority='high'
                   />
                 </div>
                 <p>

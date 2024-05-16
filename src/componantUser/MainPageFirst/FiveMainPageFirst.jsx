@@ -1,20 +1,22 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 export default function FiveMainPageFirst() {
     const navigate = useNavigate()
-      const [marek, setMarek] = useState([]);
-      useEffect(() => {
-        async function getAllLastNews() {
-          await axios
+
+
+   function getAllLastNews() {
+      return   axios
             .get(
               "https://syrianrevolution1.com/lists/search?category=maarek&limit=4"
             )
-            .then((result) => setMarek(result?.data))
-            .catch((error) => console.log(error));
+     
         }
         getAllLastNews();
-      }, []);
+  const { data } = useQuery( 'marek', getAllLastNews, {
+    cacheTime:1100000
+  })
   return (
     <div>
       <div className="container">
@@ -28,41 +30,40 @@ export default function FiveMainPageFirst() {
             <div className="row gy-3 mb-5">
               <div className="col-md-12">
                 <div className="row gy-2">
-                  {marek.length > 0 && marek
-                    .map((e, i) => (
-                      <div className="col-md-3" key={i}>
-                        <div className="news">
-                          <div className="item">
-                            <div className="image">
-                              <img
-                                src={`https://syrianrevolution1.com/postImages/${e?.selfImg}`}
-                                alt="mozaharat"
-                                            className="rounded-3 fimg"
-                                            width="100%"
-                                            height="100%"
-                              />
-                            </div>
-                            <div className="text">
-                              <p style={{ marginTop: "10px" }}>
-                                {e?.name}
-                                <br />
-                                <button
-                                  className="btu d-inline-block mx-1 px-3 rounded-3"
-                                  onClick={() =>
-                                    navigate(`/newsDetails/${e?._id}`)
-                                  }
-                                >
-                                  المزيد
-                                </button>
-                                <small className="datedSingle">
-                                  {e?.createdAt && e?.createdAt.slice(0, 10)}
-                                </small>
-                              </p>
-                            </div>
+                  {data?.data.map((e, i) => (
+                    <div className="col-md-3" key={i}>
+                      <div className="news">
+                        <div className="item">
+                          <div className="image">
+                            <img
+                              src={`https://syrianrevolution1.com/postImages/${e?.selfImg}`}
+                              alt="mozaharat"
+                              className="rounded-3 fimg"
+                              width="100%"
+                              height="100%"
+                            />
+                          </div>
+                          <div className="text">
+                            <p style={{ marginTop: "10px" }}>
+                              {e?.name}
+                              <br />
+                              <button
+                                className="btu d-inline-block mx-1 px-3 rounded-3"
+                                onClick={() =>
+                                  navigate(`/newsDetails/${e?._id}`)
+                                }
+                              >
+                                المزيد
+                              </button>
+                              <small className="datedSingle">
+                                {e?.createdAt && e?.createdAt.slice(0, 10)}
+                              </small>
+                            </p>
                           </div>
                         </div>
                       </div>
-                    ))}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

@@ -1,9 +1,29 @@
 import React  from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../../context/Context";
+import axios from "axios";
+import { useQuery } from "react-query";
+
 export default function FlagBlackListTwo() {
   const navigate = useNavigate();
-const { lastNews } = useUser();
+  function getAllLastNews() {
+    return axios.get(
+      "https://syrianrevolution1.com/lists/search?category=mogramharb&limit=4"
+    );
+  }
+  getAllLastNews();
+  const { data: data1 } = useQuery("mogramharb", getAllLastNews, {
+    cacheTime: 1800000,
+  });
+  //////////////////////////////////////
+  function getAllLastNews1() {
+    return axios.get(
+      "https://syrianrevolution1.com/lists/search?category=mogramharb&page=2&limit=10"
+    );
+  }
+  getAllLastNews();
+  const { data: data2 } = useQuery("mogramharb2", getAllLastNews1, {
+    cacheTime: 1800000,
+  });
 
   return (
     <div id="threethree">
@@ -12,9 +32,9 @@ const { lastNews } = useUser();
           <div className="row" style={{ justifyContent: "space-between" }}>
             <div className="col-md-6">
               <div className="row gy-2">
-                {lastNews
-                  .filter((e) => e.category === "mogramharb")
-                  .slice(0, 4)
+                {data1?.data
+               
+              
                   .map((e, i) => (
                     <div className="col-md-6" key={i}>
                       <div className="news">
@@ -38,7 +58,9 @@ const { lastNews } = useUser();
                               >
                                 المزيد
                               </button>
-                              <small className="datedSingle">{ e?.createdAt && e?.createdAt.slice(0,10)}</small>
+                              <small className="datedSingle">
+                                {e?.createdAt && e?.createdAt.slice(0, 10)}
+                              </small>
                             </p>
                           </div>
                         </div>
@@ -49,12 +71,12 @@ const { lastNews } = useUser();
             </div>
             <div className="lastSlider col-md-5">
               <div className=" muted p-2 overflow-hidden">
-                {lastNews
-                  .filter((e) => e.category === "mogramharb")
-                  .map((e,i) => (
+                {data2?.data
+           
+                  .map((e, i) => (
                     <div
                       className="row border-bottom pb-2 pt-2 border-2 overflow-hidden"
-                      style={ { backgroundColor: "#ECECEC" } }
+                      style={{ backgroundColor: "#ECECEC" }}
                       key={i}
                     >
                       <div className="col-md-4">
@@ -74,7 +96,9 @@ const { lastNews } = useUser();
                           >
                             المزيد
                           </button>
-                          <small className="datedSingle">{ e?.createdAt && e?.createdAt.slice(0,10)}</small>
+                          <small className="datedSingle">
+                            {e?.createdAt && e?.createdAt.slice(0, 10)}
+                          </small>
                         </p>
                       </div>
                     </div>

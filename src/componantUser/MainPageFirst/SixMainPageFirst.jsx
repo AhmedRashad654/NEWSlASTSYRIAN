@@ -1,20 +1,22 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 export default function SixMainPageFirst() {
-    const [ symbol, setSymbol ] = useState( [] );
+   
     const navigate = useNavigate()
-        useEffect(() => {
-          async function getAllLastNews() {
-            await axios
+   
+       function getAllLastNews() {
+        return axios
               .get(
                 "https://syrianrevolution1.com/lists/search?category=symbols&limit=4"
               )
-              .then((result) => setSymbol(result?.data))
-              .catch((error) => console.log(error));
+          
           }
           getAllLastNews();
-        }, []);
+  const { data } = useQuery( 'symbol', getAllLastNews, {
+  cacheTime:1800000
+})
   return (
     <div>
       <div className="container">
@@ -28,7 +30,7 @@ export default function SixMainPageFirst() {
             <div className="row gy-3 mb-5">
               <div className="col-md-12">
                 <div className="row gy-2">
-                  {symbol
+                  {data?.data
                     .filter((e) => e.category === "symbols")
                     .slice(0, 4)
                     .map((e, i) => (

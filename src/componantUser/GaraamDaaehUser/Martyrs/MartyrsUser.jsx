@@ -2,11 +2,21 @@ import React from "react";
 import "./MartyrsUser.css";
 import { useNavigate } from "react-router-dom";
 import SliderDaaedTwo from "../SliderDaaedTwo";
-import { useUser } from "../../../context/Context";
+import { useQuery } from "react-query";
+import axios from "axios";
+
 
 export default function MartyrsUser() {
-  const {child} = useUser()
+
   const navigate = useNavigate();
+   function getAllLastNews() {
+     return axios.get(
+       "https://syrianrevolution1.com/childData/search?category=martyr&responsibleAuthority=daaeh&limit=8"
+     );
+   }
+   const { data } = useQuery("martyr1Daaeh", getAllLastNews, {
+     cacheTime: 1800000,
+   });
   return (
     <>
       <section className="martyrs" id="seventwo">
@@ -15,15 +25,8 @@ export default function MartyrsUser() {
             <h3 className=" text-danger">الشهداء</h3>
           </div>
           <div className="row gy-3 mb-4">
-            {child &&
-              child
-                .filter(
-                  (e) =>
-                    e.category === "martyr" &&
-                    e.responsibleAuthority === "daaeh"
-                )
-                .slice(0, 8)
-                .map((e, i) => (
+            {
+              data?.data.map((e, i) => (
                   <div className="col-md-3" key={i}>
                     <div className="image mb-2">
                       <img
