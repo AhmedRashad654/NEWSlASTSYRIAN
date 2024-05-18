@@ -56,6 +56,10 @@ export default function SingleUser() {
             <p> {single?.government} </p>
           </div>
           <div>
+            <h6> رمز الدخول : </h6>
+            <p> {single?.key} </p>
+          </div>
+          <div>
             <h6> الدور : </h6>
             <p> {single?.role} </p>
           </div>

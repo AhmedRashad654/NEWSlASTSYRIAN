@@ -10,18 +10,23 @@ import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 export default function SearchMascers() {
     const [ name, setName ] = useState( "" );
-      const navigate = useNavigate();
+  const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
   function searchList() {
     return axios.get(
       `https://syrianrevolution1.com/massacres/searchTitle?title=${name}`
     );
   }
-  const { data, isLoading, refetch } = useQuery("searchmascers", searchList, {
+  const { data, refetch } = useQuery("searchmascers", searchList, {
     enabled: false,
+    onSettled: () => {
+      setIsLoading(false);
+    },
   });
-  console.log(data);
+
   function handlesearch() {
-    if (name !== "") {
+    if ( name !== "" ) {
+        setIsLoading(true);
       refetch();
     }
     }

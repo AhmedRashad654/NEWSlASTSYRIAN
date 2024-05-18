@@ -8,7 +8,7 @@ import { ContextUser, useUser } from '../context/Context';
 import one from "../image/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png";
 export default function DisplayDestainessDash() {
   const { setOpenAlert, setOpenAlertStore } = useContext( ContextUser );
-  const {getMartyr,role} =  useUser()
+  const {role} =  useUser()
   const [martyrDisplay, setMartyrDataDisplay] = useState([]);
   const [loading, setLoading] = useState(false);
   const [ loadingAccepted, setLoadingAccepted ] = useState( false );
@@ -53,7 +53,7 @@ export default function DisplayDestainessDash() {
         if (response.data === "childData Deleted Successfully") {
           setLoading(false);
           navigate("/dashboard/detaineesdash");
-          getMartyr();
+      
         }
       })
       .catch((error) => console.log(error));
@@ -76,7 +76,7 @@ export default function DisplayDestainessDash() {
         if (response.data.success === "data updated successfully") {
           setLoading(false);
           navigate("/dashboard/detaineesdash");
-          getMartyr();
+    
         }
       })
       .catch((error) => console.log(error));

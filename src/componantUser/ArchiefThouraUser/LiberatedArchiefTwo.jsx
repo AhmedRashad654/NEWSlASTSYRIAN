@@ -16,7 +16,7 @@ export default function LiberatedArchiefTwo() {
         )
    
     }
-const {data} = useQuery('mareek',getAllLastNews)
+const {data} = useQuery('mareek2',getAllLastNews)
   return (
     <div id="onethreefour">
       <div className="demonstrations py-3">

@@ -150,11 +150,12 @@ tr:nth-child(even) {background-color:rgb(232, 231, 231);}
   .lastSlider::-webkit-scrollbar-thumb {
     background: rgb(188, 90, 90);
   }
-  @media(min-width:800px){
-  .fimg{
-    height: 190px;
+    .fimg{
+    height: 195px;
     
   }
+  @media(min-width:800px){
+
   .gimg{
     height: 450px;
   }

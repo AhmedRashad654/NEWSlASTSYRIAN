@@ -6,24 +6,36 @@ import { useQuery } from "react-query";
 import axios from "axios";
 export default function SliderGraamQasad() {
   const navigate = useNavigate();
-  const [num, setNum] = useState(10);
-  function getMascersSystem1() {
+  const [page, setPage] = useState(1);
+  function getMascersSystem1(page = 1) {
     return axios.get(
-      `https://syrianrevolution1.com/massacres/search?responsibleAuthority=qasad&limit=${num}`
+      `https://syrianrevolution1.com/massacres/search?responsibleAuthority=qasad&page=${page}`
     );
   }
 
-  const { data } = useQuery("oneMascersQasad1", getMascersSystem1);
+    const { data } = useQuery(
+      ["oneMascersQasad1", page],
+      () => getMascersSystem1(page),
+      {
+        keepPreviousData: true,
+        cacheTime: 1800000,
+      }
+    );
+    ///////////////////////
+    const handleNextPage = () => {
+      setPage((prevPage) => prevPage + 1);
+    };
+
+    const handlePreviousPage = () => {
+      setPage((prevPage) => Math.max(prevPage - 1, 1));
+    };
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
       <div
         className={className}
         style={{ ...style, display: "block", color: "gray" }}
-        onClick={() => {
-          setNum((e) => e + 5);
-          onClick();
-        }}
+        onClick={onClick}
       />
     );
   }
@@ -107,6 +119,24 @@ export default function SliderGraamQasad() {
               </div>
             ))}
           </Slider>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <button onClick={handleNextPage} className="btn btn-secondary">
+              +
+            </button>
+            <button
+              onClick={handlePreviousPage}
+              disabled={page === 1}
+              className="btn btn-secondary"
+            >
+              -
+            </button>
+          </div>
         </div>
       </div>
     </div>

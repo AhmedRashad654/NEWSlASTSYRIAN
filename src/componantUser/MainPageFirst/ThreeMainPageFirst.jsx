@@ -37,7 +37,7 @@ export default function ThreeMainPageFirst() {
                     alt="home"
                     className=" w-100 rounded-3 fimg
                     "
-                    fetchPriority='high'
+                    fetchpriority='high'
                   />
                 </div>
                 <p>

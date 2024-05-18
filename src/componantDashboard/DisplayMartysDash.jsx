@@ -9,7 +9,7 @@ import one from '../image/png-clipart-computer-icons-avatar-icon-design-avatar-h
 export default function DisplayMartysDash() {
    const { setOpenAlert, setOpenAlertStore } =
     useContext( ContextUser );
-  const { getMartyr, role } = useUser();
+  const {  role } = useUser();
   const [ martyrDisplay, setMartyrDataDisplay ] = useState( [] );
   const [ loading, setLoading ] = useState( false );
   const [ loadingAccepted, setLoadingAccepted ] = useState( false )
@@ -54,7 +54,7 @@ export default function DisplayMartysDash() {
         if (response.data === "childData Deleted Successfully") {
           setLoading(false);
           navigate("/dashboard/martyrs");
-          getMartyr();
+     
         }
       })
       .catch((error) => console.log(error));
@@ -81,7 +81,6 @@ export default function DisplayMartysDash() {
         if (response.data.success === "data updated successfully") {
           setLoading(false);
           navigate("/dashboard/martyrs");
-          getMartyr();
         }
       })
       .catch((error) => console.log(error));

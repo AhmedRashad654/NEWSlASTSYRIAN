@@ -26,7 +26,7 @@ export default function NewsDetails() {
     const [archief, setArchirf] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
-      axios.get("https://syrianrevolution1.com/lists/userview").then((result) => {
+      axios.get(`https://syrianrevolution1.com/lists/userview`).then((result) => {
         setArchirf(result.data.data);
       }).catch((error)=>console.log(error));
     }, [] );

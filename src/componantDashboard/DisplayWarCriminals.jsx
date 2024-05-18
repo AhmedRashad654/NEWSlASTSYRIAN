@@ -2,13 +2,13 @@ import React, { useEffect, useState ,useContext} from 'react'
 import styles from "../styleDashboard/DisplayMartysDash.module.css";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { ContextUser, useUser } from "../context/Context";
+import { ContextUser} from "../context/Context";
 import one from "../image/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFile, faFileZipper } from '@fortawesome/free-solid-svg-icons';
 export default function DisplayHonorCard() {
   const { setOpenAlert, setOpenAlertStore ,role} = useContext( ContextUser );
-   const { getList } = useUser();
+ 
     const [martyrDisplay, setMartyrDataDisplay] = useState([]);
     const [loading, setLoading] = useState(false);
   const [ loadingAccepted, setLoadingAccepted ] = useState( false );
@@ -56,7 +56,7 @@ export default function DisplayHonorCard() {
           if (response.data === "list Deleted Successfully") {
             setLoading(false);
             navigate("/dashboard/warcriminals");
-            getList();
+       
           }
         })
         .catch((error) => console.log(error));
@@ -80,7 +80,7 @@ export default function DisplayHonorCard() {
           if (response.data.success === "data updated successfully") {
             setLoading(false);
             navigate("/dashboard/warcriminals");
-            getList();
+          
           }
           console.log(response);
         })

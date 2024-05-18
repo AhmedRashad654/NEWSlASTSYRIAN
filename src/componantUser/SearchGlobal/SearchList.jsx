@@ -9,23 +9,29 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 export default function SearchList() {
-    const [ name, setName ] = useState( "" );
-      const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const navigate = useNavigate();
+  const [isLoading,setIsLoading] = useState(false)
   function searchList() {
     return axios.get(
       `https://syrianrevolution1.com/lists/searchName?name=${name}`
     );
   }
-  const { data, isLoading, refetch } = useQuery("searchLists", searchList, {
+  const { data, refetch } = useQuery("searchLists", searchList, {
     enabled: false,
+    onSettled: () => {
+      setIsLoading(false); 
+    },
   });
-  console.log(data);
+
   function handlesearch() {
-    if (name !== "") {
+   
+    if ( name !== "" ) {
+      setIsLoading(true);
       refetch();
     }
-    }
-  
+  }
+
   return (
     <>
       <MainNav />

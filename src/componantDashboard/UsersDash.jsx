@@ -1,18 +1,20 @@
 import styles from "../styleDashboard/SuperVisor.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useEffect, useState } from "react";
-import { useDashboard } from '../context/DashboardContext';
+import { useDashboard } from "../context/DashboardContext";
 import {
   faEye,
-  faMagnifyingGlass,
   faPenToSquare,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import {ContextUser}  from '../context/Context'
+import { ContextUser } from "../context/Context";
 import { useNavigate } from "react-router-dom";
 import DisplayTawsec from "./DisplayTawsec";
 import axios from "axios";
+import { useQuery } from "react-query";
+import SearchUserDash from "./SearchUserDash";
 export default function UsersDash() {
+  const [choiceArchife, setChoiceArchife] = useState("display");
   const [disTawsec, setDisTawsec] = useState();
   const [imageProfile, setImageProfile] = useState("");
   const { getIdConfideint } = useDashboard();
@@ -23,30 +25,53 @@ export default function UsersDash() {
   const [idloading, setIdLoading] = useState(false);
   const [nofile, setFile] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [ report, setReport ] = useState( [] );
-  const [searched,setSearched] = useState(false)
-  const {
-    role,
-    getAllUserDashboard,
-    onlySupervisor,
-    onlyAdmin,
-    onlyUser,
-    userDashboard,
-  } = useContext(ContextUser);
+  const { role } = useContext(ContextUser);
+  ////////////////////////////////////
+  const [onlyUser, setOnlyUser] = useState("0");
+  const [onlyAdmin, setOnlyAdmin] = useState("0");
+  const [onlySupervisor, setOnlySupervisor] = useState("0");
+  //////////////////////////////
   function handleChangeImageProfile(e) {
     setImageProfile(e.target.files[0]);
   }
 
-  useEffect( () => {
-    if ( !searched ) {
-    setReport(userDashboard);
-      
+  /////////////////////////////
+  function getAllUser(page = 1) {
+    return axios.get(`https://syrianrevolution1.com/users/all?page=${page}`, {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    });
+  }
+  /////////////////////////
+  const [page, setPage] = useState(1);
+  const { data, isLoading, refetch } = useQuery(
+    ["userDashboard", page],
+    () => getAllUser(page),
+    {
+      keepPreviousData: true,
     }
-  }, [searched, userDashboard]);
-  useEffect(() => {
-    getAllUserDashboard();
-  }, [getAllUserDashboard]);
+  );
+  ///////////////////////
+  const handleNextPage = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
+  const handlePreviousPage = () => {
+    setPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+  ///////////////////////
+
+  useEffect(() => {
+    if (data) {
+      setOnlyUser(data?.data?.data.filter((e) => e.role === "user").length);
+      setOnlySupervisor(
+        data?.data?.data.filter((e) => e.role === "supervisor").length
+      );
+      setOnlyAdmin(data?.data?.data.filter((e) => e.role === "admin").length);
+    }
+  }, [data]);
+  ////////////////handle Tawsek///////////////////
   async function handleTawsek(e) {
     e.preventDefault();
     if (!imageProfile) {
@@ -67,7 +92,7 @@ export default function UsersDash() {
         setLoading(false);
         if (result.data.user._id) {
           setOpenTawsk("");
-          getAllUserDashboard();
+          refetch();
         }
       })
       .catch((error) => {
@@ -75,7 +100,7 @@ export default function UsersDash() {
         console.log(error);
       });
   }
-
+  ////////////////delete user///////////////////
   async function deleteUser() {
     try {
       setIdLoading(true);
@@ -91,9 +116,11 @@ export default function UsersDash() {
         }
       );
       const result = await response.json();
-      if (result === "User Deleted Successfully") {
-        getAllUserDashboard();
-
+      if (
+        result === "User Deleted Successfully" ||
+        result === "Cannot read property 'role' of null"
+      ) {
+        refetch();
         setIdLoading(false);
         setIdDelete("");
         setDelete("");
@@ -106,23 +133,16 @@ export default function UsersDash() {
   }
 
   const navigate = useNavigate();
-
-  const filter = ( event ) => {
-    if ( event.target.value ) {
-    setSearched(true);
-      
-    } else {
-    setSearched(false);
-      
-    }
-    setReport(
-      userDashboard.filter(
-        (f) =>
-          f.username.includes(event.target.value) ||
-          f.phone.includes(event.target.value)
-      )
+  if (isLoading)
+    return (
+      <div
+        className="spinner-border"
+        role="status"
+        style={{ position: "absolute", left: "50%", top: "50%" }}
+      >
+        <span className="sr-only">Loading...</span>
+      </div>
     );
-  };
   return (
     <>
       <div className={styles.SuperVisor}>
@@ -182,32 +202,42 @@ export default function UsersDash() {
             </div>
           </div>
         </div>
-        <div className={styles.search}>
-          <FontAwesomeIcon icon={faMagnifyingGlass} className={styles.sd} />
-          <input
-            className="form-control"
-            placeholder="بحث باستخدام الاسم"
-            type="text"
-            onChange={filter}
-          />
+        {/* ///////////////// */}
+        <div className={styles.filterAndDisplay}>
+          <div className={styles.filter}>
+            <span
+              onClick={() => setChoiceArchife("display")}
+              className={choiceArchife === "display" ? styles.active : ""}
+            >
+              عرض
+            </span>
+            <span
+              onClick={() => setChoiceArchife("search")}
+              className={choiceArchife === "search" ? styles.active : ""}
+            >
+              بحث
+            </span>
+          </div>
         </div>
-        <div className={styles.allUser}>
-          <div className={styles.containerTable}>
-            <table>
-              <thead>
-                <tr>
-                  <th>الاسم</th>
-                  <th>رقم الهاتف</th>
-                  <th>الدور</th>
+        {/* //////////////////// */}
+        {choiceArchife === "search" && <SearchUserDash />}
+        {choiceArchife === "display" && (
+          <div className={styles.allUser}>
+            <div className={styles.containerTable}>
+              <table>
+                <thead>
+                  <tr>
+                    <th>الاسم</th>
+                    <th>رقم الهاتف</th>
+                    <th>الدور</th>
 
-                  <th>توثيق الحساب</th>
+                    <th>توثيق الحساب</th>
 
-                  <th>الحالة</th>
-                </tr>
-              </thead>
-              <tbody>
-                {report &&
-                  report.map((user, index) => (
+                    <th>الحالة</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data?.data?.data.map((user, index) => (
                     <tr key={index}>
                       <td>{user.username}</td>
                       <td>{user.phone}</td>
@@ -319,17 +349,55 @@ export default function UsersDash() {
                           icon={faEye}
                           style={{ cursor: "pointer" }}
                           className="bg-primary p-1 text-white"
-                          onClick={() =>
-                            navigate(`/dashboard/singleUser/${user._id}`)
-                          }
+                          onClick={() => {
+                            if (user?.role === "owner") {
+                              if (role === "owner") {
+                                navigate(`/dashboard/singleUser/${user._id}`);
+                              } else {
+                                return alert("لا يمكنك  رؤية هذا الحساب");
+                              }
+                            }
+                            if (user?.role === "admin") {
+                              if (role === "owner") {
+                                navigate(`/dashboard/singleUser/${user._id}`);
+                              } else if (
+                                role === "admin" &&
+                                user?._id ===
+                                  localStorage.getItem("idUserLogin")
+                              ) {
+                                navigate(`/dashboard/singleUser/${user._id}`);
+                              } else {
+                                return alert("لا يمكنك  رؤية هذا الحساب");
+                              }
+                            }
+                               if (
+                                 user?.role === "user" ||
+                                 user?.role === "supervisor"
+                               ) {
+                                 navigate(`/dashboard/singleUser/${user._id}`);
+                               }
+                          }}
                         />
                       </td>
                     </tr>
                   ))}
-              </tbody>
-            </table>
+                </tbody>
+              </table>
+              <div className="mr-4">
+                <button onClick={handleNextPage} className="btn btn-primary">
+                  +
+                </button>
+                <button
+                  onClick={handlePreviousPage}
+                  disabled={page === 1}
+                  className="btn btn-primary"
+                >
+                  -
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
         <button
           className={`${styles.add} btn btn-success`}
           onClick={() => navigate("/dashboard/adduser")}
@@ -339,7 +407,7 @@ export default function UsersDash() {
         {disTawsec === "taws" && (
           <DisplayTawsec
             setDisTawsec={setDisTawsec}
-            getAllUserDashboard={getAllUserDashboard}
+            getAllUserDashboard={refetch}
           />
         )}
         {openTawsek && (

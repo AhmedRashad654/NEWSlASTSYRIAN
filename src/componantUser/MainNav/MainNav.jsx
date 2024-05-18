@@ -26,7 +26,6 @@ export default function MainNav() {
     getNotification,
     number,
   } = useContext(ContextUser);
-
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -158,7 +157,7 @@ export default function MainNav() {
                 </option>
                 <option value="option2">
                   {" "}
-                  الثهداء و المعتقلين و المفقودين
+                  الشهداء و المعتقلين و المفقودين
                 </option>
 
                 <option value="option3"> الجرائم</option>
@@ -255,10 +254,10 @@ export default function MainNav() {
                     notificationData.length > 0 &&
                     notificationData
                       .filter((e) => e?.data?.isAccepted === true)
-
-                      .map((e) => (
+                      .map((e,i) => (
                         <p
                           className="  note position-relative bg-white p-2 pe-5 m-0 mb-2"
+                          key={i}
                           style={{
                             display: "flex",
                             justifyContent: "space-between",
@@ -336,8 +335,8 @@ export default function MainNav() {
                     ? notification?.child
                         .slice()
                         .reverse()
-                        .map((e) => (
-                          <p className="  note position-relative bg-white p-2 pe-5 m-0 mb-2">
+                        .map((e,i) => (
+                          <p className="  note position-relative bg-white p-2 pe-5 m-0 mb-2" key={i}>
                             {e?.notification}
                           </p>
                         ))
@@ -346,8 +345,8 @@ export default function MainNav() {
                     ? notification?.lists
                         .slice()
                         .reverse()
-                        .map((e) => (
-                          <p className=" note position-relative bg-white p-2 pe-5 m-0 mb-2">
+                        .map((e,i) => (
+                          <p className=" note position-relative bg-white p-2 pe-5 m-0 mb-2" key={i}>
                             {e?.notification}
                           </p>
                         ))
@@ -357,8 +356,8 @@ export default function MainNav() {
                     ? notification?.massacres
                         .slice()
                         .reverse()
-                        .map((e) => (
-                          <p className="note  position-relative bg-white p-2 pe-5 m-0 mb-2">
+                        .map((e,i) => (
+                          <p className="note  position-relative bg-white p-2 pe-5 m-0 mb-2" key={i}>
                             {e?.notification}
                           </p>
                         ))

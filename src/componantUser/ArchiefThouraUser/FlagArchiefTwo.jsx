@@ -13,7 +13,7 @@ export default function FlagArchiefTwo() {
          "https://syrianrevolution1.com/lists/search?category=maarek&page=2&limit=4"
        )
   }
-  const { data: data1 } = useQuery( 'one', getAllLastNews, {
+  const { data: data1 } = useQuery( 'one10', getAllLastNews, {
     cacheTime:900000
   })
 
@@ -28,7 +28,7 @@ export default function FlagArchiefTwo() {
        )
 
    }
-const {data:data2} = useQuery('two',getAllLastNews1)
+const {data:data2} = useQuery('two10',getAllLastNews1)
 
   return (
     <div>

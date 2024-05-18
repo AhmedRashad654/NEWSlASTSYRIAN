@@ -1,28 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import "./SliderSymbolThoura.css";
 import axios from "axios";
-
+import { useQuery } from "react-query";
 
 export default function SliderTakrem() {
-     const [lastNews, setLastNews] = useState([]);
-     const [num, setNum] = useState(5);
-     const navigate = useNavigate();
-     useEffect(() => {
-       async function getAllLastNews() {
-         await axios
-           .get(
-             `https://syrianrevolution1.com/lists/search?category=takrem&limit=${num}`
-           )
-           .then((result) => {
-             setLastNews(result?.data);
-           })
-           .catch((error) => console.log(error));
-       }
-       getAllLastNews();
-     }, [num]);
+  const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  ///////////////////////////////////////////
+  function getAllLastNews(page = 1) {
+    return axios.get(
+      `https://syrianrevolution1.com/lists/search?category=takrem&page=${page}`
+    );
+  }
+  const { data } = useQuery(
+    ["takremSliders654", page],
+    () => getAllLastNews(page),
+    {
+      keepPreviousData: true,
+      cacheTime: 1800000,
+    }
+  );
+  ///////////////////////
+  const handleNextPage = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
+  const handlePreviousPage = () => {
+    setPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
 
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -30,10 +37,7 @@ export default function SliderTakrem() {
       <div
         className={className}
         style={{ ...style, display: "block", color: "gray" }}
-        onClick={() => {
-          setNum((e) => e + 5);
-          onClick();
-        }}
+        onClick={onClick}
       />
     );
   }
@@ -42,15 +46,14 @@ export default function SliderTakrem() {
     return (
       <div
         className={className}
-        style={{ ...style, display: "block",color:'gray' }}
+        style={{ ...style, display: "block", color: "gray" }}
         onClick={onClick}
       />
     );
   }
   let settings = {
     dots: false,
-    infinite:
-      lastNews.length > 1 ? true : false,
+    infinite: data?.data.length > 1 ? true : false,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4,
@@ -92,34 +95,50 @@ export default function SliderTakrem() {
       <div className="container">
         <div className="slider-container px-4 position-relative">
           <Slider {...settings}>
-            {lastNews
-              .filter((e) => e.category === "takrem")
-              .map((sym, i) => (
-                <div className="slide mx-2" key={i}>
-                  <div className="image mb-2 mx-2 ">
-                    <img
-                      src={`https://syrianrevolution1.com/postImages/${sym.selfImg}`}
-                      alt="symbolThowra"
-                      className=" w-100 slide-image"
-                      style={{height:'250px'}}
-                    />
-                  </div>
-                  <p className="px-2 text-center">
-                    {sym?.name ? sym?.name : ""}
-                    <br />
-                    <small className="datedSlider">
-                      {sym?.createdAt && sym?.createdAt.slice(0,10)}
-                    </small>
-                    <button
-                      className="d-inline-block mx-1 px-3 rounded-3 btu"
-                      onClick={() => navigate(`/newsDetails/${sym._id}`)}
-                    >
-                      المزيد
-                    </button>
-                  </p>
+            {data?.data.map((sym, i) => (
+              <div className="slide mx-2" key={i}>
+                <div className="image mb-2 mx-2 ">
+                  <img
+                    src={`https://syrianrevolution1.com/postImages/${sym.selfImg}`}
+                    alt="symbolThowra"
+                    className=" w-100 slide-image"
+                    style={{ height: "250px" }}
+                  />
                 </div>
-              ))}
+                <p className="px-2 text-center">
+                  {sym?.name ? sym?.name : ""}
+                  <br />
+                  <small className="datedSlider">
+                    {sym?.createdAt && sym?.createdAt.slice(0, 10)}
+                  </small>
+                  <button
+                    className="d-inline-block mx-1 px-3 rounded-3 btu"
+                    onClick={() => navigate(`/newsDetails/${sym._id}`)}
+                  >
+                    المزيد
+                  </button>
+                </p>
+              </div>
+            ))}
           </Slider>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <button onClick={handleNextPage} className="btn btn-secondary">
+              +
+            </button>
+            <button
+              onClick={handlePreviousPage}
+              disabled={page === 1}
+              className="btn btn-secondary"
+            >
+              -
+            </button>
+          </div>
         </div>
       </div>
     </div>

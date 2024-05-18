@@ -38,7 +38,7 @@ export default function Header() {
           src={`https://syrianrevolution1.com/backgroundImages/${allBackground[0]?.image}`}
           alt="mainpicture"
           className="head-img"
-          fetchpriority="high"
+          fetchpriority='high'
         />
       </div>
 

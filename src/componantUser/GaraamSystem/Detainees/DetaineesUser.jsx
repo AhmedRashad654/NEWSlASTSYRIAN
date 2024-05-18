@@ -13,7 +13,8 @@ export default function DetaineesUser() {
   }
   const { data } = useQuery("adentaieSystem", getAllLastNews, {
     cacheTime: 1800000,
-  });
+  } );
+  console.log(data)
   return (
     <>
       <section className="detainees" id="fourfour">

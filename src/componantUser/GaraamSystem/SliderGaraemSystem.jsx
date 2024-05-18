@@ -6,23 +6,34 @@ import axios from "axios";
 import { useQuery } from "react-query";
 export default function SliderGaraemSystem() {
   const navigate = useNavigate();
-  const [num, setNum] = useState(10);
-  function getMascersSystem() {
+  const [page, setPage] = useState(1);
+  function getMascersSystem(page = 1) {
     return axios.get(
-      `https://syrianrevolution1.com/massacres/search?responsibleAuthority=system&page=2&limit=${num}`
+      `https://syrianrevolution1.com/massacres/search?responsibleAuthority=system&page=${page}`
     );
   }
-  const { data } = useQuery("oneMascersSystem", getMascersSystem);
+    const { data} = useQuery(
+      ["oneMascersSystem", page],
+      () => getMascersSystem(page),
+      {
+        keepPreviousData: true,
+      }
+    );
+    ///////////////////////
+    const handleNextPage = () => {
+      setPage((prevPage) => prevPage + 1);
+    };
+
+    const handlePreviousPage = () => {
+      setPage((prevPage) => Math.max(prevPage - 1, 1));
+    };
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
       <div
         className={className}
         style={{ ...style, display: "block", color: "gray" }}
-        onClick={() => {
-          setNum((e) => e + 5);
-          onClick();
-        }}
+        onClick={onClick}
       />
     );
   }
@@ -80,33 +91,50 @@ export default function SliderGaraemSystem() {
       <div className="container">
         <div className="slider-container px-4 position-relative">
           <Slider {...settings}>
-            {
-              data?.data.map((e, i) => (
-                <div key={i} className="slide mx-2 text-center">
-                  <div className="image mb-2 mx-2 ">
-                    <img
-                      src={`https://syrianrevolution1.com/postImages/${e.profileImage}`}
-                      alt="mascers"
-                      className=" w-100 slide-image"
-                      style={{ height: "250px" }}
-                    />
-                  </div>
-                  <p className="px-2">
-                    {e?.title ? e?.title : ""}
-                    <br />
-                    <small className="datedSlider">
-                      {e?.createdAt && e?.createdAt.slice(0, 10)}
-                    </small>
-                    <button
-                      className="btu d-inline-block mx-1 px-3 rounded-3"
-                      onClick={() => navigate(`/NewsDetailsMascers/${e._id}`)}
-                    >
-                      المزيد
-                    </button>
-                  </p>
+            {data?.data.map((e, i) => (
+              <div key={i} className="slide mx-2 text-center">
+                <div className="image mb-2 mx-2 ">
+                  <img
+                    src={`https://syrianrevolution1.com/postImages/${e.profileImage}`}
+                    alt="mascers"
+                    className=" w-100 slide-image"
+                    style={{ height: "250px" }}
+                  />
                 </div>
-              ))}
+                <p className="px-2">
+                  {e?.title ? e?.title : ""}
+                  <br />
+                  <small className="datedSlider">
+                    {e?.createdAt && e?.createdAt.slice(0, 10)}
+                  </small>
+                  <button
+                    className="btu d-inline-block mx-1 px-3 rounded-3"
+                    onClick={() => navigate(`/NewsDetailsMascers/${e._id}`)}
+                  >
+                    المزيد
+                  </button>
+                </p>
+              </div>
+            ))}
           </Slider>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <button onClick={handleNextPage} className="btn btn-secondary">
+              +
+            </button>
+            <button
+              onClick={handlePreviousPage}
+              disabled={page === 1}
+              className="btn btn-secondary"
+            >
+              -
+            </button>
+          </div>
         </div>
       </div>
     </div>

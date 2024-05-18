@@ -10,7 +10,7 @@ export default function TwoArchief() {
       "https://syrianrevolution1.com/lists/search?category=archiefthoura&page=2&limit=4"
     );
   }
-  const { data: data1 } = useQuery("one", getAllLastNews);
+  const { data: data1 } = useQuery("onear", getAllLastNews);
 
 
   //////////////////////////
@@ -23,7 +23,7 @@ export default function TwoArchief() {
         )
   
     }
-const {data:data2} =  useQuery('two',getAllLastNews1())
+const {data:data2} =  useQuery('twoar',getAllLastNews1())
 
   return (
     <div>

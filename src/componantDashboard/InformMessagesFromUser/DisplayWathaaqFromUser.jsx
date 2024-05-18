@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styles from "../../styleDashboard/DisplayMartysDash.module.css";
 import axios from "axios";
 import {  useNavigate, useParams } from "react-router-dom";
-import { ContextUser, useUser} from "../../context/Context";
+import { ContextUser} from "../../context/Context";
 import one from "../../image/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png";
 import { useContext } from 'react';
 import { faFile, faFileZipper } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +11,7 @@ export default function DisplayWathaaqFromUser() {
   const { setOpenAlert, setOpenAlertStore,role } = useContext(ContextUser);
   const [martyrDisplay, setMartyrDataDisplay] = useState([]);
   const [ loading, setLoading ] = useState( false )
-  const {getList} =  useUser()
+
   const navigate = useNavigate()
   const { id } = useParams();
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function DisplayWathaaqFromUser() {
         if (response.data === "list Deleted Successfully") {
           setLoading(false);
           navigate("/dashboard/wathaaqfromuser");
-          getList();
+   
         }
       })
       .catch((error) => console.log(error));

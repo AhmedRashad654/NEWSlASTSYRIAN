@@ -50,7 +50,6 @@ import AllExcelDash from './componantDashboard/AllExcelDash.jsx';
 import ExeclSheet from './componantDashboard/ExeclSheet.jsx';
 import MainPageFirst from './componantUser/MainPageFirst/MainPageFirst.jsx';
 import PrivacyPolicy from './componantUser/PrivacyPolicy/PrivacyPolicy.jsx';
-import SearchGlobal from './componantUser/SearchGlobal/SearchGlobal.jsx';
 import SingleUser from './componantDashboard/SingleUser.jsx';
 import MessageDashboard from './componantDashboard/MessageDashboard.jsx';
 import PaypalDashboard from './componantDashboard/PaypalDashboard.jsx';
@@ -98,7 +97,7 @@ export default function App() {
                   <Route path="graemdashuser" element={<GaraamDaaehUser />} />
                   <Route path="/success/:id" element={<UpdatedPassword />} />
                   <Route path="privacypolicy" element={<PrivacyPolicy />} />
-                  <Route path="searchglobal" element={<SearchGlobal />} />
+                
                 </Route>
                 <Route path="newsDetails/:id" element={<NewsDetails />} />
                 <Route

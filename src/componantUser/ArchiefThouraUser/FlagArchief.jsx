@@ -14,7 +14,7 @@ export default function FlagArchief() {
          "https://syrianrevolution1.com/lists/search?category=mozaharat&page=2&limit=4"
        )
   }
-  const {data:data1} = useQuery('one',getAllLastNews)
+  const {data:data1} = useQuery('one65',getAllLastNews)
   
 
  //////////////////////////
@@ -27,7 +27,7 @@ export default function FlagArchief() {
        )
    
    }
-  const { data: data2 } = useQuery( "teo", getAllLastNews1, {
+  const { data: data2 } = useQuery( "teo654", getAllLastNews1, {
     cacheTime:1800000
   });
 

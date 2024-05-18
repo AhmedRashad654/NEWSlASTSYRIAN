@@ -13,7 +13,7 @@ export default function LiberatedArchief() {
        )
   
    }
-  const { data } = useQuery( 'all', getAllLastNews, {
+  const { data } = useQuery( 'all23', getAllLastNews, {
   cacheTime:600000
 })
   return (

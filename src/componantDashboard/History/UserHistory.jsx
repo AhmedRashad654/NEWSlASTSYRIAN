@@ -1,31 +1,55 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./History.module.css";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../../context/Context";
+import { ContextUser} from "../../context/Context";
 import axios from "axios";
+import { getAllHistory } from "./MainHistory";
+import { useQuery } from "react-query";
 export default function UserHistory() {
-  const { history, getAllHistory } = useUser();
+  ///////////////////////////////////
+  const { page } = useContext(ContextUser);
+  ////////////////////////////
+  const { data, isLoading, refetch } = useQuery(
+    ["historyData", page],
+    () => getAllHistory(page),
+    {
+      keepPreviousData: true,
+    }
+  );
+
   const navigate = useNavigate();
-   async function handleDelete(id) {
-     await axios
-       .delete(`https://syrianrevolution1.com/sgel/${id}`, {
-         headers: {
-           Authorization: localStorage.getItem("token"),
-         },
-       })
-       .then((result) => {
-         if (result?.data === "History Item Deleted Successfully") {
-           getAllHistory();
-         }
-       })
-       .catch((error) => console.log(error));
-   }
+  async function handleDelete(id) {
+    await axios
+      .delete(`https://syrianrevolution1.com/sgel/${id}`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
+      .then((result) => {
+        if (result?.data === "History Item Deleted Successfully") {
+          refetch();
+        }
+      })
+      .catch((error) => console.log(error));
+  }
+
+  ////////////////////
+  ////////////////////
+  if (isLoading)
+    return (
+      <div
+        className="spinner-border"
+        role="status"
+        style={{ position: "absolute", left: "50%", top: "50%" }}
+      >
+        <span className="sr-only">Loading...</span>
+      </div>
+    );
   return (
     <div className={styles.AllHistory}>
-      {history?.length > 0 &&
-        history
-          .slice()
-          .reverse()
+      {data?.data?.data.length > 0 &&
+        data?.data?.data
+
           .filter((e) =>
             e?.upUser
               ? e?.upUser?.role === "user"
@@ -349,7 +373,7 @@ export default function UserHistory() {
                   حذف
                 </button>
               ) : (
-             ""
+                ""
               )}
             </div>
           ))}

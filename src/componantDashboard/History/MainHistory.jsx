@@ -1,13 +1,34 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./History.module.css";
 import AllHistory from "./AllHistory";
 import AdminHistory from "./AdminHistory";
 import UserHistory from "./UserHistory";
 import HistorySupervisor from "./HistorySupervisor";
-import { useUser } from "../../context/Context";
+import { ContextUser } from "../../context/Context";
+import axios from "axios";
 
+
+////////////////////////////////////////////////
+export function getAllHistory(page = 1) {
+  return axios.get(`https://syrianrevolution1.com/sgel?page=${page}&limit=10`, {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+}
+////////////////////////////////
 export default function MainHistory() {
-  const { role } = useUser();
+  ///////////////////////////////////
+  const { role, page, setPage } = useContext(ContextUser);
+ 
+
+  /////////////////////////////////////
+  const handleNextPage = () => setPage((prevPage) => prevPage + 1);
+  const handlePreviousPage = () =>
+    setPage((prevPage) => Math.max(prevPage - 1, 1));
+
+  ////////////////////////////////
+
   const [choice, setChoice] = useState(
     role === "owner"
       ? "all"
@@ -17,7 +38,6 @@ export default function MainHistory() {
       ? "user"
       : ""
   );
-
 
   return (
     <div className={styles.MainHistory}>
@@ -74,6 +94,19 @@ export default function MainHistory() {
       {choice === "admin" && <AdminHistory />}
       {choice === "supervisor" && <HistorySupervisor />}
       {choice === "user" && <UserHistory />}
+      <div>
+        <button onClick={handleNextPage} className="btn btn-primary">
+          +
+        </button>
+
+        <button
+          onClick={handlePreviousPage}
+          disabled={page === 1}
+          className="btn btn-primary"
+        >
+          -
+        </button>
+      </div>
     </div>
   );
 }

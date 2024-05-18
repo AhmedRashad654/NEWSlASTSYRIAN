@@ -19,7 +19,7 @@
   position: relative;
 }
 .allUser{
-  height: 300px;
+  height: 350px;
   overflow: auto;
 }
   .allUser::-webkit-scrollbar {
@@ -60,54 +60,7 @@ width: 20px;
 height: 20px;
 border-radius: 50%;
 }
-.counter{
-  background-color:red;
-  width:30px;
-  padding:19px;
-  transform:translateY(-10px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-/* /////////////////////////////////// */
-.useruseruser{
-display: flex;
-justify-content: space-between;
-  background-color: #0d3a5a;
-  padding: 10px 20px 0 0;
-  color: white;
-  transform: translateY(20px);
-  font-size: 14px;
-height: 40px;
-}
-@media(max-width:940px){
-  .useruseruser{
-    flex-direction: column;
-    gap: 13px;
-    height: 65px;
-  }
-  .search {
-  margin-top: 80px;
-}
-.counter{
-  width: 20px;
-  padding: 10px;
-}
-.youseef p{
-  font-size: 7px !important;
-}
-}
-/* ///////////////////////////// */
-.useruseruser  span{
-width: 14px;
-height: 14px;
-}
-@media (max-width: 900px) {
-  .useruseruser p {
-    font-size: 10px;
-  }
-}
-/* //////////////// */
+
 .filterAndDisplay {
   width: 90%;
   margin: auto;
@@ -119,14 +72,39 @@ height: 14px;
 .filter span {
   padding: 5px 0;
   text-align: center;
-  width: 100px;
+  width: 150px;
   display: inline-block;
   background-color: #e2dede;
   color: black;
   margin-left: 1px;
   cursor: pointer;
-  font-size: 15px;
 }
 .filter .active {
   background-color: #A5C3EB;
+}
+
+.inputSearch{
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  width: 80%;
+ transform: translateY(10px);
+  margin: auto;
+}
+.inputSearch input::placeholder{
+  font-size: 10px;
+}
+.inputSearch label{
+  font-size: 10px;
+}
+@media(max-width:800px){
+  .inputSearch{
+    flex-direction: column;
+  }
+}
+.table{
+ min-width:1500px ;
+}
+.table th ,td{
+  width: fit-content;
 }

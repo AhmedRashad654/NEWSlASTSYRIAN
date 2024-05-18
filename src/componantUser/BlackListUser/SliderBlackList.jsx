@@ -8,17 +8,30 @@ import axios from "axios";
 export default function SliderBlackList() {
 
   const navigate = useNavigate();
-  const [num, setNum] = useState(10);
+  const [page, setPage] = useState(1);
   ///////////////////////////////////////////
   function getAllLastNews() {
     return axios.get(
-      `https://syrianrevolution1.com/lists/search?category=Traitors&limit=${num}`
+      `https://syrianrevolution1.com/lists/search?category=Traitors&page=${page}`
     );
   }
-  const { data } = useQuery("Traitors3", getAllLastNews, {
-    cacheTime: 1800000,
-  });
-  
+
+     const { data } = useQuery(
+       ["Traitors3", page],
+       () => getAllLastNews(page),
+       {
+         keepPreviousData: true,
+         cacheTime: 1800000,
+       }
+     );
+     ///////////////////////
+     const handleNextPage = () => {
+       setPage((prevPage) => prevPage + 1);
+     };
+
+     const handlePreviousPage = () => {
+       setPage((prevPage) => Math.max(prevPage - 1, 1));
+     };
  /////////////////////////////////
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -26,10 +39,7 @@ export default function SliderBlackList() {
       <div
         className={className}
         style={{ ...style, display: "block" }}
-        onClick={() => {
-          setNum((e) => e + 5);
-          onClick();
-        }}
+        onClick={onClick}
       />
     );
   }
@@ -88,34 +98,51 @@ export default function SliderBlackList() {
       <div className="container">
         <div className="slider-container px-4 position-relative">
           <Slider {...settings}>
-            {data?.data
-         
-              .map((sym, i) => (
-                <div className="slide mx-2" key={i}>
-                  <div className="image mb-2 mx-2 ">
-                    <img
-                      src={`https://syrianrevolution1.com/postImages/${sym.selfImg}`}
-                      alt="symbolThowra"
-                      className=" w-100 slide-image"
-                      style={{ height: "250px" }}
-                    />
-                  </div>
-                  <p className="px-2" style={{ textAlign: "center" }}>
-                    {sym?.name ? sym?.name : ""}
-                    <br />
-                    <small className="datedSlider">
-                      {sym?.createdAt && sym?.createdAt.slice(0, 10)}
-                    </small>
-                    <button
-                      className=" d-inline-block mx-1  rounded-3 btu"
-                      onClick={() => navigate(`/newsDetails/${sym._id}`)}
-                    >
-                      المزيد
-                    </button>
-                  </p>
+            {data?.data.map((sym, i) => (
+              <div className="slide mx-2" key={i}>
+                <div className="image mb-2 mx-2 ">
+                  <img
+                    src={`https://syrianrevolution1.com/postImages/${sym.selfImg}`}
+                    alt="symbolThowra"
+                    className=" w-100 slide-image"
+                    style={{ height: "250px" }}
+                  />
                 </div>
-              ))}
+                <p className="px-2" style={{ textAlign: "center" }}>
+                  {sym?.name ? sym?.name : ""}
+                  <br />
+                  <small className="datedSlider">
+                    {sym?.createdAt && sym?.createdAt.slice(0, 10)}
+                  </small>
+                  <button
+                    className=" d-inline-block mx-1  rounded-3 btu"
+                    onClick={() => navigate(`/newsDetails/${sym._id}`)}
+                  >
+                    المزيد
+                  </button>
+                </p>
+              </div>
+            ))}
           </Slider>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <button onClick={handleNextPage} className="btn btn-secondary">
+              +
+            </button>
+            <button
+              onClick={handlePreviousPage}
+              disabled={page === 1}
+              className="btn btn-secondary"
+            >
+              -
+            </button>
+          </div>
         </div>
       </div>
     </div>

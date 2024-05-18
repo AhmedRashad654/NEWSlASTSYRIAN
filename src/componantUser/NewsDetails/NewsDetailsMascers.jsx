@@ -1,32 +1,26 @@
-import React, { useContext, useEffect, useState } from 'react'
-import MainNav from '../MainNav/MainNav';
-import Navbar from '../Navbar/Navbar';
-import Footer from '../Footer/Footer';
-import axios from 'axios';
+import React, { useContext, useEffect, useState } from "react";
+import MainNav from "../MainNav/MainNav";
+import Navbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
+import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { ContextUser } from '../../context/Context';
-import AlertImageDash from '../../componantDashboard/AlertImageDash/AlertImageDash';
-import one from '../../image/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSubscript } from '@fortawesome/free-solid-svg-icons';
-import Subscribes from '../subscribe/Subscribes';
+import { ContextUser } from "../../context/Context";
+import AlertImageDash from "../../componantDashboard/AlertImageDash/AlertImageDash";
+import one from "../../image/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSubscript } from "@fortawesome/free-solid-svg-icons";
+import Subscribes from "../subscribe/Subscribes";
 export default function NewsDetailsMascers() {
   const [single, setSingle] = useState([]);
-  const {
-   
-    openAlert,
-    openAlertStore,
-    setOpenSubscrips,
-    openSubscrips,
-  } = useContext(ContextUser);
+  const { openAlert, openAlertStore, setOpenSubscrips, openSubscrips } =
+    useContext(ContextUser);
   const { id } = useParams();
   useEffect(() => {
     async function getSingle() {
       await axios
         .get(`https://syrianrevolution1.com/massacres/${id}`)
         .then((result) => {
-          
           setSingle(result.data);
         })
         .catch((error) => console.log(error));
@@ -125,10 +119,11 @@ export default function NewsDetailsMascers() {
             {/* /////////////////////// */}
             <div className="lastSlider1 col-md-4">
               <div className=" muted p-2 overflow-hidden">
-                {archief.slice(0, 50).map((e) => (
+                {archief.slice(0, 50).map((e, i) => (
                   <div
                     className="row border-bottom pb-2 pt-2 border-2 overflow-hidden"
                     style={{ backgroundColor: "#fdfafa" }}
+                    key={i}
                   >
                     <div className="col-md-4">
                       <img

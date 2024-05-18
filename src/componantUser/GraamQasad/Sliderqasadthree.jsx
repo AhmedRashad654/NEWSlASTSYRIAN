@@ -7,16 +7,29 @@ import axios from "axios";
 import { useQuery } from "react-query";
 export default function Sliderqasadthree() {
   const navigate = useNavigate();
-  const [num, setNum] = useState(10);
+  const [page, setPage] = useState(1);
   function getAllLastNews() {
     return axios.get(
-      `https://syrianrevolution1.com/childData/search?category=missing&responsibleAuthority=qasad&page=2&limit=${num}`
+      `https://syrianrevolution1.com/childData/search?category=missing&responsibleAuthority=qasad&page=${page}`
     );
   }
-  const { data } = useQuery("missingqasadSystemSlider", getAllLastNews, {
-    cacheTime: 1800000,
-  });
+  const { data } = useQuery(
+    ["missingqasadSystemSliderr", page],
+    () => getAllLastNews(page),
+    {
+      keepPreviousData: true,
+      cacheTime: 1800000,
+    }
+  );
+  ///////////////////////
+  const handleNextPage = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
+  const handlePreviousPage = () => {
+    setPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+  //////////////////////////
   ///////////////////
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -24,10 +37,7 @@ export default function Sliderqasadthree() {
       <div
         className={className}
         style={{ ...style, display: "block", color: "gray" }}
-        onClick={() => {
-          setNum((e) => e + 5);
-          onClick();
-        }}
+        onClick={onClick}
       />
     );
   }
@@ -111,6 +121,24 @@ export default function Sliderqasadthree() {
               </div>
             ))}
           </Slider>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <button onClick={handleNextPage} className="btn btn-secondary">
+              +
+            </button>
+            <button
+              onClick={handlePreviousPage}
+              disabled={page === 1}
+              className="btn btn-secondary"
+            >
+              -
+            </button>
+          </div>
         </div>
       </div>
     </div>

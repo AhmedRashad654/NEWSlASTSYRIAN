@@ -6,15 +6,29 @@ import { useQuery } from "react-query";
 import axios from "axios";
 export default function SliderDaaehThree() {
   const navigate = useNavigate();
-  const [num, setNum] = useState(10);
+  const [page, setPage] = useState(1);
   function getAllLastNews() {
     return axios.get(
-      `https://syrianrevolution1.com/childData/search?category=adetaine&responsibleAuthority=daaeh&page=2&limit=${num}`
+      `https://syrianrevolution1.com/childData/search?category=adetaine&responsibleAuthority=daaeh&page=${page}`
     );
   }
-  const { data } = useQuery("adetainegdaaehSystemSlider", getAllLastNews, {
-    cacheTime: 1800000,
-  });
+
+  const { data } = useQuery(
+    ["adetainegdaaehSystemSliderse", page],
+    () => getAllLastNews(page),
+    {
+      keepPreviousData: true,
+      cacheTime: 1800000,
+    }
+  );
+  ///////////////////////
+  const handleNextPage = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
+  const handlePreviousPage = () => {
+    setPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
   ///////////////////
 
   function SampleNextArrow(props) {
@@ -23,10 +37,7 @@ export default function SliderDaaehThree() {
       <div
         className={className}
         style={{ ...style, display: "block", color: "gray" }}
-        onClick={() => {
-          setNum((e) => e + 5);
-          onClick();
-        }}
+        onClick={onClick}
       />
     );
   }
@@ -111,6 +122,24 @@ export default function SliderDaaehThree() {
               </div>
             ))}
           </Slider>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <button onClick={handleNextPage} className="btn btn-secondary">
+              +
+            </button>
+            <button
+              onClick={handlePreviousPage}
+              disabled={page === 1}
+              className="btn btn-secondary"
+            >
+              -
+            </button>
+          </div>
         </div>
       </div>
     </div>
